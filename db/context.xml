@@ -30,6 +30,12 @@
     <Valve className="org.apache.catalina.valves.CometConnectionManagerValve" />
     -->
 	
-	<Resource auth="Container" driverClassName="org.postgresql.Driver" name="jdbc/sis-online" password="master$123" type="javax.sql.DataSource" url="jdbc:postgresql://localhost:5432/sis_online" username="postgres"/>
-
+	<Resource auth="Container" 
+		driverClassName="org.postgresql.Driver" 
+		name="jdbc/sis-online" 
+		password="master$123" 
+		type="javax.sql.DataSource" 
+		url="jdbc:postgresql://localhost:5432/sis_online" 
+		username="postgres"/>
+		
 </Context>
