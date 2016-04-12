@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.beesinergi.mapper.PoMapper">
+
+	<resultMap id="BaseResultMap" type="com.beesinergi.model.Po">
+		<id column="pk_po" property="pkPo" />
+		<result column="po_no" property="poNo" />
+		<result column="po_date" property="poDate" />
+		<result column="status" property="status" />
+		<result column="created_date" property="createdDate" />
+		<result column="created_by" property="createdBy" />
+		<result column="changed_date" property="changedDate" />
+		<result column="changed_by" property="changedBy" />
+		
+		<result column="status_name" property="statusName" />
+		<collection property="poDetailList" ofType="com.beesinergi.model.PoDetail">
+	    	<result column="fk_product" property="fkProduct" />
+	    	<result column="qty" property="qty" />
+	    	<result column="price" property="price" />
+	    	<result column="total" property="total" />
+	    	<result column="outstanding" property="outstanding" />
+	    	<result column="req_qty" property="reqQty" />
+	    	
+	    	<result column="product_name" property="productName" />
+	    	<result column="fk_category" property="fkCategory" />
+	    	<result column="category_name" property="categoryName" />
+	    	<result column="product_unit" property="productUnit" />
+	    	<result column="product_stock" property="productStock" />
+	  	</collection>
+	</resultMap>
+	
+	<select id="selectAll" parameterType="com.beesinergi.model.Po" resultMap="BaseResultMap">
+		select 
+			a.*,
+			b.status_name
+		from po a
+			inner join app_status b on b.status_code = a.status and b.status_type = 'PO'
+			inner join employee c on c.pk_employee = a.fk_employee
+			inner join lookup d on d.pk_lookup = c.fk_department
+		where 1 = 1
+			<if test="pkPo != null">
+				and a.pk_po = #{pkPo}
+			</if>
+			<if test="status != null">
+				and a.status = #{status}
+			</if>
+			<if test="fkEmployee != null">
+				and a.fk_employee = #{fkEmployee}
+			</if>
+			<if test="fkDepartment != null">
+				and d.pk_lookup = #{fkDepartment}
+			</if>
+			<if test="poNo != null">
+				and lower(a.po_no) like #{poNo}
+			</if>
+			<if test="statusList != null">
+				and a.status in 
+				<foreach item="statusList" index="index" collection="statusList" open="(" separator="," close=")">
+		       		#{statusList}
+		 		</foreach>
+			</if>
+		order by a.po_date desc	
+	</select>
+	
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select 
+			a.*,
+			b.*,
+			c.product_name,
+			c.fk_category,
+			d.lookup_name as category_name,
+			e.lookup_name as product_unit,
+			c.qty as product_stock
+		from po a
+			inner join po_detail b on a.pk_po = b.fk_po
+			inner join product c on c.pk_product = b.fk_product
+			inner join lookup d on d.pk_lookup = c.fk_category
+			inner join lookup e on e.pk_lookup = c.fk_unit
+		where a.pk_po = #{pkPo}
+	</select>
+	
+	<select id="selectCount" parameterType="com.beesinergi.model.Po" resultType="java.lang.Integer">
+    	select count(*) from po a
+    	where 1 = 1
+    		<if test="status != null">
+				and a.status = #{status}
+			</if>
+			<if test="poNo != null">
+				and lower(a.po_no) like #{poNo}
+			</if>
+			<if test="fkEmployee != null">
+				and a.fk_employee = #{fkEmployee}
+			</if>
+			<if test="fkDepartment != null">
+				and d.pk_lookup = #{fkDepartment}
+			</if>
+  	</select>
+	
+	<insert id="insert" parameterType="com.beesinergi.model.Po" useGeneratedKeys="true" keyProperty="pkPo" keyColumn="pk_po">
+		insert into po ( 
+			po_no,
+			po_date,
+			fk_employee,
+			status, 
+			created_date, 
+			created_by
+		) values (
+			#{poNo},
+			#{poDate},
+			#{fkEmployee},
+			#{status},
+			#{createdDate},
+			#{createdBy}
+      )
+	</insert>
+	
+	<update id="updateByPrimaryKey" parameterType="com.beesinergi.model.Po">
+		update po
+    	<set> 
+	      	<if test="fkEmployee != null">
+	      		fk_employee = #{fkEmployee},
+	      	</if>
+	      	<if test="status != null">
+				status = #{status},
+			</if>
+	      	changed_date = #{changedDate},
+	      	changed_by = #{changedBy}
+	    </set>  	
+		where pk_po = #{pkPo}
+	</update> 
+	
+</mapper>

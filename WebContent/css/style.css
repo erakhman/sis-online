@@ -1,0 +1,879 @@
+table.grid {
+	border-bottom-style: solid;
+}
+
+A {
+	COLOR: #FAFFFF; 
+	text-decoration: none;
+}
+
+A.containerTitle {
+	COLOR: white;
+}
+
+A.noUnderline {
+	COLOR: black;
+	TEXT-DECORATION: none;
+}
+
+A.menu {
+	COLOR: black;
+	TEXT-DECORATION: none;
+}
+
+A:hover .menu {
+	COLOR: #d7141d;
+	TEXT-DECORATION: none;
+}
+
+BODY {
+	FONT-FAMILY: verdana;
+	FONT-SIZE: 8pt;
+	MARGIN: 0px;
+}
+
+ul{
+	padding:0px; 
+	margin:0px;
+}
+
+INPUT {
+	FONT-FAMILY: verdana;
+	FONT-SIZE: 8pt;
+}
+
+input text {
+	width: 120px;
+}
+
+.Flat {
+	border: 0 none;
+	background-color: #DCDCDC;
+	FONT-FAMILY: verdana;
+	FONT-SIZE: 8pt;
+	text-align: right;
+}
+
+SELECT {
+	FONT-FAMILY: verdana;
+	FONT-SIZE: 8pt;
+	/* edy */
+	height: 21px; 
+	width:134px;
+}
+
+TEXTAREA {
+	FONT-FAMILY: verdana;
+	FONT-SIZE: 8pt;
+}
+
+TD {
+	FONT-FAMILY: verdana;
+	FONT-SIZE: 8pt;
+}
+
+TH {
+	FONT-FAMILY: verdana;
+	FONT-SIZE: 8pt;
+}
+
+TD.actionHeader {
+	BORDER-BOTTOM: 2px groove;
+	FONT-WEIGHT: bold;
+}
+
+TD.actionItem {
+	height: 18px;
+}
+
+TD.caption {
+	FONT-FAMILY: verdana;
+	FONT-SIZE: 8pt;
+	FONT-WEIGHT: bold;
+	WORD-WRAP: normal;
+	vertical-align: middle;
+	WHITE-SPACE: nowrap;
+}
+
+TD.captionDesc {
+	FONT-FAMILY: verdana;
+	FONT-SIZE: 8pt;
+	FONT-WEIGHT: bold;
+	WORD-WRAP: normal;
+	vertical-align: top;
+	WHITE-SPACE: nowrap;
+	padding-top: 4px;
+}
+
+TD.captionDescLabel {
+	FONT-FAMILY: verdana;
+	FONT-SIZE: 8pt;
+	FONT-WEIGHT: bold;
+	WORD-WRAP: normal;
+	vertical-align: top;
+	WHITE-SPACE: nowrap;
+}
+
+TD.captionBigger {
+	FONT-FAMILY: verdana;
+	FONT-SIZE: 10pt;
+	FONT-WEIGHT: bold;
+	WIDTH: 120px;
+	WORD-WRAP: normal;
+}
+
+TD.container {
+	background-color: #EEEEEE;
+	BORDER-BOTTOM: 1px solid silver;
+	PADDING: 1px;
+}
+
+TD.containerMTA {
+	background-color: #EEEEEE;
+	BORDER-BOTTOM: 1px solid silver;
+	PADDING: 1px;
+}
+
+.menulink {
+	padding: 5px;
+	font-family: tahoma;
+	font-size: 12px;
+	font-weight: bold;
+	cursor: hand;
+	color: #d7141d   /*change*/
+}
+
+.menulink:hover {
+	cursor: pointer;
+}
+
+.hidden {
+	display: none;
+}
+
+div.show {
+	display: block;
+}
+
+.toolBar {
+	height:40px;
+	BACKGROUND-IMAGE: url('../images/toolbar.png')
+	
+}
+
+TD.toolBar1 {
+	BACKGROUND-COLOR: gainsboro;
+	BORDER-BOTTOM: 1px solid silver;
+	BORDER-LEFT: 1px solid white;
+	BORDER-RIGHT: 1px solid silver;
+	BORDER-TOP: 1px solid white;
+	PADDING: 3px;
+}
+
+.toolBarImageHover {
+	BACKGROUND-COLOR: white;
+	BORDER: 2px groove;
+	CURSOR: pointer;
+	HEIGHT: 22px;
+	PADDING: 3px;
+	TEXT-ALIGN: center;
+	VERTICAL-ALIGN: middle;
+}
+
+.toolBarImageButton {
+	CURSOR: pointer;
+	FONT-FAMILY: verdana;
+	FONT-SIZE: 8pt;
+	HEIGHT: 22px;
+	PADDING: 5px;
+	TEXT-ALIGN: center;
+	VERTICAL-ALIGN: middle;
+}
+
+.toolBarImageHover2 {
+	BACKGROUND-COLOR: whitesmoke;
+	BORDER: 2px groove;
+	CURSOR: hand;
+	HEIGHT: 22px;
+	PADDING: 3px;
+	TEXT-ALIGN: center;
+	VERTICAL-ALIGN: middle;
+}
+
+.toolBarImageButton2 {
+	BACKGROUND-COLOR: White;
+	BORDER: 2px solid gainsboro;
+	CURSOR: hand;
+	FONT-FAMILY: verdana;
+	FONT-SIZE: 8pt;
+	HEIGHT: 22px;
+	PADDING: 3px;
+	TEXT-ALIGN: center;
+	VERTICAL-ALIGN: middle;
+}
+
+.frontImageHover {
+	BACKGROUND-COLOR: white;
+	BORDER: 2px groove;
+	CURSOR: pointer;
+	HEIGHT: 22px;
+	PADDING: 3px;
+	TEXT-ALIGN: center;
+	VERTICAL-ALIGN: middle;
+}
+
+.frontImageButton {
+	BACKGROUND-COLOR: #EEEEEE;
+	BORDER: 2px solid #EEEEEE;
+	CURSOR: pointer;
+	FONT-FAMILY: verdana;
+	FONT-SIZE: 8pt;
+	HEIGHT: 22px;
+	PADDING: 3px;
+	TEXT-ALIGN: center;
+	VERTICAL-ALIGN: middle;
+}
+
+TD.containerTitle {
+	padding: 5px;
+	filter:
+		'progid:DXImageTransform.Microsoft.Gradient(GradientType=1, StartColorStr=#F7B64B, EndColorStr=#DCDCDC)'
+		;
+	/*BACKGROUND-IMAGE: url('../images/ln.jpg'); */
+	BORDER-BOTTOM: 1px outset #DCDCDC;
+	COLOR: #000000;
+	FONT-WEIGHT: bold;
+}
+
+TD.containerTitle2 {
+	padding: 5px;
+	BACKGROUND-COLOR: gainsboro;
+	filter:
+		'progid:DXImageTransform.Microsoft.Gradient(GradientType=1, StartColorStr=#1B0E77, EndColorStr=#05BAE7)'
+		;
+	/*BACKGROUND-IMAGE: url('../images/ln.jpg'); */
+	BORDER: 1px outset;
+	COLOR: black;
+	FONT-WEIGHT: bold;
+}
+
+TD.content {
+	FONT-FAMILY: verdana;
+	FONT-SIZE: 8pt;
+}
+
+TD.listHeaderimage {
+	BACKGROUND-COLOR: silver;
+	BORDER-BOTTOM: 1px solid gray;
+	BORDER-LEFT: 1px solid white;
+	BORDER-RIGHT: 1px solid gray;
+	BORDER-TOP: 1px solid white;
+	FONT-FAMILY: verdana;
+	FONT-SIZE: 8pt;
+	PADDING-LEFT: 5px;
+	PADDING-RIGHT: 6px;
+}
+
+TD.listHeader {
+	BACKGROUND-COLOR: #E1E1E1;
+	BORDER-BOTTOM: 1px solid gray;
+	BORDER-LEFT: 1px solid white;
+	BORDER-RIGHT: 1px solid gray;
+	BORDER-TOP: 1px solid white;
+	FONT-FAMILY: verdana;
+	FONT-SIZE: 8pt;
+	font-weight:bold;
+	PADDING-BOTTOM: 2px;
+	PADDING-LEFT: 3px;
+	PADDING-RIGHT: 3px;
+	PADDING-TOP: 2px;
+	TEXT-ALIGN: center;
+	white-space:nowrap;  
+}
+
+TD.listHeaderSorted {
+	BACKGROUND-COLOR: silver;
+	BORDER-BOTTOM: 1px solid gray;
+	BORDER-LEFT: 1px solid white;
+	BORDER-RIGHT: 1px solid gray;
+	BORDER-TOP: 1px solid white;
+	FONT-FAMILY: verdana;
+	FONT-SIZE: 8pt;
+	FONT-WEIGHT: bold;
+	PADDING-BOTTOM: 3px;
+	PADDING-LEFT: 2px;
+	PADDING-RIGHT: 2px;
+	PADDING-TOP: 3px;
+	TEXT-ALIGN: center;
+}
+
+TD.listItemGroup {
+	BORDER-LEFT: 1px solid white;
+	BORDER-RIGHT: 1px solid white;
+	BORDER-TOP: 1px solid silver;
+	FONT-FAMILY: verdana;
+	FONT-SIZE: 8pt;
+	PADDING-LEFT: 3px;
+	PADDING-RIGHT: 3px;
+}
+
+TD.listItem {
+	BORDER-BOTTOM: 1px solid silver;
+	CURSOR: pointer;
+	FONT-FAMILY: verdana;
+	FONT-SIZE: 8pt;
+	OVERFLOW: hidden;
+	PADDING: 3px;
+	TEXT-OVERFLOW: ellipsis;
+	WHITE-SPACE: normal;
+	empty-cells:show;
+}
+TD.listItemWithoutPointer {
+	BORDER-BOTTOM: 1px solid silver;
+	FONT-FAMILY: verdana;
+	FONT-SIZE: 8pt;
+	OVERFLOW: hidden;
+	PADDING: 3px;
+	TEXT-OVERFLOW: ellipsis;
+	WHITE-SPACE: normal;
+	empty-cells:show;
+}
+TD.listItemWithoutPointer a{
+	cursor: pointer;
+}	
+	
+TD.listItemEllipsis {
+	BORDER-BOTTOM: 1px solid silver;
+	CURSOR: pointer;
+	FONT-FAMILY: verdana;
+	FONT-SIZE: 8pt;
+	OVERFLOW: hidden;
+	PADDING: 3px;
+	TEXT-OVERFLOW: ellipsis;
+	height: 20px;
+	OVERFLOW: hidden;
+	TEXT-OVERFLOW: ellipsis;
+	WHITE-SPACE: nowrap;
+}
+
+
+TD.listItemLink {
+	BACKGROUND-COLOR: white;
+	BORDER-BOTTOM: 1px solid silver;
+	CURSOR: hand;
+	FONT-FAMILY: verdana;
+	font-weight: bold;
+	FONT-SIZE: 8pt;
+	OVERFLOW: hidden;
+	PADDING: 3px;
+	COLOR: #d7141d;   /*change*/
+	CURSOR: hand;
+	TEXT-OVERFLOW: ellipsis;
+	WHITE-SPACE: nowrap;
+	height: 20px;
+}
+
+TD.listItem2 {
+	BACKGROUND-COLOR: white;
+	BORDER-BOTTOM: 1px solid silver;
+	FONT-FAMILY: verdana;
+	FONT-SIZE: 8pt;
+	OVERFLOW: hidden;
+	PADDING-LEFT: 6px;
+	PADDING-RIGHT: 6px;
+	TEXT-OVERFLOW: ellipsis;
+	WHITE-SPACE: nowrap;
+	height: 20px;
+}
+
+TD.listItem3 {
+	BACKGROUND-COLOR: white;
+	BORDER-BOTTOM: 1px solid silver;
+	FONT-FAMILY: verdana;
+	FONT-SIZE: 8pt;
+	OVERFLOW: hidden;
+	PADDING-LEFT: 6px;
+	PADDING-RIGHT: 6px;
+	TEXT-OVERFLOW: ellipsis;
+	WHITE-SPACE: nowrap;
+}
+
+TD.listItemBg {
+	PADDING-RIGHT: 3px;
+	PADDING-LEFT: 3px;
+	FONT-SIZE: 8pt;
+	OVERFLOW: hidden;
+	BORDER-BOTTOM: silver 1px solid;
+	FONT-FAMILY: verdana;
+	WHITE-SPACE: nowrap;
+	HEIGHT: 20px;
+	TEXT-OVERFLOW: ellipsis;
+	BACKGROUND-COLOR: #EEEEDD
+}
+
+#tableList TR:HOVER {
+	BACKGROUND-COLOR: #EEEEDD;
+}
+
+TD.list {
+	BACKGROUND-COLOR: white;
+	CURSOR: pointer;
+	FONT-FAMILY: verdana;
+	FONT-SIZE: 8pt;
+	OVERFLOW: hidden;
+	padding-left: 3px;
+	padding-right: 3px;
+	TEXT-OVERFLOW: ellipsis;
+	WHITE-SPACE: nowrap;
+}
+
+TD.listed {
+	background-Color: #B6BDD2;
+	CURSOR: pointer;
+	FONT-FAMILY: verdana;
+	FONT-SIZE: 8pt;
+	OVERFLOW: hidden;
+	padding-left: 3px;
+	padding-right: 3px;
+	TEXT-OVERFLOW: ellipsis;
+	WHITE-SPACE: nowrap;
+}
+
+TD.listItemclosed {
+	BACKGROUND-COLOR: white;
+	BORDER-TOP: 1px solid silver;
+	CURSOR: hand;
+	FONT-FAMILY: verdana;
+	FONT-SIZE: 8pt;
+	OVERFLOW: hidden;
+	PADDING-LEFT: 6px;
+	PADDING-RIGHT: 6px;
+	TEXT-OVERFLOW: ellipsis;
+	WHITE-SPACE: nowrap;
+	COLOR: red;
+}
+
+TD.listItemEnd {
+	CURSOR: hand;
+	FONT-FAMILY: verdana;
+	FONT-SIZE: 8pt;
+	PADDING-LEFT: 3px;
+	PADDING-RIGHT: 3px;
+}
+
+TD.winbar { /*BACKGROUND-IMAGE: url('images/lg.jpg');*/
+	COLOR: white
+}
+
+.ellipsis {
+	OVERFLOW: hidden;
+	TEXT-OVERFLOW: ellipsis;
+	-o-text-overflow: ellipsis;
+	WHITE-SPACE: nowrap;
+}
+
+
+.button {
+	PADDING-LEFT: 3px;
+	PADDING-RIGHT: 3px;
+	BORDER: 1px solid black;
+}
+
+.field {
+	FONT-FAMILY: verdana;
+	FONT-WEIGHT: bold;
+	TEXT-DECORATION: none;
+	PADDING-LEFT: 10px;
+	PADDING-RIGHT: 10px;
+}
+
+td.tabNonActive {
+	padding-top: 4px;
+	padding-bottom: 4px;
+	padding-left: 10px;
+	padding-right: 10px;
+	FONT-FAMILY: verdana, sans-serif;
+	background-color:#d7141d ; /*change*/
+	FONT-SIZE: 12px;
+	color:#0450A4;
+	font-weight: normal;
+	cursor: hand;
+	BORDER-top: #F0F0F0 1px solid;
+	BORDER-left:#FFFFFF 1px solid;
+	BORDER-bottom: #d7141d 1px solid;
+}
+
+
+td.tabActive {
+	padding-top: 4px;
+	padding-bottom: 4px;
+	padding-left: 10px;
+	padding-right: 10px;
+	FONT-FAMILY: verdana, sans-serif;
+	FONT-SIZE: 12px;
+	color: #0450A4; 
+	font-weight: bold;
+	cursor: hand;
+	BORDER-top: #FAFFFF 1px solid;
+	BORDER-left: #FAFFFF 1px solid;
+	BORDER-right: #FAFFFF 1px solid;
+	background-color: #AE4244;
+}
+
+td.tabEnd {
+	PADDING: 5px;
+	CURSOR: default;
+	BORDER-BOTTOM: white 1px solid;
+	TEXT-ALIGN: center;
+	FONT-FAMILY: verdana;
+	FONT-SIZE: 12;
+	WIDTH: 100%;
+}
+
+td.tab {
+	COLOR: black;
+	BORDER-RIGHT: silver 1px solid;
+	PADDING: 25px;
+	BORDER-LEFT: white 1px solid;
+	CURSOR: default;
+	BACKGROUND: buttonface;
+	BORDER-BOTTOM: silver 1px solid;
+	TEXT-ALIGN: center;
+	FONT-FAMILY: verdana;
+	FONT-SIZE: 12;
+	HEIGHT: 100%;
+	WIDTH: 100%;
+}
+
+
+td.subTabActive {
+	padding-top: 4px;
+	padding-bottom: 4px;
+	padding-left: 10px;
+	padding-right: 10px;
+	FONT-FAMILY: verdana, sans-serif;
+	FONT-SIZE: 12px;
+	color: #003060;
+	font-weight: bold;
+	cursor: hand;
+	BORDER-top: #D0D0D0 1px solid;
+	BORDER-left: #D0D0D0 1px solid;
+	BORDER-right: #D0D0D0 1px solid;
+	background-color: #F0F0F0;
+}
+
+td.subTabNonActive {
+	padding-top: 4px;
+	padding-bottom: 4px;
+	padding-left: 10px;
+	padding-right: 10px;
+	FONT-FAMILY: verdana, sans-serif;
+	FONT-SIZE: 12px;
+	color: #003060;
+	font-weight: normal;
+	cursor: hand;
+	BORDER-top: #D0D0D0 1px solid;
+	BORDER-right: #D0D0D0 1px solid;
+	BORDER-bottom: #D0D0D0 1px solid;
+	BORDER-left: #D0D0D0 1px solid;
+	background-color: #FFFFF0;
+}
+
+
+
+td.subTabEnd {
+	PADDING: 5px;
+	CURSOR: default;
+	BORDER-BOTTOM: #D0D0D0 1px solid;
+	TEXT-ALIGN: center;
+	FONT-FAMILY: verdana;
+	FONT-SIZE: 12;
+	WIDTH: 100%;
+}
+
+td.subTab {
+	COLOR: black;
+	BORDER-RIGHT: #D0D0D0 1px solid;
+	BORDER-LEFT: #D0D0D0 1px solid;
+	CURSOR: default;
+	background-color: #F0F0F0;
+	BORDER-BOTTOM: #D0D0D0 1px solid;
+	TEXT-ALIGN: center;
+	FONT-FAMILY: verdana;
+	FONT-SIZE: 12;
+	HEIGHT: 100%;
+	WIDTH: 100%;
+}
+
+
+.toolBarSeparatorLeft {
+	BORDER-RIGHT: 1px solid gray;
+	WIDTH: 2px;
+}
+
+.toolBarSeparatorRight {
+	BORDER-LEFT: 1px solid white;
+	WIDTH: 2px;
+}
+
+.required {
+	COLOR: red;
+	font-weight: bold;
+}
+
+.sort-table thead {
+	background: ButtonFace;
+}
+
+.sort-table td {
+	padding: 2px 5px;
+}
+
+.sort-table thead td {
+	border: 1px solid;
+	border-color: ButtonHighlight ButtonShadow ButtonShadow ButtonHighlight;
+	cursor: default;
+}
+
+.sort-table thead td:active {
+	border-color: ButtonShadow ButtonHighlight ButtonHighlight ButtonShadow;
+	padding: 3px 4px 1px 6px;
+}
+
+.sort-table thead td[_sortType=None]:active {
+	border-color: ButtonHighlight ButtonShadow ButtonShadow ButtonHighlight;
+	padding: 2px 5px;
+}
+
+.sort-arrow {
+	width: 11px;
+	height: 11px;
+	background-position: center center;
+	background-repeat: no-repeat;
+	margin: 0 2px;
+}
+
+.sort-arrow.descending {
+	background-image: url("../images/downsimple.png");
+}
+
+.sort-arrow.ascending {
+	background-image: url("../images/upsimple.png");
+}
+
+.spanstyle {
+	FONT-WEIGHT: bold;
+	FONT-SIZE: 10px;
+	VISIBILITY: arial;
+	COLOR: red;
+	FONT-FAMILY: Verdana;
+	POSITION: absolute;
+	TOP: -40px
+}
+
+a.helpLink {
+	color: black;
+	text-decoration: none;
+	cursor: hand;
+}
+
+a.helpLink:hover {
+	color: Red;
+	text-decoration: none;
+}
+
+.help-tooltip {
+	position: absolute;
+	width: 250px;
+	border: 1px Solid WindowFrame;
+	background: Infobackground;
+	color: InfoText;
+	font: StatusBar;
+	font: Status-Bar;
+	padding: 3px;
+	filter: progid : DXImageTransform.Microsoft.Shadow ( color = "#777777",
+		Direction = 135, Strength = 3 );
+	z-index: 10000;
+}
+
+.help-tooltip a,.help-tooltip a:hover {
+	color: #d7141d !important;   /*change blue*/
+	background: none;
+}
+
+.enabledApproval {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	left: 2px;
+	margin-left: 2px;
+	top: 17%;
+	background-color: gainsboro;
+	visibility: visible;
+	border-color: Blue;
+	border-width: 1px;
+}
+
+.disabledApproval {
+	visibility: hidden;
+	position: absolute;
+}
+
+
+.treeBody{
+	BORDER-RIGHT: 2px inset; 
+	BORDER-TOP: 2px inset; 
+	BACKGROUND: buttonshadow; 
+	MARGIN: 0px; 
+	PADDING-RIGHT:5px;
+	BORDER-LEFT: 2px inset; 
+	CURSOR: default; 
+	COLOR: black; 
+	BORDER-BOTTOM: 2px inset;
+	WIDTH:100%;
+	HEIGHT:100%;
+	OVERFLOW:auto;
+	BACKGROUND-COLOR:white;
+}
+.treeCaption{
+	font-family:tahoma;
+	font-size:11px;
+	color:black;
+	text-decoration:none;
+	cursor:hand;
+}
+
+.treeChild{
+	padding-left:35px;
+	font-family:tahoma;
+	font-size:11px;
+	color:black;
+	cursor:hand;
+	text-decoration:none;
+}
+
+.sort-table thead {
+	background:	ButtonFace;
+}
+
+.sort-table td {
+	padding:	2px 5px;
+}
+
+.sort-table thead td {
+	border:			1px solid;
+	border-color:	ButtonHighlight ButtonShadow
+					ButtonShadow ButtonHighlight;
+	cursor:			default;
+}
+
+.sort-table thead td:active {
+	border-color:	ButtonShadow ButtonHighlight
+					ButtonHighlight ButtonShadow;
+	padding:		3px 4px 1px 6px;
+}
+
+.sort-table thead td[_sortType=None]:active {
+	border-color:	ButtonHighlight ButtonShadow
+					ButtonShadow ButtonHighlight;
+	padding:		2px 5px;
+}
+
+.sort-arrow {
+	width:					11px;
+	height:					11px;
+	background-position:	center center;
+	background-repeat:		no-repeat;
+	margin:					0 2px;
+}
+
+.sort-arrow.descending {
+	background-image:		url("../images/downsimple.png");
+
+}
+
+.sort-arrow.ascending {
+	background-image:		url("../images/upsimple.png");
+}
+
+
+
+.dtree {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #666;
+	white-space: nowrap;
+}
+.dtree img {
+	border: 0px;
+	vertical-align: middle;
+}
+.dtree a {
+	color: #333;
+	text-decoration: none;
+}
+.dtree a.node, .dtree a.nodeSel {
+	white-space: nowrap;
+	padding: 1px 2px 1px 2px;
+}
+.dtree a.node:hover, .dtree a.nodeSel:hover {
+	color: #333;
+	text-decoration: underline;
+}
+.dtree a.nodeSel {
+	background-color: #c0d2ec;
+}
+.dtree .clip {
+	overflow: hidden;
+}
+
+.errorFragmentList{
+	padding:2; border:1px dotted #CC0000; background-color: #FFCCCC; font-family:Tahoma; font-size:11px; color:#CC0000
+}
+
+div.listWrapper {
+	overflow-y: auto; overflow-x:auto;width:100%; height:425px;
+}
+
+div.clientInstitutionalWrapper {
+	overflow-y: auto; overflow-x:auto;width:1035px; height:440px;
+}
+
+div.selectBrowserContent {
+	overflow:auto; width:100%; height:380px;
+}
+
+.alert {
+	padding-left:15px; 
+	border:1px dotted #CC0000; 
+	background-color: #FFCCCC; 
+	font-family:Tahoma; 
+	font-size:11px; 
+	color:#CC0000
+}
+#errorMessage {
+	margin-top:5px;
+	margin-bottom:5px;
+	margin-right:3px;
+}
+.colspan3 {
+	width: 390px;
+}
+.mandatory {
+	color: red;
+}
+#printArea{
+	text-align:center;
+}
+.ui-datepicker-trigger{
+	vertical-align: top;
+} 
+.datepicker {
+	width: 110px;
+}
+.datetimepicker {
+	width: 110px;
+}
+.ui_tpicker_unit_hide{
+	display: none;
+}

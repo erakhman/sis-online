@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.beesinergi.mapper.AppParameterMapper">
+
+	<resultMap id="BaseResultMap" type="com.beesinergi.model.AppParameter">
+		<id column="pk_app_parameter" jdbcType="INTEGER" property="pkAppParameter" />
+		<result column="description" jdbcType="VARCHAR" property="description" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
+		<result column="data_type" jdbcType="VARCHAR" property="dataType" />
+		<result column="is_viewable" jdbcType="VARCHAR" property="isViewable" />
+		<result column="changed_date" jdbcType="DATE" property="changedDate" />
+		<result column="changed_by" jdbcType="VARCHAR" property="changedBy" />
+		<result column="value" jdbcType="VARCHAR" property="value" />
+	</resultMap>
+	
+	<select id="selectAll" parameterType="com.beesinergi.model.AppParameter" resultMap="BaseResultMap">
+		select a.* 
+		from "app_parameter" a
+		where 1 = 1	
+		<if test="pkAppParameter != null">
+			and a.pk_app_parameter = #{pkAppParameter}
+		</if>
+		<if test="isViewable != null">
+			and a.is_viewable = #{isViewable}
+		</if>
+	</select>
+	
+	<select id="selectCount" parameterType="com.beesinergi.model.AppParameter" resultType="java.lang.Integer">
+    	select count(*) from "app_parameter" a
+    	where 1 = 1
+    	<if test="isViewable != null">
+			and a.is_viewable = #{isViewable}
+		</if>
+  	</select>
+	
+	<update id="updateByPrimaryKey" parameterType="com.beesinergi.model.AppParameter">
+		update "app_parameter"
+    	set 
+	      	"description" = #{description},
+	      	"value" = #{value}
+		where "pk_app_parameter" = #{pkAppParameter}
+	</update>
+	
+	<update id="updateByName" parameterType="com.beesinergi.model.AppParameter">
+		update "app_parameter"
+    	set 
+	      	"value" = #{value}
+		where "name" = #{name}
+	</update>
+	
+</mapper>

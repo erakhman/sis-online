@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.beesinergi.mapper.SiswaMapper">
+
+	<resultMap id="BaseResultMap" type="com.beesinergi.model.Siswa">
+		<id column="pk_siswa" property="pkSiswa" />
+		<result column="nama_siswa" property="namaSiswa" />
+		<result column="tgl_lahir" property="tglLahir" />
+		<result column="tempat_lahir" property="tempatLahir" />
+		<result column="alamat" property="alamat" />
+		<result column="nama_ayah" property="namaAyah" />
+		<result column="nama_ibu" property="namaIbu" />
+		<result column="alamat_ayah" property="alamatAyah" />
+		<result column="alamat_ibu" property="alamatIbu" />
+		<result column="telp_ortu" property="telpOrtu" />
+		<result column="nem" property="nem" />
+		<result column="created_date" property="createdDate" />
+		<result column="created_by" property="createdBy" />
+		<result column="changed_date" property="changedDate" />
+		<result column="changed_by" property="changedBy" />
+	</resultMap>
+	
+	<select id="selectAll" parameterType="com.beesinergi.model.Siswa" resultMap="BaseResultMap">
+		select 
+			*
+		from siswa a
+		where 1 = 1
+			<if test="pkSiswa != null">
+				and a.pk_siswa = #{pkSiswa}
+			</if>pe
+		order by a.pk_siswa asc	
+	</select>
+	
+	<select id="selectCount" parameterType="com.beesinergi.model.Siswa" resultType="java.lang.Integer">
+    	select count(*) from siswa a
+    	where 1 = 1
+  	</select>
+	
+	<insert id="insert" parameterType="com.beesinergi.model.Siswa" useGeneratedKeys="true" keyProperty="pkSiswa" keyColumn="pk_siswa">
+		insert into siswa ( 
+			nama_siswa,
+			tgl_lahir,
+		  	tempat_lahir,
+		  	alamat,
+		  	nama_ayah,
+		  	nama_ibu,
+		  	alamat_ayah,
+		  	alamat_ibu,
+		  	telp_ortu,
+			nem, 
+			created_date, 
+			created_by
+		) values (
+			#{namaSiswa},
+			#{tglLahir},
+			#{tempatLahir},
+			#{alamat},
+			#{namaAyah},
+			#{namaIbu},
+			#{alamatAyah},
+			#{alamatIbu},
+			#{telpOrtu},
+			#{nem},
+			#{createdDate},
+			#{createdBy}
+      )
+	</insert>
+	
+	<update id="updateByPrimaryKey" parameterType="com.beesinergi.model.Siswa">
+		update siswa
+    	set 
+	      	nama_siswa = #{namaSiswa},
+	      	tgl_lahir = #{tglLahir},
+		  	tempat_lahir = #{tempatLahir},
+		  	alamat = #{alamat},
+		  	nama_ayah = #{namaAyah},
+		  	nama_ibu = #{namaIbu},
+		  	alamat_ayah = #{alamatAyah},
+		  	alamat_ibu = #{alamatIbu},
+		  	telp_ortu = #{telpOrtu},
+	      	nem = #{nem},
+	      	changed_date = #{changedDate},
+	      	changed_by = #{changedBy}
+		where pk_siswa = #{pkSiswa}
+	</update> 
+	
+</mapper>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.beesinergi.mapper.RoleMapper">
+
+	<resultMap id="BaseResultMap" type="com.beesinergi.model.AppRole">
+		<id column="pk_role" jdbcType="INTEGER" property="pkRole" />
+		<result column="role_code" jdbcType="VARCHAR" property="roleCode" />
+		<result column="role_name" jdbcType="VARCHAR" property="roleName" />
+		<result column="created_date" jdbcType="DATE" property="createdDate" />
+		<result column="created_by" jdbcType="VARCHAR" property="createdBy" />
+		<result column="changed_date" jdbcType="DATE" property="changedDate" />
+		<result column="changed_by" jdbcType="VARCHAR" property="changedBy" />
+		<result column="is_active" jdbcType="VARCHAR" property="isActive" />
+		
+		<collection property="menuList" ofType="com.beesinergi.model.AppRoleMenu">
+	    	<result column="fk_menu" property="fkMenu" />
+	  	</collection>
+	</resultMap>
+	
+	<select id="selectAll" parameterType="com.beesinergi.model.AppRole" resultMap="BaseResultMap">
+		select 
+			a.*
+		from app_role a
+		where 1 = 1
+			<if test="isActive != null">
+				and a.is_active = #{isActive}
+			</if>
+			<if test="roleName != null">
+				and lower(a.role_name) like #{roleName}
+			</if>
+		order by a.role_name asc	
+	</select>
+	
+	<select id="selectByPrimaryKey" parameterType="com.beesinergi.model.AppRole" resultMap="BaseResultMap">
+		select 
+			a.*,
+			b.*
+		from app_role a
+			left join app_role_menu b on a.pk_role = b.fk_role
+		where a.pk_role = #{pkRole}
+	</select>
+	
+	<select id="selectCount" parameterType="com.beesinergi.model.AppRole" resultType="java.lang.Integer">
+    	select count(*) from app_role a
+    	where 1 = 1
+    		<if test="isActive != null">
+				and a.is_active = #{isActive}
+			</if>
+			<if test="roleName != null">
+				and lower(a.role_name) like #{roleName}
+			</if>
+  	</select>
+	
+	<insert id="insert" parameterType="com.beesinergi.model.AppRole">
+		insert into app_role ( 
+			role_code,
+			role_name,
+			is_active, 
+			created_date, 
+			created_by
+		) values (
+			#{roleCode},
+			#{roleName},
+			#{isActive},
+			#{createdDate},
+			#{createdBy}
+      )
+	</insert>
+	
+	<update id="updateByPrimaryKey" parameterType="com.beesinergi.model.AppRole">
+		update app_role
+    	set 
+    		role_code = #{roleCode},
+	      	role_name = #{roleName},
+	      	is_active = #{isActive},
+	      	changed_date = #{changedDate},
+	      	changed_by = #{changedBy}
+		where pk_role = #{pkRole}
+	</update> 
+	
+</mapper>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.beesinergi.mapper.PoDetailMapper">
+
+	<resultMap id="BaseResultMap" type="com.beesinergi.model.PoDetail">
+		<id column="pk_po_detail" property="pkPoDetail" />
+    	<result column="fk_product" property="fkProduct" />
+    	<result column="qty" property="qty" />
+    	<result column="price" property="price" />
+    	<result column="total" property="total" />
+    	<result column="outstanding" property="outstanding" />
+	</resultMap>
+	
+	<select id="selectAll" parameterType="com.beesinergi.model.PoDetail" resultMap="BaseResultMap">
+		select 
+			a.*
+		from po_detail a
+		where 1 = 1	
+			<if test="fkPo != null">
+				and a.fk_po = #{fkPo}
+			</if>
+			<if test="fkProduct != null">
+				and a.fk_product = #{fkProduct}
+			</if>
+	</select>
+	
+	<insert id="insert" parameterType="com.beesinergi.model.PoDetail">
+		insert into po_detail ( 
+			fk_po,
+			fk_product,
+			qty,
+			outstanding
+		) values (
+			#{fkPo},
+			#{fkProduct},
+			#{qty},
+			#{outstanding}
+      )
+	</insert>
+	
+	<delete id="deleteByFkPo" parameterType="java.lang.Integer">
+		delete from po_detail where fk_po = #{fkPo}
+	</delete>
+	
+	<update id="updateByPrimaryKey" parameterType="com.beesinergi.model.PoDetail">
+		update po_detail
+    	set 
+	      	outstanding = #{outstanding}
+		where pk_po_detail = #{pkPoDetail}
+	</update>
+
+</mapper>

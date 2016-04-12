@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.beesinergi.mapper.DeliveryDetailMapper">
+
+	<insert id="insert" parameterType="com.beesinergi.model.DeliveryDetail">
+		insert into delivery_detail ( 
+			fk_delivery,
+			fk_product,
+			qty,
+			outstanding
+		) values (
+			#{fkDelivery},
+			#{fkProduct},
+			#{qty},
+			#{outstanding}
+      )
+	</insert>
+	
+	<delete id="deleteByFkDelivery" parameterType="java.lang.Integer">
+		delete from delivery_detail where fk_delivery = #{fkDelivery}
+	</delete>
+
+</mapper>

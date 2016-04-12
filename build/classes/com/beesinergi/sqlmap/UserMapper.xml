@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.beesinergi.mapper.UserMapper">
+
+	<resultMap id="BaseResultMap" type="com.beesinergi.model.AppUser">
+		<id column="pk_user" property="pkUser" />
+		<result column="password" property="password" />
+		<result column="full_name" property="fullName" />
+		<result column="wrong_password" property="wrongPassword" />
+		<result column="created_date" property="createdDate" />
+		<result column="created_by" property="createdBy" />
+		<result column="changed_date" property="changedDate" />
+		<result column="changed_by" property="changedBy" />
+		<result column="is_locked" property="isLocked" />
+		<result column="change_password" property="changePassword" />
+		<result column="user_name" property="userName" />
+		<result column="last_login_date" property="lastLoginDate" />
+		
+		<collection property="menuList" ofType="com.beesinergi.model.AppMenu">
+	    	<result column="main_menu" property="mainMenu" />
+	    	<result column="sub_menu" property="subMenu" />
+	    	<result column="page_name" property="pageName" />
+	    	<result column="menu_code" property="menuCode" />
+	  	</collection>
+	  	<collection property="roleList" ofType="com.beesinergi.model.AppRole">
+	    	<result column="pk_role" property="pkRole" />
+	    	<result column="role_name" property="roleName" />
+	  	</collection>
+	</resultMap>
+	
+	<select id="selectAll" parameterType="com.beesinergi.model.AppUser" resultMap="BaseResultMap">
+		select 
+			a.*
+		from app_user a
+		where 1 = 1	
+			<if test="pkUser != null">
+				and a.pk_user = #{pkUser}
+			</if>	
+			<if test="userName != null">
+				and a.user_name = #{userName}
+			</if>	
+		order by a.user_name asc		
+	</select>
+	
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select 
+			a.*,
+			c.*
+		from app_user a
+			inner join app_user_role b on a.pk_user = b.fk_user
+			inner join app_role c on c.pk_role = b.fk_role
+		where a.pk_user = #{pkUser}
+	</select>
+	
+	<select id="selectByUserName" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select 
+			a.*,
+			d.*
+		from app_user a
+			left join app_user_role b on a.pk_user = b.fk_user
+			left join app_role_menu c on c.fk_role = b.fk_role
+			left join app_menu d on d.pk_menu = c.fk_menu
+		where a.user_name = #{userName}	
+		order by d.menu_order asc
+	</select>
+	
+	<select id="selectCount" parameterType="com.beesinergi.model.AppUser" resultType="java.lang.Integer">
+    	select count(*) from app_user a
+    	where 1 = 1
+    		<if test="userName != null">
+				and a.user_name = #{userName}
+			</if>	
+  	</select>
+	
+	<insert id="insert" parameterType="com.beesinergi.model.AppUser" useGeneratedKeys="true" keyProperty="pkUser" keyColumn="pk_user">
+		insert into app_user ( 
+			"password", 
+			"full_name", 
+			"wrong_password", 
+			"created_date", 
+			"created_by",
+			"is_locked",
+			"change_password",
+			"user_name",
+			"last_login_date"
+		) values (
+			#{password}, 
+			#{fullName}, 
+			#{wrongPassword}, 
+			#{createdDate}, 
+			#{createdBy},
+			#{isLocked}, 
+			#{changePassword}, 
+			#{userName},
+			#{lastLoginDate}
+      )
+	</insert>
+	
+	<update id="updateByPrimaryKey" parameterType="com.beesinergi.model.AppUser">
+		update app_user
+    	<set>
+    		<if test="password != null">
+	      	"password" = #{password},
+	      	</if>
+	      	"full_name" = #{fullName},
+	      	<if test="wrongPassword != null">
+	      	"wrong_password" = #{wrongPassword},
+	      	</if>
+	      	"changed_date" = #{changedDate},
+	      	"changed_by" = #{changedBy},
+	      	"is_locked" = #{isLocked},
+	      	<if test="changePassword != null">    
+	      	"change_password" = #{changePassword},
+	      	</if>
+	      	"user_name" = #{userName},
+	      	<if test="lastLoginDate != null">
+	      	"last_login_date" = #{lastLoginDate}
+	      	</if>
+	    </set>  	
+		where "pk_user" = #{pkUser}
+	</update>
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.util.List">
+		delete from app_user a
+		where a.pk_user in
+		<foreach item="pkUserList" index="index" collection="list" open="(" separator="," close=")">
+       		#{pkUserList}
+ 		</foreach>
+	</delete>
+	
+</mapper>

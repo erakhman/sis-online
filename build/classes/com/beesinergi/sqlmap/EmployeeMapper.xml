@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.beesinergi.mapper.EmployeeMapper">
+
+	<resultMap id="BaseResultMap" type="com.beesinergi.model.Employee">
+		<id column="pk_employee" property="pkEmployee" />
+		<result column="employee_code" property="employeeCode" />
+		<result column="employee_name" property="employeeName" />
+		<result column="address" property="address" />
+		<result column="phone_no" property="phoneNo" />
+		<result column="fax_no" property="faxNo" />
+		<result column="fk_department" property="fkDepartment" />
+		<result column="created_date" property="createdDate" />
+		<result column="created_by" property="createdBy" />
+		<result column="changed_date" property="changedDate" />
+		<result column="changed_by" property="changedBy" />
+		<result column="is_active" property="isActive" />
+		
+		<result column="department_name" property="departmentName" />
+	</resultMap>
+	
+	<select id="selectAll" parameterType="com.beesinergi.model.Employee" resultMap="BaseResultMap">
+		select 
+			a.*,
+			b.lookup_name as department_name
+		from employee a
+			inner join lookup b on a.fk_department = b.pk_lookup
+		where 1 = 1
+			<if test="pkEmployee != null">
+				and a.pk_employee = #{pkEmployee}
+			</if>
+			<if test="isActive != null">
+				and a.is_active = #{isActive}
+			</if>
+			<if test="employeeName != null">
+				and a.employee_name = #{employeeName}
+			</if>
+		order by a.employee_name asc	
+	</select>
+	
+	<select id="selectCount" parameterType="com.beesinergi.model.Employee" resultType="java.lang.Integer">
+    	select count(*) from employee a
+    	where 1 = 1
+    		<if test="isActive != null">
+				and a.is_active = #{isActive}
+			</if>
+  	</select>
+	
+	<insert id="insert" parameterType="com.beesinergi.model.Employee">
+		insert into employee ( 
+			employee_code,
+			employee_name,
+		  	address,
+		  	phone_no,
+		  	fk_department,
+			is_active, 
+			created_date, 
+			created_by
+		) values (
+			#{employeeCode},
+			#{employeeName},
+			#{address},
+			#{phoneNo},
+			#{fkDepartment},
+			#{isActive},
+			#{createdDate},
+			#{createdBy}
+      )
+	</insert>
+	
+	<update id="updateByPrimaryKey" parameterType="com.beesinergi.model.Employee">
+		update employee
+    	set 
+	      	employee_code = #{employeeCode},
+	      	employee_name = #{employeeName},
+		  	address = #{address},
+		  	phone_no = #{phoneNo},
+		  	fax_no = #{faxNo},
+		  	fk_department = #{fkDepartment},
+	      	is_active = #{isActive},
+	      	changed_date = #{changedDate},
+	      	changed_by = #{changedBy}
+		where pk_employee = #{pkEmployee}
+	</update> 
+	
+</mapper>

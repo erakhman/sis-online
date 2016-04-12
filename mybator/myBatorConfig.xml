@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+	<classPathEntry location="mybator/postgresql-9.3-1101.jdbc41.jar"/>
+
+	<context id="PostgreTables" targetRuntime="MyBatis3">
+
+		
+		<jdbcConnection driverClass="org.postgresql.Driver"
+			connectionURL="jdbc:postgresql://localhost:5432/sis_online" userId="postgres" password="master$123">
+		</jdbcConnection>
+
+		<javaTypeResolver>
+			<property name="forceBigDecimals" value="false" />
+		</javaTypeResolver>
+
+		<javaModelGenerator targetPackage="com.beesinergi.model" targetProject="src">
+			<property name="enableSubPackages" value="true" />
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
+		
+		<table tableName="pelajaran" delimitIdentifiers="true" delimitAllColumns="true"/>
+		<table tableName="pendaftaran" delimitIdentifiers="true" delimitAllColumns="true"/>
+		<table tableName="pendaftaran_detail" delimitIdentifiers="true" delimitAllColumns="true"/>
+		<table tableName="siswa" delimitIdentifiers="true" delimitAllColumns="true"/>
+		<table tableName="soal" delimitIdentifiers="true" delimitAllColumns="true"/>
+		<table tableName="tahun_ajaran" delimitIdentifiers="true" delimitAllColumns="true"/>
+		<table tableName="ujian_masuk" delimitIdentifiers="true" delimitAllColumns="true"/>
+		<table tableName="ujian_masuk_detail" delimitIdentifiers="true" delimitAllColumns="true"/>
+		
+
+	</context>
+</generatorConfiguration>

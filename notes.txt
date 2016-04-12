@@ -1,0 +1,53 @@
+select * from (
+
+SELECT 
+  pembelian.tanggal, 
+  barang.kode_barang, 
+  pembelian_detail.fk_barang,
+  pembelian_detail.qty_barang as beli_barang,
+  0 as jual_barang,
+  jaminan.kode_jaminan,	
+  coalesce(pembelian_detail.qty_jaminan,0) as beli_jaminan,
+  0 as jual_jaminan
+FROM 
+  public.pembelian, 
+  public.pembelian_detail, 
+  public.barang, 
+  public.jaminan
+WHERE 
+  pembelian.pk_pembelian = pembelian_detail.fk_pembelian AND
+  pembelian_detail.fk_barang = barang.pk_barang AND
+  barang.fk_jaminan = jaminan.pk_jaminan
+
+UNION
+
+SELECT 
+  penjualan.tanggal,
+  barang.kode_barang,
+  penjualan_detail.fk_barang,
+  0 as beli_barang,
+  penjualan_detail.qty_barang as jual_barang, 
+  jaminan.kode_jaminan,
+  0 as beli_jaminan,
+  coalesce(penjualan_detail.qty_jaminan,0) as jual_jaminan
+FROM 
+  public.penjualan, 
+  public.penjualan_detail, 
+  public.barang, 
+  public.jaminan
+WHERE 
+  penjualan.pk_penjualan = penjualan_detail.fk_penjualan AND
+  penjualan_detail.fk_barang = barang.pk_barang AND
+  barang.fk_jaminan = jaminan.pk_jaminan) x
+  where x.fk_barang = 2	
+  order by x.tanggal,x.kode_barang asc
+  
+  
+  
+
+delete from pembelian;
+delete from pembelian_detail;
+delete from pembelian_bayar;
+delete from penjualan;
+delete from penjualan_detail;
+delete from penjualan_bayar;  

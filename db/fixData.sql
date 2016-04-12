@@ -1,0 +1,1 @@
+delete from penjualan_bayar_detail where fk_penjualan_bayar in (305,371,429);

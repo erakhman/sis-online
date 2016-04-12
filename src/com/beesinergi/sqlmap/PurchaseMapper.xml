@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.beesinergi.mapper.PurchaseMapper">
+
+	<resultMap id="BaseResultMap" type="com.beesinergi.model.Purchase">
+		<id column="pk_purchase" property="pkPurchase" />
+		<result column="fk_po_out" property="fkPoOut" />
+		<result column="purchase_no" property="purchaseNo" />
+		<result column="purchase_date" property="purchaseDate" />
+		<result column="payment" property="payment" />
+		<result column="paid_date" property="paidDate" />
+		<result column="due_date" property="dueDate" />
+		<result column="outstanding" property="outstanding" />
+		<result column="created_date" property="createdDate" />
+		<result column="created_by" property="createdBy" />
+		<result column="changed_date" property="changedDate" />
+		<result column="changed_by" property="changedBy" />
+		
+		<result column="po_out_no" property="poOutNo" />
+		<result column="vendor_name" property="vendorName" />
+		
+		<collection property="purchaseDetailList" ofType="com.beesinergi.model.PurchaseDetail">
+	    	<result column="fk_product" property="fkProduct" />
+	    	<result column="qty" property="qty" />
+	    	<result column="price" property="price" />
+	    	<result column="total" property="total" />
+	    	
+	    	<result column="product_name" property="productName" />
+	    	<result column="fk_category" property="fkCategory" />
+	    	<result column="category_name" property="categoryName" />
+	  	</collection>
+	</resultMap>
+	
+	<select id="selectAll" parameterType="com.beesinergi.model.Purchase" resultMap="BaseResultMap">
+		select 
+			a.*,
+			b.po_out_no,
+			c.vendor_name
+		from purchase a
+			inner join po_out b on b.pk_po_out = a.fk_po_out
+			inner join vendor c on c.pk_vendor = b.fk_vendor
+		where 1 = 1
+			<if test="purchaseNo != null">
+				and lower(a.purchase_no) like #{purchaseNo}
+			</if>
+			<if test="poOutNo != null">
+				and lower(b.po_out_no) like #{poOutNo}
+			</if>
+		order by a.purchase_date desc	
+	</select>
+	
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select 
+			a.*,
+			b.*,
+			c.product_name,
+			c.fk_category,
+			d.lookup_name as category_name,
+			e.po_out_no,
+			f.vendor_name
+		from purchase a
+			inner join purchase_detail b on a.pk_purchase = b.fk_purchase
+			inner join product c on c.pk_product = b.fk_product
+			inner join lookup d on d.pk_lookup = c.fk_category
+			inner join po_out e on e.pk_po_out = a.fk_po_out
+			inner join vendor f on f.pk_vendor = e.fk_vendor
+		where a.pk_purchase = #{pkPurchase}
+	</select>
+	
+	<select id="selectCount" parameterType="com.beesinergi.model.Purchase" resultType="java.lang.Integer">
+    	select count(*) from purchase a
+    	where 1 = 1
+    		<if test="purchaseNo != null">
+				and lower(a.purchase_no) like #{purchaseNo}
+			</if>
+			<if test="poOutNo != null">
+				and lower(b.po_out_no) like #{poOutNo}
+			</if>
+  	</select>
+	
+	<insert id="insert" parameterType="com.beesinergi.model.Purchase" useGeneratedKeys="true" keyProperty="pkPurchase" keyColumn="pk_purchase">
+		insert into purchase ( 
+			purchase_no,
+			purchase_date,
+			fk_po_out, 
+			payment,
+			paid_date,
+			due_date, 
+			outstanding,
+			created_date, 
+			created_by
+		) values (
+			#{purchaseNo},
+			#{purchaseDate},
+			#{fkPoOut},
+			#{payment},
+			#{paidDate},
+			#{dueDate},
+			#{outstanding},
+			#{createdDate},
+			#{createdBy}
+      )
+	</insert>
+	
+	<update id="updateByPrimaryKey" parameterType="com.beesinergi.model.Purchase">
+		update purchase
+    	<set> 
+	      	purchase_no = #{purchaseNo},
+	      	purchase_date = #{purchaseDate},
+	      	paid_date = #{paidDate},
+	      	due_date = #{dueDate},
+	      	payment = #{payment},
+	      	outstanding = #{outstanding},
+	      	changed_date = #{changedDate},
+	      	changed_by = #{changedBy},
+	    </set>  	
+		where pk_purchase = #{pkPurchase}
+	</update> 
+	
+</mapper>

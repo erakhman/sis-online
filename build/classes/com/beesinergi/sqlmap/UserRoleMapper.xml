@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.beesinergi.mapper.UserRoleMapper">
+
+	<insert id="insert" parameterType="com.beesinergi.model.AppUserRole">
+		insert into app_user_role ( 
+			"fk_user", 
+			"fk_role"
+		) values (
+			#{fkUser}, 
+			#{fkRole}
+      )
+	</insert>
+	
+	<delete id="deleteByFkUser" parameterType="java.lang.Integer">
+		delete from app_user_role where fk_user = #{fkUser}
+	</delete>
+	
+</mapper>

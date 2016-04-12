@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.beesinergi.mapper.PelajaranMapper">
+
+	<resultMap id="BaseResultMap" type="com.beesinergi.model.Pelajaran">
+		<id column="pk_pelajaran" property="pkPelajaran" />
+		<result column="nama_pelajaran" property="namaPelajaran" />
+		<result column="created_date" property="createdDate" />
+		<result column="created_by" property="createdBy" />
+		<result column="changed_date" property="changedDate" />
+		<result column="changed_by" property="changedBy" />
+	</resultMap>
+	
+	<select id="selectAll" parameterType="com.beesinergi.model.Pelajaran" resultMap="BaseResultMap">
+		select 
+			a.*
+		from pelajaran a
+		where 1 = 1
+			<if test="pkPelajaran != null">
+				and a.pk_pelajaran = #{pkPelajaran}
+			</if>
+			<if test="namaPelajaran != null">
+				and lower(a.nama_pelajaran) like #{namaPelajaran}
+			</if>
+		order by a.pk_pelajaran asc	
+	</select>
+	
+	<select id="selectCount" parameterType="com.beesinergi.model.Pelajaran" resultType="java.lang.Integer">
+    	select count(*) from pelajaran a
+    	where 1 = 1
+  	</select>
+	
+	<insert id="insert" parameterType="com.beesinergi.model.Pelajaran">
+		insert into pelajaran ( 
+			nama_pelajaran,
+			created_date, 
+			created_by
+		) values (
+			#{namaPelajaran},
+			#{createdDate},
+			#{createdBy}
+      )
+	</insert>
+	
+	<update id="updateByPrimaryKey" parameterType="com.beesinergi.model.Pelajaran">
+		update pelajaran
+    	set 
+    		nama_pelajaran = #{namaPelajaran},
+	      	changed_date = #{changedDate},
+	      	changed_by = #{changedBy}
+		where pk_pelajaran = #{pkPelajaran}
+	</update> 
+	
+</mapper>

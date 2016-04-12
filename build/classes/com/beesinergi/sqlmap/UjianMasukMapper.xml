@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.beesinergi.mapper.UjianMasukMapper">
+
+	<resultMap id="BaseResultMap" type="com.beesinergi.model.UjianMasuk">
+		<id column="pk_ujian_masuk" property="pkUjianMasuk" />
+		<result column="fk_tahun_ajaran" property="fkTahunAjaran" />
+		<result column="fk_pelajaran" property="fkPelajaran" />
+		<result column="fk_pendaftaran" property="fkPendaftaran" />
+		<result column="tahun_ajaran" property="tahunAjaran" />
+		<result column="created_date" property="createdDate" />
+		<result column="created_by" property="createdBy" />
+		<result column="changed_date" property="changedDate" />
+		<result column="changed_by" property="changedBy" />
+		<collection property="ujianMasukDetailList" ofType="com.beesinergi.model.UjianMasukDetail">
+	    	<result column="soal_pelajaran" property="soalPelajaran" />
+	    	<result column="jawaban_soal" property="jawabanSoal" />
+	    	<result column="jawaban_siswa" property="jawabanSiswa" />
+	    	<association property="soal" resultMap="com.beesinergi.mapper.SoalMapper.BaseResultMap"/>
+	  	</collection>
+	</resultMap>
+	
+	<select id="selectAll" parameterType="com.beesinergi.model.UjianMasuk" resultMap="BaseResultMap">
+		select 
+			a.pk_ujian_masuk,
+			a.fk_pelajaran,
+			a.fk_pendaftaran,
+			a.tahun_ajaran,
+			c.jawaban_siswa
+		from ujian_masuk a
+			join ujian_masuk_detail c on a.pk_ujian_masuk = c.fk_ujian_masuk
+		where 1 = 1
+			<if test="fkPelajaran != null">
+				and a.fk_pelajaran = #{fkPelajaran}
+			</if>
+			<if test="fkTahunAjaran != null">
+				and a.fk_tahun_ajaran = #{fkTahunAjaran}
+			</if>
+			<if test="fkPendaftaran != null">
+				and a.fk_pendaftaran = #{fkPendaftaran}
+			</if>
+			<if test="tahunAjaran != null">
+				and a.tahun_ajaran = #{tahunAjaran}
+			</if>
+		order by a.pk_ujian_masuk asc	
+	</select>
+	
+	<select id="selectCount" parameterType="com.beesinergi.model.UjianMasuk" resultType="java.lang.Integer">
+    	select count(*) from ujian_masuk a
+    	where 1 = 1
+  	</select>
+	
+	<insert id="insert" parameterType="com.beesinergi.model.UjianMasuk" useGeneratedKeys="true" keyProperty="pkUjianMasuk" keyColumn="pk_ujian_masuk">
+		insert into ujian_masuk ( 
+			fk_pelajaran,
+			fk_pendaftaran,
+			tahun_ajaran,
+			created_date, 
+			created_by
+		) values (
+			#{fkPelajaran},
+			#{fkPendaftaran},
+			#{tahunAjaran},
+			#{createdDate},
+			#{createdBy}
+      )
+	</insert>
+	
+</mapper>

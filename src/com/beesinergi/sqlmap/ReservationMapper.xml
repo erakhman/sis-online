@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.beesinergi.mapper.ReservationMapper">
+
+	<resultMap id="BaseResultMap" type="com.beesinergi.model.Reservation">
+		<id column="pk_reservation" property="pkReservation" />
+		<result column="reservation_type" property="reservationType" />
+		<result column="fk_lookup" property="fkLookup" />
+		<result column="date_from" property="dateFrom" />
+		<result column="date_to" property="dateTo" />
+		<result column="created_date" property="createdDate" />
+		<result column="created_by" property="createdBy" />
+		<result column="changed_date" property="changedDate" />
+		<result column="changed_by" property="changedBy" />
+		<result column="status" property="status" />
+		<result column="fk_driver" property="fkDriver" />
+		
+		<result column="lookup_name" property="lookupName" />
+	</resultMap>
+	
+	<select id="selectAll" parameterType="com.beesinergi.model.Reservation" resultMap="BaseResultMap">
+		select 
+			a.*,
+			b.lookup_name
+		from reservation a
+			inner join lookup b on b.pk_lookup = a.fk_lookup
+		where 1 = 1
+			<if test="pkReservation != null">
+				and a.pk_reservation = #{pkReservation}
+			</if>
+			<if test="reservationType != null">
+				and a.reservation_type = #{reservationType}
+			</if>
+		order by a.date_from asc	
+	</select>
+	
+	<select id="selectCount" parameterType="com.beesinergi.model.Reservation" resultType="java.lang.Integer">
+    	select count(*) from reservation a
+    	where 1 = 1
+    		<if test="reservationType != null">
+				and a.reservation_type = #{reservationType}
+			</if>
+  	</select>
+	
+	<insert id="insert" parameterType="com.beesinergi.model.Reservation">
+		insert into reservation ( 
+			reservation_type,
+		  	fk_lookup,
+		  	date_from,
+		  	date_to,
+		  	fk_driver,
+			status, 
+			created_date, 
+			created_by
+		) values (
+			#{reservationType},
+			#{fkLookup},
+			#{dateFrom},
+			#{dateTo},
+			#{fkDriver},
+			#{status},
+			#{createdDate},
+			#{createdBy}
+      )
+	</insert>
+	
+	<update id="updateByPrimaryKey" parameterType="com.beesinergi.model.Reservation">
+		update reservation
+    	set 
+	      	reservation_type = #{reservationType},
+		  	fk_lookup = #{fkLookup},
+		  	date_from = #{dateFrom},
+		  	date_to = #{dateTo},
+		  	fk_driver = #{fkDriver},
+	      	status = #{status},
+	      	changed_date = #{changedDate},
+	      	changed_by = #{changedBy}
+		where pk_reservation = #{pkReservation}
+	</update> 
+	
+</mapper>

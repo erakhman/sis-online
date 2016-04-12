@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="WebApp_ID" version="2.5">
+	<display-name>E-Purchasing</display-name>
+	<context-param>
+		<param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
+		<param-value>StripesResources</param-value>
+	</context-param>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value> 
+		/WEB-INF/applicationContext.xml </param-value>
+	</context-param>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener> 
+	<listener> 
+		<listener-class>com.beesinergi.listener.AppParameterLoader</listener-class> 
+	</listener>
+	<filter>
+		<display-name>Stripes Filter</display-name>
+		<filter-name>StripesFilter</filter-name>
+		<filter-class>net.sourceforge.stripes.controller.StripesFilter</filter-class>
+		<init-param>
+			<param-name>ActionResolver.Packages</param-name>
+			<param-value>com.beesinergi.action</param-value>
+		</init-param>
+		<init-param>
+			<param-name>Interceptor.Classes</param-name>
+			<param-value>
+		        net.sourceforge.stripes.integration.spring.SpringInterceptor
+		    </param-value>
+		</init-param>
+		<init-param>
+	    	<param-name>LocalePicker.Class</param-name>
+	      	<param-value>com.beesinergi.util.LocalPicker</param-value>
+	    </init-param>
+		<init-param>
+			<param-name>Extension.Packages</param-name>
+			<param-value>
+		   		com.beesinergi.ext,
+				net.sourceforge.stripes.integration.spring, 
+				org.stripesstuff.plugin.security
+			</param-value>
+		</init-param>
+		<!-- <init-param> <param-name>ExceptionHandler.Class</param-name> <param-value>com.medisafe.exception.MyExceptionHandler</param-value> 
+			</init-param> -->
+		<init-param>
+			<param-name>ActionBeanContext.Class</param-name>
+			<param-value>com.beesinergi.action.BaseActionBeanContext</param-value>
+		</init-param>
+		<init-param>
+			<param-name>PopulationStrategy.Class</param-name>
+			<param-value>net.sourceforge.stripes.tag.BeanFirstPopulationStrategy</param-value>
+		</init-param>
+		<init-param> 
+			<param-name>LocalePicker.Locales</param-name> 
+			<param-value>in,en</param-value> 
+		</init-param>
+		<init-param> 
+			<param-name>SecurityManager.Class</param-name> 
+			<param-value>com.beesinergi.ext.MySecurityManager</param-value> 
+		</init-param> 
+	</filter>
+	<filter-mapping>
+		<filter-name>StripesFilter</filter-name>
+		<url-pattern>*.jsp</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>StripesFilter</filter-name>
+		<servlet-name>StripesDispatcher</servlet-name>
+		<dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
+	<servlet>
+		<servlet-name>StripesDispatcher</servlet-name>
+		<servlet-class>net.sourceforge.stripes.controller.DispatcherServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>StripesDispatcher</servlet-name>
+		<url-pattern>/action/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>StripesDispatcher</servlet-name>
+		<url-pattern>*.action</url-pattern>
+	</servlet-mapping>
+	<error-page>
+		<error-code>401</error-code>
+		<location>/WEB-INF/pages/common/unauthorized.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>404</error-code>
+		<location>/WEB-INF/pages/common/pageNotFound.jsp</location>
+	</error-page>
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+</web-app>
