@@ -27,6 +27,7 @@
     <script type="text/javascript" src="${contextPath}/js/jquery.alphanumeric.js"></script>
     <script type="text/javascript" src="${contextPath}/js/moment.js"></script>
     <script type="text/javascript" src="${contextPath}/js/jquery.timepicker.js"></script>
+    <script type="text/javascript" src="${contextPath}/js/jquery.countdownTimer.js"></script>
     <script>	
 	$(document).ready(function(){
 		$("tableList tbody tr:odd").css('background-color', 'white');

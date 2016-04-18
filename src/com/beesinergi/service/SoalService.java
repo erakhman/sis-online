@@ -20,8 +20,6 @@ public class SoalService implements CommonService<Soal> {
 	private SoalMapper soalMapper;
 	@Autowired
 	private SqlSessionFactory sqlSessionFactory;
-	@Autowired
-	private StockService stockService;
 
 	@Override
 	public Soal findById(int id) {

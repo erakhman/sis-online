@@ -15,7 +15,6 @@ import com.beesinergi.mapper.UserMapper;
 import com.beesinergi.mapper.UserRoleMapper;
 import com.beesinergi.model.AppUser;
 import com.beesinergi.model.AppUserRole;
-import com.beesinergi.model.Employee;
 import com.beesinergi.util.Paging;
 import com.beesinergi.util.PasswordUtil;
 import com.beesinergi.util.SystemConstant;
@@ -30,8 +29,6 @@ public class UserService implements CommonService<AppUser> {
 	private UserRoleMapper userRoleMapper;
 	@Autowired
 	private SqlSessionFactory sqlSessionFactory;
-	@Autowired
-	private EmployeeService employeeService;
 
 	@Override
 	public AppUser findById(int id) {
@@ -51,7 +48,6 @@ public class UserService implements CommonService<AppUser> {
 
 	@Override
 	public void save(AppUser object) {
-//		Employee emp = employeeService.findById(object.getFkEmployee());
 		object.setFullName(object.getFullName());
 		if (object.getPkUser() == null){
 			generateDefaultPassword(object);

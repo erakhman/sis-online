@@ -1,0 +1,86 @@
+<%@page import="com.beesinergi.util.SystemParameter"%>
+<%@page import="com.beesinergi.util.SystemConstant"%>
+<%@include file="/WEB-INF/pages/layout/taglibs.jsp"%>
+<s:layout-render name="/WEB-INF/pages/layout/layout.jsp" title="${actionBean.pageTitle}">
+<s:layout-component name="content">
+<table cellpadding="0" cellspacing="0" width="100%">   
+	<tr>
+	  	<td class="toolBar">
+	  		<s:form method="post" id="searchForm" beanclass="${actionBean.beanClass}">
+	  			<input type="hidden" value="9" name="model.fkPendaftaran"/>
+	  			<input type="hidden" value="1" name="soal.fkPelajaran"/>
+		    	<table cellspacing="0" cellpadding="0" border="0">
+		    		<tr id="btnStart">
+		            	<td 
+		            		class="toolBarImageButton"
+		                	onmouseover="this.className='toolBarImageHover'"
+		                    onmouseout="this.className='toolBarImageButton'"
+		                    onclick="showDetail()" nowrap>
+		                    <img src="<%=request.getContextPath()%>/images/icon-green.png" align="absMiddle"/>&nbsp;Start
+		           		</td>
+		           		
+		           	</tr>
+		  		</table>
+	  		</s:form>
+		</td>
+	</tr>
+	<tr> 
+    	<td height="100%" valign="top" id="ujianMasukDetail">
+    		<table cellspacing="10px">
+   				<tr>
+    				<td>Mata Pelajaran</td>
+    				<td>:</td>
+    				<td>Matematika</td>
+    			</tr>
+    			<tr>
+    				<td>Durasi Ujian</td>
+    				<td>:</td>
+    				<td>30 Menit</td>
+    			</tr>	
+    		</table>
+    	</td>
+	</tr>
+</table>
+<script>
+var sessionWaktuUjian = '${sessionScope._waktuUjian}';
+var hasilUjian = '${actionBean.hasilUjian}';
+
+$(document).ready(function(){
+	$('#'+'<%=SystemConstant.MenuCode.UJIAN_MASUK%>').addClass('tabActive');
+	if (hasilUjian != ''){
+		showResult();
+	} else if(sessionWaktuUjian != ''){
+		showDetail();
+	}
+});
+
+function showDetail(){
+	var param = $('#searchForm').serialize();
+	var sURL = '<s:url beanclass="${actionBean.beanClass}"/>?showDetail=';
+	$.get(sURL,param,function(data){
+		$('#ujianMasukDetail').html(data);
+		$('#btnStart').html('<td id="countdown">&nbsp;&nbsp;Ujian akan berakhir dalam waktu <span class="minutes"></span> Menit <span class="seconds"></span> Detik </td>');
+		if (sessionWaktuUjian == ''){
+			var currentDate = new Date();
+			var durasiUjian = '<%=SystemParameter.DURASI_UJIAN%>';
+			currentDate.setMinutes(currentDate.getMinutes()+parseInt(durasiUjian));
+			sessionWaktuUjian = currentDate;
+		}
+		$("#countdown").countdown({
+			date: sessionWaktuUjian, 
+		    format: "on"
+		});
+	});
+}
+
+function showResult(){
+	var param = $('#searchForm').serialize();
+	var sURL = '<s:url beanclass="${actionBean.beanClass}"/>?showResult=';
+	$.get(sURL,param,function(data){
+		$('#btnStart').html('');
+		$('#ujianMasukDetail').html(data);
+	});
+}
+</script>
+</s:layout-component>
+</s:layout-render>

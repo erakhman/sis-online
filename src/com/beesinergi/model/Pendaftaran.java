@@ -7,6 +7,9 @@ public class Pendaftaran {
 
     private Integer pkPendaftaran;
     private Integer fkSiswa;
+    private String namaSiswa;
+    private Date tglLahir;
+    private Double nem;
     private Date createdDate;
     private String createdBy;
     private Date changedDate;
@@ -63,5 +66,23 @@ public class Pendaftaran {
 	public void setPendaftaranDetailList(
 			List<PendaftaranDetail> pendaftaranDetailList) {
 		this.pendaftaranDetailList = pendaftaranDetailList;
+	}
+	public String getNamaSiswa() {
+		return namaSiswa;
+	}
+	public void setNamaSiswa(String namaSiswa) {
+		this.namaSiswa = namaSiswa;
+	}
+	public Date getTglLahir() {
+		return tglLahir;
+	}
+	public void setTglLahir(Date tglLahir) {
+		this.tglLahir = tglLahir;
+	}
+	public Double getNem() {
+		return nem;
+	}
+	public void setNem(Double nem) {
+		this.nem = nem;
 	}
 }

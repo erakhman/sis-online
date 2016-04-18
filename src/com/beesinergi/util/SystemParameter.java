@@ -11,7 +11,7 @@ public final class SystemParameter {
 	
 	public static int PAGE_LIMIT;
 	public static int MAX_WRONG_PASSWORD;
-	public static int RUNNING_NUMBER_PO_NO;
+	public static int DURASI_UJIAN;
 	public static int RUNNING_NUMBER_PO_OUT_NO;
 	public static int RUNNING_NUMBER_PURCHASE_NO;
 	public static int RUNNING_NUMBER_DELIVERY_NO;

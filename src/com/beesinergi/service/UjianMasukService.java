@@ -16,14 +16,12 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import com.beesinergi.exception.ErrorHolder;
 import com.beesinergi.exception.SystemException;
+import com.beesinergi.mapper.SiswaMapper;
 import com.beesinergi.mapper.UjianMasukDetailMapper;
 import com.beesinergi.mapper.UjianMasukMapper;
-import com.beesinergi.mapper.SiswaMapper;
 import com.beesinergi.model.UjianMasuk;
 import com.beesinergi.model.UjianMasukDetail;
-import com.beesinergi.model.Po;
 import com.beesinergi.util.Paging;
-import com.beesinergi.util.SystemParameter;
 
 @Service("ujianMasukService")
 public class UjianMasukService implements CommonService<UjianMasuk> {

@@ -18,11 +18,16 @@ import com.beesinergi.exception.ErrorHolder;
 import com.beesinergi.exception.SystemException;
 import com.beesinergi.mapper.PendaftaranDetailMapper;
 import com.beesinergi.mapper.PendaftaranMapper;
-import com.beesinergi.mapper.SiswaMapper;
+import com.beesinergi.mapper.UserMapper;
+import com.beesinergi.mapper.UserRoleMapper;
+import com.beesinergi.model.AppUser;
+import com.beesinergi.model.AppUserRole;
 import com.beesinergi.model.Pendaftaran;
 import com.beesinergi.model.PendaftaranDetail;
-import com.beesinergi.model.Po;
+import com.beesinergi.util.DateTimeFunction;
 import com.beesinergi.util.Paging;
+import com.beesinergi.util.PasswordUtil;
+import com.beesinergi.util.SystemConstant;
 
 @Service("pendaftaranService")
 public class PendaftaranService implements CommonService<Pendaftaran> {
@@ -32,7 +37,11 @@ public class PendaftaranService implements CommonService<Pendaftaran> {
 	@Autowired
 	private PendaftaranDetailMapper pendaftaranDetailMapper;
 	@Autowired
-	private SiswaMapper siswaMapper;
+	private UserMapper userMapper;
+	@Autowired
+	private UserRoleMapper userRoleMapper;
+	@Autowired
+	private UserService userService;
 	@Autowired
 	private SqlSessionFactory sqlSessionFactory;
 	@Autowired
@@ -68,16 +77,10 @@ public class PendaftaranService implements CommonService<Pendaftaran> {
 		TransactionStatus status = txManager.getTransaction(def);
 		try {
 			if (object.getPkPendaftaran() == null){
-				object.getSiswa().setCreatedDate(new Date());
-				siswaMapper.insert(object.getSiswa());
-				
 				object.setCreatedDate(new Date());
-				object.setFkSiswa(object.getSiswa().getPkSiswa());
 				pendaftaranMapper.insert(object);
+				generateUserAndPassword(object);
 			} else{
-				object.getSiswa().setChangedDate(new Date());
-				siswaMapper.updateByPrimaryKey(object.getSiswa());
-				
 				object.setChangedDate(new Date());
 				pendaftaranMapper.updateByPrimaryKey(object);
 				
@@ -91,18 +94,49 @@ public class PendaftaranService implements CommonService<Pendaftaran> {
 		txManager.commit(status);		
 	}
 	
+	public void generateUserAndPassword(Pendaftaran pendaftaran) {
+		AppUser user = new AppUser();
+		user.setFullName(pendaftaran.getNamaSiswa());
+		String[] namaSiswa = pendaftaran.getNamaSiswa().split(" ");
+		String userName = "";
+		for (int i=0; i<namaSiswa.length; i++){
+			if (i == namaSiswa.length-1){
+				userName += namaSiswa[i];
+			} else{
+				userName += namaSiswa[i].charAt(0);
+			}
+		}
+		user.setUserName(userName.toLowerCase());
+		String tglLahir = DateTimeFunction.date2String(pendaftaran.getTglLahir(), "ddMMyyyy");
+		String encryptPassword = PasswordUtil.getEncryptPassword(tglLahir);
+		user.setPassword(encryptPassword);
+		user.setWrongPassword(0);
+		user.setIsLocked("N");
+		user.setChangePassword("N");
+		user.setCreatedDate(new Date());
+		user.setCreatedBy("System");
+		userMapper.insert(user);
+		
+		AppUserRole userRole = new AppUserRole();
+		userRole.setFkUser(user.getPkUser());
+		userRole.setFkRole(SystemConstant.PK_USER_ROLE_CALON_SISWA);
+		userRoleMapper.insert(userRole);
+	}
+	
 	public void deletePendaftaranDetail(Pendaftaran object) {
 		pendaftaranDetailMapper.deleteByFkPendaftaran(object.getPkPendaftaran());
 	}
 	
 	public void savePendaftaranDetail(Pendaftaran object) throws SystemException {
 		List<ErrorHolder> errors = new ArrayList<ErrorHolder>();
-		for(PendaftaranDetail detail:object.getPendaftaranDetailList()){
-			detail.setFkPendaftaran(object.getPkPendaftaran());
-			pendaftaranDetailMapper.insert(detail);
-		}
-		if (!errors.isEmpty()){
-			throw new SystemException(errors);
+		if (object.getPendaftaranDetailList() != null){
+			for(PendaftaranDetail detail:object.getPendaftaranDetailList()){
+				detail.setFkPendaftaran(object.getPkPendaftaran());
+				pendaftaranDetailMapper.insert(detail);
+			}
+			if (!errors.isEmpty()){
+				throw new SystemException(errors);
+			}
 		}
 	}
 

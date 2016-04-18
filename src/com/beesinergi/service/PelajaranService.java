@@ -20,8 +20,6 @@ public class PelajaranService implements CommonService<Pelajaran> {
 	private PelajaranMapper pelajaranMapper;
 	@Autowired
 	private SqlSessionFactory sqlSessionFactory;
-	@Autowired
-	private StockService stockService;
 
 	@Override
 	public Pelajaran findById(int id) {

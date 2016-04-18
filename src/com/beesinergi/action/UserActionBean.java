@@ -4,7 +4,6 @@ import java.util.List;
 
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.Resolution;
-import net.sourceforge.stripes.action.StreamingResolution;
 import net.sourceforge.stripes.integration.spring.SpringBean;
 import net.sourceforge.stripes.validation.ValidationMethod;
 
@@ -14,14 +13,12 @@ import org.apache.commons.logging.LogFactory;
 
 import com.beesinergi.model.AppRole;
 import com.beesinergi.model.AppUser;
-import com.beesinergi.model.Employee;
-import com.beesinergi.model.Product;
 import com.beesinergi.service.CommonService;
-import com.beesinergi.service.EmployeeService;
 import com.beesinergi.service.RoleService;
 import com.beesinergi.service.UserService;
-import com.beesinergi.util.JSONUtil;
 import com.beesinergi.util.SystemConstant;
+
+import flexjson.test.mock.Employee;
 
 public class UserActionBean extends BaseMaintenanceActionBean<AppUser> {
 	
@@ -34,30 +31,12 @@ public class UserActionBean extends BaseMaintenanceActionBean<AppUser> {
 	private UserService userService;
 	@SpringBean
 	private RoleService roleService;
-	@SpringBean
-	private EmployeeService employeeService;
 	
-	private Employee employee;
 	private List<Integer> pkUserList;
 
 	@Override
 	public Resolution show() {
 		return new ForwardResolution(LIST_PAGE);
-	}
-	
-	public Resolution doGetEmployeeList() {
-		JSONUtil jsonUtil = new JSONUtil();
-		List<Employee> list = employeeService.findAll(new Employee());
-		jsonUtil.addData("employeeList", list);
-		return new StreamingResolution("text/html", jsonUtil.serialize());
-	}
-	
-	public Resolution doGetEmployeeDetail() {
-		JSONUtil jsonUtil = new JSONUtil();
-		List<Employee> list = employeeService.findAll(employee);
-		Employee emp = !list.isEmpty() ? list.get(0) : null;
-		jsonUtil.addData("employee", emp);
-		return new StreamingResolution("text/html", jsonUtil.serialize());
 	}
 	
 	public Resolution doDelete() {
@@ -120,14 +99,6 @@ public class UserActionBean extends BaseMaintenanceActionBean<AppUser> {
 	@Override
 	public String getPageTitle() {
 		return getLocalizeableMessage("nav."+SystemConstant.MenuCode.USER);
-	}
-
-	public Employee getEmployee() {
-		return employee;
-	}
-
-	public void setEmployee(Employee employee) {
-		this.employee = employee;
 	}
 
 }
