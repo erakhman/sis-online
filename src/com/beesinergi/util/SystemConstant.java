@@ -25,6 +25,13 @@ public class SystemConstant {
 		public static String UJIAN_MASUK = "ujianMasuk";
 		public static String HASIL_UJIAN_MASUK = "hasilUjianMasuk";
 		public static String TAHUN_AJARAN = "tahunAjaran";
+		public static String COA_TYPE = "coaType";
+		public static String PELAJARAN = "pelajaran";
+		public static String KELAS = "kelas";
+		public static String PELAJARAN_UJIAN = "pelajaranUjian";
+		public static String JADWAL_UJIAN = "jadwalUjian";
+		public static String SISWA = "siswa";
+		public static String SOAL = "soal";
 	}	
 	
 	public static class LookupType {
