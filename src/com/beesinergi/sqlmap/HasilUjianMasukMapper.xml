@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.beesinergi.mapper.HasilUjianMasukMapper">
+
+	<resultMap id="BaseResultMap" type="com.beesinergi.model.HasilUjianMasuk">
+		<id column="pk_hasil_ujian_masuk" property="pkHasilUjianMasuk" />
+		<result column="jumlah_soal" property="jumlahSoal" />
+		<result column="jawaban_benar" property="jawabanBenar" />
+		<result column="jawaban_salah" property="jawabanSalah" />
+		<result column="score" property="score" />
+		<association property="pendaftaran" resultMap="com.beesinergi.mapper.PendaftaranMapper.BaseResultMap"/>
+	</resultMap>
+	
+	<select id="selectAll" parameterType="com.beesinergi.model.HasilUjianMasuk" resultMap="BaseResultMap">
+		select 
+			*
+		from hasil_ujian_masuk a
+			join pendaftaran b on b.pk_pendaftaran = a.fk_pendaftaran
+		<where>
+			<if test="fkPendaftaran != null">
+				and a.fk_pendaftaran = #{fkPendaftaran}
+			</if>
+		</where>	
+		order by a.pk_hasil_ujian_masuk asc	
+	</select>
+	
+	<select id="selectCount" parameterType="com.beesinergi.model.HasilUjianMasuk" resultType="java.lang.Integer">
+    	select count(*) from hasil_ujian_masuk a
+    	where 1 = 1
+  	</select>
+	
+	<insert id="insert" parameterType="com.beesinergi.model.HasilUjianMasuk" useGeneratedKeys="true" keyProperty="pkHasilUjianMasuk" keyColumn="pk_hasil_ujian_masuk">
+		insert into hasil_ujian_masuk ( 
+			jumlah_soal,
+			jawaban_benar,
+			jawaban_salah,
+			score, 
+			fk_pendaftaran
+		) values (
+			#{jumlahSoal},
+			#{jawabanBenar},
+			#{jawabanSalah},
+			#{score},
+			#{fkPendaftaran}
+      )
+	</insert>
+	
+</mapper>

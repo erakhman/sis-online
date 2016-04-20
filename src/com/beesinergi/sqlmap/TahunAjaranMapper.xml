@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.beesinergi.mapper.TahunAjaranMapper">
+
+	<resultMap id="BaseResultMap" type="com.beesinergi.model.TahunAjaran">
+		<id column="pk_tahun_ajaran" property="pkTahunAjaran" />
+		<result column="tahun_ajaran" property="tahunAjaran" />
+		<result column="created_date" property="createdDate" />
+		<result column="created_by" property="createdBy" />
+		<result column="changed_date" property="changedDate" />
+		<result column="changed_by" property="changedBy" />
+		<result column="is_active" property="isActive" />
+	</resultMap>
+	
+	<select id="selectAll" parameterType="com.beesinergi.model.TahunAjaran" resultMap="BaseResultMap">
+		select 
+			*
+		from tahun_ajaran a
+		where 1 = 1
+			<if test="pkTahunAjaran != null">
+				and a.pk_tahun_ajaran = #{pkTahunAjaran}
+			</if>
+		order by a.pk_tahun_ajaran asc	
+	</select>
+	
+	<select id="selectCount" parameterType="com.beesinergi.model.TahunAjaran" resultType="java.lang.Integer">
+    	select count(*) from tahun_ajaran a
+    	where 1 = 1
+  	</select>
+	
+	<insert id="insert" parameterType="com.beesinergi.model.TahunAjaran" useGeneratedKeys="true" keyProperty="pkTahunAjaran" keyColumn="pk_tahun_ajaran">
+		insert into tahun_ajaran ( 
+			tahun_ajaran,
+			created_date, 
+			created_by
+		) values (
+			#{tahunAjaran},
+			#{createdDate},
+			#{createdBy}
+      )
+	</insert>
+	
+	<update id="updateByPrimaryKey" parameterType="com.beesinergi.model.TahunAjaran">
+		update tahun_ajaran
+    	set 
+    		tahun_ajaran = #{tahunAjaran},
+	      	changed_date = #{changedDate},
+	      	changed_by = #{changedBy}
+		where pk_tahun_ajaran = #{pkTahunAjaran}
+	</update> 
+	
+</mapper>
