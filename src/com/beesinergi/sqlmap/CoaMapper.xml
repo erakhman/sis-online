@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.beesinergi.mapper.CoaMapper">
+
+	<resultMap id="BaseResultMap" type="com.beesinergi.model.Coa">
+		<id column="pk_coa" property="pkCoa" />
+		<result column="coa" property="tahunAjaran" />
+		<result column="created_date" property="createdDate" />
+		<result column="created_by" property="createdBy" />
+		<result column="changed_date" property="changedDate" />
+		<result column="changed_by" property="changedBy" />
+		<result column="is_active" property="isActive" />
+	</resultMap>
+	
+	<select id="selectAll" parameterType="com.beesinergi.model.Coa" resultMap="BaseResultMap">
+		select 
+			*
+		from coa a
+		where 1 = 1
+			<if test="pkCoa != null">
+				and a.pk_coa = #{pkCoa}
+			</if>
+		order by a.pk_coa asc	
+	</select>
+	
+	<select id="selectCount" parameterType="com.beesinergi.model.Coa" resultType="java.lang.Integer">
+    	select count(*) from coa a
+    	where 1 = 1
+  	</select>
+	
+	<insert id="insert" parameterType="com.beesinergi.model.Coa" useGeneratedKeys="true" keyProperty="pkCoa" keyColumn="pk_coa">
+		insert into coa ( 
+			coa,
+			created_date, 
+			created_by
+		) values (
+			#{tahunAjaran},
+			#{createdDate},
+			#{createdBy}
+      )
+	</insert>
+	
+	<update id="updateByPrimaryKey" parameterType="com.beesinergi.model.Coa">
+		update coa
+    	set 
+    		coa = #{tahunAjaran},
+	      	changed_date = #{changedDate},
+	      	changed_by = #{changedBy}
+		where pk_coa = #{pkCoa}
+	</update> 
+	
+</mapper>

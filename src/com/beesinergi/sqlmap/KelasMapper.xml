@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.beesinergi.mapper.KelasMapper">
+
+	<resultMap id="BaseResultMap" type="com.beesinergi.model.Kelas">
+		<id column="pk_kelas" property="pkKelas" />
+		<result column="kode_kelas" property="kodeKelas" />
+		<result column="nama_kelas" property="namaKelas" />
+		<result column="kuota" property="kuota" />
+		<result column="created_date" property="createdDate" />
+		<result column="created_by" property="createdBy" />
+		<result column="changed_date" property="changedDate" />
+		<result column="changed_by" property="changedBy" />
+	</resultMap>
+	
+	<select id="selectAll" parameterType="com.beesinergi.model.Kelas" resultMap="BaseResultMap">
+		select 
+			*
+		from kelas a
+		where 1 = 1
+			<if test="pkKelas != null">
+				and a.pk_kelas = #{pkKelas}
+			</if>
+		order by a.pk_kelas asc	
+	</select>
+	
+	<select id="selectCount" parameterType="com.beesinergi.model.Kelas" resultType="java.lang.Integer">
+    	select count(*) from kelas a
+    	where 1 = 1
+  	</select>
+	
+	<insert id="insert" parameterType="com.beesinergi.model.Kelas" useGeneratedKeys="true" keyProperty="pkKelas" keyColumn="pk_kelas">
+		insert into kelas ( 
+			kode_kelas,
+			nama_kelas,
+			created_date, 
+			created_by
+		) values (
+			#{kodeKelas},
+			#{namaKelas},
+			#{createdDate},
+			#{createdBy}
+      )
+	</insert>
+	
+	<update id="updateByPrimaryKey" parameterType="com.beesinergi.model.Kelas">
+		update kelas
+    	set 
+    		kode_kelas = #{kodeKelas},
+    		nama_kelas = #{namaKelas},
+	      	changed_date = #{changedDate},
+	      	changed_by = #{changedBy}
+		where pk_kelas = #{pkKelas}
+	</update> 
+	
+</mapper>

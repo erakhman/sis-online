@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.beesinergi.mapper.PelajaranMapper;
 import com.beesinergi.model.Pelajaran;
 import com.beesinergi.util.Paging;
+import com.beesinergi.util.SystemConstant;
 
 @Service("pelajaranService")
 public class PelajaranService implements CommonService<Pelajaran> {
@@ -40,11 +41,6 @@ public class PelajaranService implements CommonService<Pelajaran> {
 	public Paging findAllByPaging(Paging paging, Pelajaran param) {
 		SqlSession session = sqlSessionFactory.openSession();
 		String sqlMapper = "com.beesinergi.mapper.PelajaranMapper.selectAll";
-//		if (param != null){
-//			if (param.getPelajaranName() != null){
-//				param.setPelajaranName("%"+param.getPelajaranName().toLowerCase()+"%");
-//			}
-//		}
 		List<Pelajaran> list = session.selectList(sqlMapper, param, new RowBounds(paging.getOffset(),paging.getLimit()));
 		Paging result = new Paging(list);
 		session.close();
@@ -59,9 +55,9 @@ public class PelajaranService implements CommonService<Pelajaran> {
 			object.setCreatedDate(new Date());
 			pelajaranMapper.insert(object);
 		} else{
-//			if (object.getIsActive() == null){
-//				object.setIsActive(SystemConstant.NO);
-//			}
+			if (object.getIsActive() == null){
+				object.setIsActive(SystemConstant.NO);
+			}
 			object.setChangedDate(new Date());
 			pelajaranMapper.updateByPrimaryKey(object);
 		}
@@ -69,20 +65,15 @@ public class PelajaranService implements CommonService<Pelajaran> {
 
 	@Override
 	public List<Pelajaran> findAll(Pelajaran param) {
-//		if (param != null){
-//			if (param.getPelajaranName() != null){
-//				param.setPelajaranName("%"+param.getPelajaranName().toLowerCase()+"%");
-//			}
-//		}
 		List<Pelajaran> list = pelajaranMapper.selectAll(param);
 		return list;
 	}
 
 	@Override
 	public Integer getCount(Pelajaran param) {
-//		if (param.getIsActive() == null){
-//			param.setIsActive(SystemConstant.YES);
-//		}
+		if (param.getIsActive() == null){
+			param.setIsActive(SystemConstant.YES);
+		}
 		int count = pelajaranMapper.selectCount(param);
 		return count;
 	}

@@ -8,15 +8,27 @@
 			<div id="errorMessage"></div>
 			<s:form id="detailForm" method="POST" beanclass="${actionBean.beanClass}">
 				<s:hidden name="doSave"/>
-				<s:hidden name="model.pkTahunAjaran"/>
+				<s:hidden name="model.pkPelajaranUjian"/>
 				<c:choose>
-					<c:when test="${actionBean.model.pkTahunAjaran != null}"><input type="hidden" name="model.changedBy" value="${actionBean.userInfo.fullName}"/></c:when>
+					<c:when test="${actionBean.model.pkPelajaranUjian != null}"><input type="hidden" name="model.changedBy" value="${actionBean.userInfo.fullName}"/></c:when>
 					<c:otherwise><input type="hidden" name="model.createdBy" value="${actionBean.userInfo.fullName}"/></c:otherwise>
 				</c:choose>
 					<table>
 						<tr>
+							<td class="caption">Nama Pelajaran<b class="mandatory">*</b></td>
+							<td>
+								<s:select name="model.fkPelajaran">
+									<s:options-collection collection="${actionBean.pelajaranList}" value="pkPelajaran" label="namaPelajaran"/>
+								</s:select>
+							</td>
+						</tr>
+						<tr>
 							<td class="caption">Tahun Ajaran<b class="mandatory">*</b></td>
-							<td><s:text name="model.tahunAjaran"/></td>
+							<td>
+								<s:select name="model.fkTahunAjaran">
+									<s:options-collection collection="${actionBean.tahunAjaranList}" value="pkTahunAjaran" label="tahunAjaran"/>
+								</s:select>
+							</td>
 						</tr>
 					</table>		
 			</s:form>

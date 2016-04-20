@@ -4,38 +4,39 @@
 
 	<resultMap id="BaseResultMap" type="com.beesinergi.model.Pelajaran">
 		<id column="pk_pelajaran" property="pkPelajaran" />
+		<result column="kode_pelajaran" property="kodePelajaran" />
 		<result column="nama_pelajaran" property="namaPelajaran" />
 		<result column="created_date" property="createdDate" />
 		<result column="created_by" property="createdBy" />
 		<result column="changed_date" property="changedDate" />
 		<result column="changed_by" property="changedBy" />
+		<result column="is_active" property="isActive" />
 	</resultMap>
 	
 	<select id="selectAll" parameterType="com.beesinergi.model.Pelajaran" resultMap="BaseResultMap">
 		select 
 			a.*
 		from pelajaran a
-		where 1 = 1
+		<where>
 			<if test="pkPelajaran != null">
 				and a.pk_pelajaran = #{pkPelajaran}
 			</if>
-			<if test="namaPelajaran != null">
-				and lower(a.nama_pelajaran) like #{namaPelajaran}
-			</if>
+		</where>	
 		order by a.pk_pelajaran asc	
 	</select>
 	
 	<select id="selectCount" parameterType="com.beesinergi.model.Pelajaran" resultType="java.lang.Integer">
     	select count(*) from pelajaran a
-    	where 1 = 1
   	</select>
 	
 	<insert id="insert" parameterType="com.beesinergi.model.Pelajaran">
 		insert into pelajaran ( 
+			kode_pelajaran,
 			nama_pelajaran,
 			created_date, 
 			created_by
 		) values (
+			#{kodePelajaran},
 			#{namaPelajaran},
 			#{createdDate},
 			#{createdBy}
@@ -45,6 +46,7 @@
 	<update id="updateByPrimaryKey" parameterType="com.beesinergi.model.Pelajaran">
 		update pelajaran
     	set 
+    		kode_pelajaran = #{kodePelajaran},
     		nama_pelajaran = #{namaPelajaran},
 	      	changed_date = #{changedDate},
 	      	changed_by = #{changedBy}

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.beesinergi.mapper.PelajaranUjianMapper">
+
+	<resultMap id="BaseResultMap" type="com.beesinergi.model.PelajaranUjian">
+		<id column="pk_pelajaran_ujian" property="pkPelajaranUjian" />
+		<result column="created_date" property="createdDate" />
+		<result column="created_by" property="createdBy" />
+		<result column="changed_date" property="changedDate" />
+		<result column="changed_by" property="changedBy" />
+		
+		<result column="nama_pelajaran" property="namaPelajaran" />
+		<result column="tahun_ajaran" property="tahunAjaran" />
+	</resultMap>
+	
+	<select id="selectAll" parameterType="com.beesinergi.model.PelajaranUjian" resultMap="BaseResultMap">
+		select 
+			*
+		from pelajaran_ujian a
+			join pelajaran b on b.pk_pelajaran = a.fk_pelajaran
+			join tahun_ajaran c on c.pk_tahun_ajaran = a.fk_tahun_ajaran
+		where 1 = 1
+			<if test="pkPelajaranUjian != null">
+				and a.pk_pelajaran_ujian = #{pkPelajaranUjian}
+			</if>
+		order by a.pk_pelajaran_ujian asc	
+	</select>
+	
+	<select id="selectCount" parameterType="com.beesinergi.model.PelajaranUjian" resultType="java.lang.Integer">
+    	select count(*) from pelajaran_ujian a
+    	where 1 = 1
+  	</select>
+	
+	<insert id="insert" parameterType="com.beesinergi.model.PelajaranUjian" useGeneratedKeys="true" keyProperty="pkPelajaranUjian" keyColumn="pk_pelajaran_ujian">
+		insert into pelajaran_ujian ( 
+			fk_pelajaran,
+			fk_tahun_ajaran,
+			created_date, 
+			created_by
+		) values (
+			#{fkPelajaran},
+			#{fkTahunAjaran},
+			#{createdDate},
+			#{createdBy}
+      )
+	</insert>
+	
+	<update id="updateByPrimaryKey" parameterType="com.beesinergi.model.PelajaranUjian">
+		update pelajaran_ujian
+    	set 
+    		fk_pelajaran = #{fkPelajaran},
+    		fk_tahun_ajaran = #{fkTahunAjaran},
+	      	changed_date = #{changedDate},
+	      	changed_by = #{changedBy}
+		where pk_pelajaran_ujian = #{pkPelajaranUjian}
+	</update> 
+	
+</mapper>

@@ -13,53 +13,53 @@ import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
-import com.beesinergi.mapper.TahunAjaranMapper;
+import com.beesinergi.mapper.KelasMapper;
 import com.beesinergi.model.AppUser;
+import com.beesinergi.model.Kelas;
+import com.beesinergi.model.Kelas;
 import com.beesinergi.model.Pelajaran;
-import com.beesinergi.model.TahunAjaran;
-import com.beesinergi.model.TahunAjaran;
 import com.beesinergi.util.Paging;
 
-@Service("tahunAjaranService")
-public class TahunAjaranService implements CommonService<TahunAjaran> {
+@Service("kelasService")
+public class KelasService implements CommonService<Kelas> {
 
 	@Autowired
-	private TahunAjaranMapper tahunAjaranMapper;
+	private KelasMapper kelasMapper;
 	@Autowired
 	private SqlSessionFactory sqlSessionFactory;
 	@Autowired
 	private DataSourceTransactionManager txManager;
 	
 	@Override
-	public TahunAjaran findById(int id) {
-		TahunAjaran param = new TahunAjaran();
-		param.setPkTahunAjaran(id);
-		List<TahunAjaran> list = tahunAjaranMapper.selectAll(param);
+	public Kelas findById(int id) {
+		Kelas param = new Kelas();
+		param.setPkKelas(id);
+		List<Kelas> list = kelasMapper.selectAll(param);
 		return list.get(0);
 	}
 
 	@Override
-	public Paging findAllByPaging(Paging paging, TahunAjaran param) {
+	public Paging findAllByPaging(Paging paging, Kelas param) {
 		SqlSession session = sqlSessionFactory.openSession();
-		String sqlMapper = "com.beesinergi.mapper.TahunAjaranMapper.selectAll";
-		List<TahunAjaran> list = session.selectList(sqlMapper, param, new RowBounds(paging.getOffset(),paging.getLimit()));
+		String sqlMapper = "com.beesinergi.mapper.KelasMapper.selectAll";
+		List<Kelas> list = session.selectList(sqlMapper, param, new RowBounds(paging.getOffset(),paging.getLimit()));
 		Paging result = new Paging(list);
 		session.close();
 		return result;
 	}
 
 	@Override
-	public void save(TahunAjaran object) throws Exception {
+	public void save(Kelas object) throws Exception {
 		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
 		def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
 		TransactionStatus status = txManager.getTransaction(def);
 		try {
-			if (object.getPkTahunAjaran() == null){
+			if (object.getPkKelas() == null){
 				object.setCreatedDate(new Date());
-				tahunAjaranMapper.insert(object);
+				kelasMapper.insert(object);
 			} else{
 				object.setChangedDate(new Date());
-				tahunAjaranMapper.updateByPrimaryKey(object);
+				kelasMapper.updateByPrimaryKey(object);
 			}
 		} catch (Exception e) {
 			txManager.rollback(status);
@@ -69,14 +69,14 @@ public class TahunAjaranService implements CommonService<TahunAjaran> {
 	}
 
 	@Override
-	public List<TahunAjaran> findAll(TahunAjaran param) {
-		List<TahunAjaran> list = tahunAjaranMapper.selectAll(param);
+	public List<Kelas> findAll(Kelas param) {
+		List<Kelas> list = kelasMapper.selectAll(param);
 		return list;
 	}
 
 	@Override
-	public Integer getCount(TahunAjaran param) {
-		int count = tahunAjaranMapper.selectCount(param);
+	public Integer getCount(Kelas param) {
+		int count = kelasMapper.selectCount(param);
 		return count;
 	}
 

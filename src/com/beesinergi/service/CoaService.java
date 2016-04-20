@@ -13,53 +13,53 @@ import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
-import com.beesinergi.mapper.TahunAjaranMapper;
+import com.beesinergi.mapper.CoaMapper;
 import com.beesinergi.model.AppUser;
 import com.beesinergi.model.Pelajaran;
-import com.beesinergi.model.TahunAjaran;
-import com.beesinergi.model.TahunAjaran;
+import com.beesinergi.model.Coa;
+import com.beesinergi.model.Coa;
 import com.beesinergi.util.Paging;
 
-@Service("tahunAjaranService")
-public class TahunAjaranService implements CommonService<TahunAjaran> {
+@Service("coaService")
+public class CoaService implements CommonService<Coa> {
 
 	@Autowired
-	private TahunAjaranMapper tahunAjaranMapper;
+	private CoaMapper coaMapper;
 	@Autowired
 	private SqlSessionFactory sqlSessionFactory;
 	@Autowired
 	private DataSourceTransactionManager txManager;
 	
 	@Override
-	public TahunAjaran findById(int id) {
-		TahunAjaran param = new TahunAjaran();
-		param.setPkTahunAjaran(id);
-		List<TahunAjaran> list = tahunAjaranMapper.selectAll(param);
+	public Coa findById(int id) {
+		Coa param = new Coa();
+		param.setPkCoa(id);
+		List<Coa> list = coaMapper.selectAll(param);
 		return list.get(0);
 	}
 
 	@Override
-	public Paging findAllByPaging(Paging paging, TahunAjaran param) {
+	public Paging findAllByPaging(Paging paging, Coa param) {
 		SqlSession session = sqlSessionFactory.openSession();
-		String sqlMapper = "com.beesinergi.mapper.TahunAjaranMapper.selectAll";
-		List<TahunAjaran> list = session.selectList(sqlMapper, param, new RowBounds(paging.getOffset(),paging.getLimit()));
+		String sqlMapper = "com.beesinergi.mapper.CoaMapper.selectAll";
+		List<Coa> list = session.selectList(sqlMapper, param, new RowBounds(paging.getOffset(),paging.getLimit()));
 		Paging result = new Paging(list);
 		session.close();
 		return result;
 	}
 
 	@Override
-	public void save(TahunAjaran object) throws Exception {
+	public void save(Coa object) throws Exception {
 		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
 		def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
 		TransactionStatus status = txManager.getTransaction(def);
 		try {
-			if (object.getPkTahunAjaran() == null){
+			if (object.getPkCoa() == null){
 				object.setCreatedDate(new Date());
-				tahunAjaranMapper.insert(object);
+				coaMapper.insert(object);
 			} else{
 				object.setChangedDate(new Date());
-				tahunAjaranMapper.updateByPrimaryKey(object);
+				coaMapper.updateByPrimaryKey(object);
 			}
 		} catch (Exception e) {
 			txManager.rollback(status);
@@ -69,14 +69,14 @@ public class TahunAjaranService implements CommonService<TahunAjaran> {
 	}
 
 	@Override
-	public List<TahunAjaran> findAll(TahunAjaran param) {
-		List<TahunAjaran> list = tahunAjaranMapper.selectAll(param);
+	public List<Coa> findAll(Coa param) {
+		List<Coa> list = coaMapper.selectAll(param);
 		return list;
 	}
 
 	@Override
-	public Integer getCount(TahunAjaran param) {
-		int count = tahunAjaranMapper.selectCount(param);
+	public Integer getCount(Coa param) {
+		int count = coaMapper.selectCount(param);
 		return count;
 	}
 

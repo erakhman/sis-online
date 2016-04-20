@@ -2,34 +2,40 @@ package com.beesinergi.model;
 
 import java.util.Date;
 
-public class Pelajaran {
+public class Kelas {
 
-    private Integer pkPelajaran;
-    private String kodePelajaran;
-    private String namaPelajaran;
+    private Integer pkKelas;
+    private String kodeKelas;
+    private String namaKelas;
+    private Integer kuota;
     private Date createdDate;
     private String createdBy;
     private Date changedDate;
     private String changedBy;
-    private String isActive;
     
-	public Integer getPkPelajaran() {
-		return pkPelajaran;
+	public Integer getPkKelas() {
+		return pkKelas;
 	}
-	public void setPkPelajaran(Integer pkPelajaran) {
-		this.pkPelajaran = pkPelajaran;
+	public void setPkKelas(Integer pkKelas) {
+		this.pkKelas = pkKelas;
 	}
-	public String getKodePelajaran() {
-		return kodePelajaran;
+	public String getKodeKelas() {
+		return kodeKelas;
 	}
-	public void setKodePelajaran(String kodePelajaran) {
-		this.kodePelajaran = kodePelajaran;
+	public void setKodeKelas(String kodeKelas) {
+		this.kodeKelas = kodeKelas;
 	}
-	public String getNamaPelajaran() {
-		return namaPelajaran;
+	public String getNamaKelas() {
+		return namaKelas;
 	}
-	public void setNamaPelajaran(String namaPelajaran) {
-		this.namaPelajaran = namaPelajaran;
+	public void setNamaKelas(String namaKelas) {
+		this.namaKelas = namaKelas;
+	}
+	public Integer getKuota() {
+		return kuota;
+	}
+	public void setKuota(Integer kuota) {
+		this.kuota = kuota;
 	}
 	public Date getCreatedDate() {
 		return createdDate;
@@ -55,10 +61,5 @@ public class Pelajaran {
 	public void setChangedBy(String changedBy) {
 		this.changedBy = changedBy;
 	}
-	public String getIsActive() {
-		return isActive;
-	}
-	public void setIsActive(String isActive) {
-		this.isActive = isActive;
-	}
+    
 }

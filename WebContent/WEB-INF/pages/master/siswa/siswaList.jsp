@@ -26,10 +26,7 @@
 	        	<thead>
 	            	<tr>
 	            		<td class="hidden"></td>
-	            		<td class="listHeader"><fmt:message key="label.namaSiswa"/></td> 
-	            		<td class="listHeader">Tgl Lahir</td>   
-	            		<td class="listHeader">User Name</td>   
-	            		<td class="listHeader">NEM</td> 
+	            		<td class="listHeader">Nama Siswa</td> 
 	             	</tr>
 	        	</thead>
 				<tbody></tbody>	
@@ -41,7 +38,7 @@
 <script>
 $(document).ready(function(){
 	showList(1);
-	$('#'+'<%=SystemConstant.MenuCode.PENDAFTARAN%>').addClass('tabActive');
+	$('#'+'<%=SystemConstant.MenuCode.SISWA%>').addClass('tabActive');
 });
 
 function populateTable(data){
@@ -49,11 +46,8 @@ function populateTable(data){
 	$.each(data,function(i){
 		tBody += 
    			'<tr>'+
-   				'<td class="hidden">'+this.pkPendaftaran+'</td>'+
+   				'<td class="hidden">'+this.pkSiswa+'</td>'+
    				'<td class="listItem">'+this.namaSiswa+'</td>'+
-   				'<td class="listItem">'+formatDate(this.tglLahir)+'</td>'+
-   				'<td class="listItem">'+this.userName+'</td>'+
-   				'<td class="listItem">'+this.nem+'</td>'+
    			'</tr>';
 	});
 	return tBody;

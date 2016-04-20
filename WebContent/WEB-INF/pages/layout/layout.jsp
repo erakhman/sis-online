@@ -137,7 +137,7 @@
 		});	
 	}
 	
-	function activeInactive(){
+	function activeInactive(el){
 		if ($('#chkIsActive').is(':checked')){
 			$('#chkIsActive').next().html('<fmt:message key="label.active"/>');
 		} else{

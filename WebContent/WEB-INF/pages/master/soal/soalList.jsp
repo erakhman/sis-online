@@ -26,10 +26,15 @@
 	        	<thead>
 	            	<tr>
 	            		<td class="hidden"></td>
-	            		<td class="listHeader"><fmt:message key="label.namaSiswa"/></td> 
-	            		<td class="listHeader">Tgl Lahir</td>   
-	            		<td class="listHeader">User Name</td>   
-	            		<td class="listHeader">NEM</td> 
+	            		<td class="listHeader">Nama Pelajaran</td>
+	            		<td class="listHeader">Soal Pelajaran</td> 
+	            		<td class="listHeader">Pilihan A</td>
+	            		<td class="listHeader">Pilihan B</td>
+	            		<td class="listHeader">Pilihan C</td>
+	            		<td class="listHeader">Pilihan D</td>
+	            		<td class="listHeader">Pilihan E</td> 
+	            		<td class="listHeader">Level</td>
+	            		<td class="listHeader">Jawaban</td>
 	             	</tr>
 	        	</thead>
 				<tbody></tbody>	
@@ -41,7 +46,7 @@
 <script>
 $(document).ready(function(){
 	showList(1);
-	$('#'+'<%=SystemConstant.MenuCode.PENDAFTARAN%>').addClass('tabActive');
+	$('#'+'<%=SystemConstant.MenuCode.SOAL%>').addClass('tabActive');
 });
 
 function populateTable(data){
@@ -49,11 +54,16 @@ function populateTable(data){
 	$.each(data,function(i){
 		tBody += 
    			'<tr>'+
-   				'<td class="hidden">'+this.pkPendaftaran+'</td>'+
-   				'<td class="listItem">'+this.namaSiswa+'</td>'+
-   				'<td class="listItem">'+formatDate(this.tglLahir)+'</td>'+
-   				'<td class="listItem">'+this.userName+'</td>'+
-   				'<td class="listItem">'+this.nem+'</td>'+
+   				'<td class="hidden">'+this.pkSoal+'</td>'+
+   				'<td class="listItem">'+this.namaPelajaran+'</td>'+
+   				'<td class="listItem">'+this.soalPelajaran+'</td>'+
+   				'<td class="listItem">'+this.pilihanA+'</td>'+
+   				'<td class="listItem">'+this.pilihanB+'</td>'+
+   				'<td class="listItem">'+this.pilihanC+'</td>'+
+   				'<td class="listItem">'+this.pilihanD+'</td>'+
+   				'<td class="listItem">'+this.pilihanE+'</td>'+
+   				'<td class="listItem">'+this.level+'</td>'+
+   				'<td class="listItem">'+this.jawaban+'</td>'+
    			'</tr>';
 	});
 	return tBody;
