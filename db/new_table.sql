@@ -61,7 +61,6 @@ COMMENT ON COLUMN ms_coa.n_type IS '1. Income
 3. Expense
 4. Other Expense
 5. COGS
-
 6. Cash
 7. Bank
 8. Other Current Assets
