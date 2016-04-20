@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.beesinergi.mapper.CoaTypeMapper">
+
+	<resultMap id="BaseResultMap" type="com.beesinergi.model.CoaType">
+		<id column="id" property="pkCoaType" />
+		<result column="type_name" property="coaTypeName" />
+		<result column="normal_balance" property="naturalBalance" />
+		<result column="balance_desc" property="naturalBalanceDesc" />
+	</resultMap>
+	
+	<select id="selectAll" parameterType="com.beesinergi.model.TahunAjaran" resultMap="BaseResultMap">
+		select n_ct_id as id, v_ct_name as type_name, n_ct_natural_balance as normal_balane,
+		case
+   			when n_ct_natural_balance = 1 then 'DEBIT'
+   			else 'CREDIT'
+		end as balance_desc
+		from ms_coa_type a
+		where 1 = 1
+			<if test="pkCoaType != null">
+				and a.n_ct_id = #{pkCoaType}
+			</if>
+		order by a.n_ct_id asc	
+	</select>
+	
+	<select id="selectCount" parameterType="com.beesinergi.model.CoaType" resultType="java.lang.Integer">
+    	select count(*) from ms_coa_type a
+    	where 1 = 1
+  	</select>
+	
+	<insert id="insert" parameterType="com.beesinergi.model.CoaType" useGeneratedKeys="true" keyProperty="pkCoaType" keyColumn="n_ct_id">
+		insert into ms_coa_type ( 
+			v_ct_name,
+			n_ct_natural_balance
+		) values (
+			#{coaTypeName},
+			#{naturalBalance}
+		)
+	</insert>
+	
+	<update id="updateByPrimaryKey" parameterType="com.beesinergi.model.TahunAjaran">
+		update ms_coa_type
+    	set 
+    		v_ct_name = #{coaTypeName},
+	      	n_ct_natural_balance = #{naturalBalance}
+	    where n_ct_id = #{pkCoaType}
+	</update> 
+	
+</mapper>
