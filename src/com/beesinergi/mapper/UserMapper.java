@@ -11,5 +11,6 @@ public interface UserMapper extends CommonMapper<AppUser> {
 	public AppUser selectByUserName(String userName);
 	
 	public AppUser selectByPrimaryKey(int pkUser);
+
     
 }

@@ -23,6 +23,8 @@ public class SystemConstant {
 		public static String ROLE = "role";
 		public static String PENDAFTARAN = "pendaftaran";
 		public static String UJIAN_MASUK = "ujianMasuk";
+		public static String HASIL_UJIAN_MASUK = "hasilUjianMasuk";
+		public static String TAHUN_AJARAN = "tahunAjaran";
 	}	
 	
 	public static class LookupType {

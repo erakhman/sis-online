@@ -22,11 +22,7 @@
 	
 	<select id="selectAll" parameterType="com.beesinergi.model.UjianMasuk" resultMap="BaseResultMap">
 		select 
-			a.pk_ujian_masuk,
-			a.fk_pelajaran,
-			a.fk_pendaftaran,
-			a.tahun_ajaran,
-			c.jawaban_siswa
+			*
 		from ujian_masuk a
 			join ujian_masuk_detail c on a.pk_ujian_masuk = c.fk_ujian_masuk
 		where 1 = 1
@@ -38,9 +34,6 @@
 			</if>
 			<if test="fkPendaftaran != null">
 				and a.fk_pendaftaran = #{fkPendaftaran}
-			</if>
-			<if test="tahunAjaran != null">
-				and a.tahun_ajaran = #{tahunAjaran}
 			</if>
 		order by a.pk_ujian_masuk asc	
 	</select>

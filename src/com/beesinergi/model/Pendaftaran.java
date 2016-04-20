@@ -8,6 +8,7 @@ public class Pendaftaran {
     private Integer pkPendaftaran;
     private Integer fkSiswa;
     private String namaSiswa;
+    private String userName;
     private Date tglLahir;
     private Double nem;
     private Date createdDate;
@@ -84,5 +85,11 @@ public class Pendaftaran {
 	}
 	public void setNem(Double nem) {
 		this.nem = nem;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 }

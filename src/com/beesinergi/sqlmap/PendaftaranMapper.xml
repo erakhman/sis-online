@@ -8,6 +8,7 @@
 		<result column="nama_siswa" property="namaSiswa" />
 		<result column="tgl_lahir" property="tglLahir" />
 		<result column="nem" property="nem" />
+		<result column="user_name" property="userName" />
 		<result column="created_date" property="createdDate" />
 		<result column="created_by" property="createdBy" />
 		<result column="changed_date" property="changedDate" />
@@ -30,6 +31,9 @@
 			<if test="pkPendaftaran != null">
 				and a.pk_pendaftaran = #{pkPendaftaran}
 			</if>
+			<if test="userName != null">
+				and a.user_name = #{userName}
+			</if>
 		order by a.pk_pendaftaran asc	
 	</select>
 	
@@ -43,12 +47,14 @@
 			nama_siswa,
 			tgl_lahir,
 			nem,
+			user_name,
 			created_date, 
 			created_by
 		) values (
 			#{namaSiswa},
 			#{tglLahir},
 			#{nem},
+			#{userName},
 			#{createdDate},
 			#{createdBy}
       )

@@ -27,7 +27,9 @@
 	            	<tr>
 	            		<td class="hidden"></td>
 	            		<td class="listHeader"><fmt:message key="label.namaSiswa"/></td> 
-	            		<td class="listHeader">Tgl Lahir</td>     
+	            		<td class="listHeader">Tgl Lahir</td>   
+	            		<td class="listHeader">User Name</td>   
+	            		<td class="listHeader">NEM</td>     
 	             	</tr>
 	        	</thead>
 				<tbody></tbody>	
@@ -50,6 +52,8 @@ function populateTable(data){
    				'<td class="hidden">'+this.pkPendaftaran+'</td>'+
    				'<td class="listItem">'+this.namaSiswa+'</td>'+
    				'<td class="listItem">'+formatDate(this.tglLahir)+'</td>'+
+   				'<td class="listItem">'+this.userName+'</td>'+
+   				'<td class="listItem">'+this.nem+'</td>'+
    			'</tr>';
 	});
 	return tBody;

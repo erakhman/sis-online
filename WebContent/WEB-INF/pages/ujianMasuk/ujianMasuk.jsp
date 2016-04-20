@@ -7,8 +7,8 @@
 	<tr>
 	  	<td class="toolBar">
 	  		<s:form method="post" id="searchForm" beanclass="${actionBean.beanClass}">
-	  			<input type="hidden" value="9" name="model.fkPendaftaran"/>
-	  			<input type="hidden" value="1" name="soal.fkPelajaran"/>
+	  			<s:hidden name="model.fkPendaftaran"/>
+	  			<s:hidden name="model.fkPelajaran"/>
 		    	<table cellspacing="0" cellpadding="0" border="0">
 		    		<tr id="btnStart">
 		            	<td 
@@ -35,7 +35,7 @@
     			<tr>
     				<td>Durasi Ujian</td>
     				<td>:</td>
-    				<td>30 Menit</td>
+    				<td><%= SystemParameter.DURASI_UJIAN %> Menit</td>
     			</tr>	
     		</table>
     	</td>
@@ -43,15 +43,15 @@
 </table>
 <script>
 var sessionWaktuUjian = '${sessionScope._waktuUjian}';
-var hasilUjian = '${actionBean.hasilUjian}';
+//var hasilUjian = '${actionBean.hasilUjian}';
 
 $(document).ready(function(){
 	$('#'+'<%=SystemConstant.MenuCode.UJIAN_MASUK%>').addClass('tabActive');
-	if (hasilUjian != ''){
+	if (sessionWaktuUjian == '0'){
 		showResult();
 	} else if(sessionWaktuUjian != ''){
 		showDetail();
-	}
+	} 
 });
 
 function showDetail(){

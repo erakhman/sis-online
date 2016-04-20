@@ -104,16 +104,20 @@
 	      	<if test="wrongPassword != null">
 	      	"wrong_password" = #{wrongPassword},
 	      	</if>
-	      	"changed_date" = #{changedDate},
-	      	"changed_by" = #{changedBy},
+	      	<if test="isLocked != null"> 
 	      	"is_locked" = #{isLocked},
+	      	</if>
 	      	<if test="changePassword != null">    
 	      	"change_password" = #{changePassword},
 	      	</if>
+	      	<if test="userName != null"> 
 	      	"user_name" = #{userName},
-	      	<if test="lastLoginDate != null">
-	      	"last_login_date" = #{lastLoginDate}
 	      	</if>
+	      	<if test="lastLoginDate != null">
+	      	"last_login_date" = #{lastLoginDate},
+	      	</if>
+	      	"changed_date" = #{changedDate},
+	      	"changed_by" = #{changedBy},
 	    </set>  	
 		where "pk_user" = #{pkUser}
 	</update>

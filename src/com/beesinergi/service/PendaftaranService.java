@@ -78,8 +78,9 @@ public class PendaftaranService implements CommonService<Pendaftaran> {
 		try {
 			if (object.getPkPendaftaran() == null){
 				object.setCreatedDate(new Date());
+				AppUser user = generateUserAndPassword(object);
+				object.setUserName(user.getUserName());
 				pendaftaranMapper.insert(object);
-				generateUserAndPassword(object);
 			} else{
 				object.setChangedDate(new Date());
 				pendaftaranMapper.updateByPrimaryKey(object);
@@ -94,7 +95,7 @@ public class PendaftaranService implements CommonService<Pendaftaran> {
 		txManager.commit(status);		
 	}
 	
-	public void generateUserAndPassword(Pendaftaran pendaftaran) {
+	public AppUser generateUserAndPassword(Pendaftaran pendaftaran) {
 		AppUser user = new AppUser();
 		user.setFullName(pendaftaran.getNamaSiswa());
 		String[] namaSiswa = pendaftaran.getNamaSiswa().split(" ");
@@ -121,6 +122,8 @@ public class PendaftaranService implements CommonService<Pendaftaran> {
 		userRole.setFkUser(user.getPkUser());
 		userRole.setFkRole(SystemConstant.PK_USER_ROLE_CALON_SISWA);
 		userRoleMapper.insert(userRole);
+		
+		return user;
 	}
 	
 	public void deletePendaftaranDetail(Pendaftaran object) {
@@ -142,11 +145,6 @@ public class PendaftaranService implements CommonService<Pendaftaran> {
 
 	@Override
 	public List<Pendaftaran> findAll(Pendaftaran param) {
-//		if (param != null){
-//			if (param.getPendaftaranName() != null){
-//				param.setPendaftaranName("%"+param.getPendaftaranName().toLowerCase()+"%");
-//			}
-//		}
 		List<Pendaftaran> list = pendaftaranMapper.selectAll(param);
 		return list;
 	}

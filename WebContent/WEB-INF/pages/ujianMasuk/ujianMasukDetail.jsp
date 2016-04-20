@@ -34,7 +34,7 @@ $(function(){});
 
 function save(){
 	var fkPendaftaran = $('input[name="model.fkPendaftaran"]').val();
-	var fkPelajaran = $('input[name="soal.fkPelajaran"]').val();
+	var fkPelajaran = $('input[name="model.fkPelajaran"]').val();
 	var url = $('#detailForm').attr('action');
 	var param = '&model.fkPendaftaran='+fkPendaftaran+'&model.fkPelajaran='+fkPelajaran;
 	var xhr = $.post(url,$('#detailForm').serialize()+param,function(data){

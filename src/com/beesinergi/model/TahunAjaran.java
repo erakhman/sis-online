@@ -10,6 +10,7 @@ public class TahunAjaran {
     private String createdBy;
     private Date changedDate;
     private String changedBy;
+    private String isActive;
     
 	public Integer getPkTahunAjaran() {
 		return pkTahunAjaran;
@@ -46,6 +47,12 @@ public class TahunAjaran {
 	}
 	public void setChangedBy(String changedBy) {
 		this.changedBy = changedBy;
+	}
+	public String getIsActive() {
+		return isActive;
+	}
+	public void setIsActive(String isActive) {
+		this.isActive = isActive;
 	}
     
 }
