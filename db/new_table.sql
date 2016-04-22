@@ -413,4 +413,122 @@ CREATE INDEX fki_book_penalty_to_book_history
   ON book_penalty
   USING btree
   (history_id);
+  
+  
+  
+CREATE TABLE ms_staff
+(
+  id serial NOT NULL,
+  staff_code character varying(20),
+  staff_name character varying(255),
+  staff_dob date,
+  staff_sex character(1),
+  staff_marital_status character(1),
+  staff_address character varying(255),
+  staff_phone_no character varying(40),
+  staff_entrance_date date,
+  staff_type integer, -- 1=guru, 2=TU
+  staff_status integer, -- 1=PNS/Karyawan Tetap, 2=Honorer
+  CONSTRAINT ms_staff_pkey PRIMARY KEY (id)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE ms_staff
+  OWNER TO postgres;
+COMMENT ON COLUMN ms_staff.staff_type IS '1=guru, 2=TU';
+COMMENT ON COLUMN ms_staff.staff_status IS '1=PNS/Karyawan Tetap, 2=Honorer';
+
+
+
+CREATE TABLE class_history
+(
+  id serial NOT NULL,
+  home_room_teacher_id integer,
+  class_id integer,
+  tahun_ajaran_id integer,
+  CONSTRAINT class_history_pkey PRIMARY KEY (id),
+  CONSTRAINT fk_class_history_to_kelas FOREIGN KEY (class_id)
+      REFERENCES kelas (pk_kelas) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT fk_class_history_to_ms_staff FOREIGN KEY (home_room_teacher_id)
+      REFERENCES ms_staff (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT fk_class_history_to_tahun_ajaran FOREIGN KEY (tahun_ajaran_id)
+      REFERENCES tahun_ajaran (pk_tahun_ajaran) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE class_history
+  OWNER TO postgres;
+
+-- Index: fki_class_history_to_kelas
+
+-- DROP INDEX fki_class_history_to_kelas;
+
+CREATE INDEX fki_class_history_to_kelas
+  ON class_history
+  USING btree
+  (class_id);
+
+-- Index: fki_class_history_to_ms_staff
+
+-- DROP INDEX fki_class_history_to_ms_staff;
+
+CREATE INDEX fki_class_history_to_ms_staff
+  ON class_history
+  USING btree
+  (home_room_teacher_id);
+
+-- Index: fki_class_history_to_tahun_ajaran
+
+-- DROP INDEX fki_class_history_to_tahun_ajaran;
+
+CREATE INDEX fki_class_history_to_tahun_ajaran
+  ON class_history
+  USING btree
+  (tahun_ajaran_id);
+
+
+  
+CREATE TABLE student_class_history
+(
+  id serial NOT NULL,
+  class_history_id integer,
+  student_id integer,
+  CONSTRAINT student_class_history_pkey PRIMARY KEY (id),
+  CONSTRAINT fk_sch_to_class_history FOREIGN KEY (class_history_id)
+      REFERENCES class_history (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT fk_sch_to_student FOREIGN KEY (student_id)
+      REFERENCES siswa (pk_siswa) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE student_class_history
+  OWNER TO postgres;
+
+-- Index: fki_sch_to_class_history
+
+-- DROP INDEX fki_sch_to_class_history;
+
+CREATE INDEX fki_sch_to_class_history
+  ON student_class_history
+  USING btree
+  (class_history_id);
+
+-- Index: fki_sch_to_student
+
+-- DROP INDEX fki_sch_to_student;
+
+CREATE INDEX fki_sch_to_student
+  ON student_class_history
+  USING btree
+  (student_id);
+
+
 
