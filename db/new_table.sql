@@ -76,3 +76,341 @@ COMMENT ON COLUMN ms_coa.n_natural_balance IS '1. Debit
 COMMENT ON COLUMN ms_coa.n_status IS '1. Active
 0. Inactive';
 
+
+CREATE TABLE ms_book_category
+(
+  id serial NOT NULL,
+  category_code character(5),
+  category_description character varying(255),
+  CONSTRAINT ms_book_category_pkey PRIMARY KEY (id)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE ms_book_category
+  OWNER TO postgres;
+
+
+CREATE TABLE ms_book_shelf
+(
+  id serial NOT NULL,
+  shelf_code character varying(30),
+  shelf_name character varying(100),
+  CONSTRAINT ms_book_shelf_pkey PRIMARY KEY (id)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE ms_book_shelf
+  OWNER TO postgres;
+
+
+CREATE TABLE ms_book_location
+(
+  id serial NOT NULL,
+  shelf_id integer,
+  code character varying(20),
+  location_description character varying(255),
+  CONSTRAINT ms_book_location_pkey PRIMARY KEY (id),
+  CONSTRAINT fk_ms_book_location_to_ms_book_shelf FOREIGN KEY (shelf_id)
+      REFERENCES ms_book_shelf (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE ms_book_location
+  OWNER TO postgres;
+
+-- Index: fki_ms_book_location_to_ms_book_shelf
+
+-- DROP INDEX fki_ms_book_location_to_ms_book_shelf;
+
+CREATE INDEX fki_ms_book_location_to_ms_book_shelf
+  ON ms_book_location
+  USING btree
+  (shelf_id);
+
+
+CREATE TABLE ms_book_publisher
+(
+  id serial NOT NULL,
+  code character varying(5),
+  publisher_name character varying(100),
+  address character varying(255),
+  phone_no character varying(40),
+  CONSTRAINT ms_book_publisher_pkey PRIMARY KEY (id)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE ms_book_publisher
+  OWNER TO postgres;
+
+
+CREATE TABLE ms_book
+(
+  id serial NOT NULL,
+  isbn character varying(20),
+  code character varying(20),
+  title character varying(20),
+  category integer,
+  author character varying(100),
+  publisher integer,
+  location integer,
+  status integer, -- 1 = available,  0 = borrowed
+  received_date date, -- date when book is received for the first time
+  created_date timestamp without time zone,
+  changed_date timestamp without time zone,
+  created_by character varying(40),
+  changed_by character varying(40),
+  CONSTRAINT ms_book_pkey PRIMARY KEY (id),
+  CONSTRAINT fk_ms_book_to_ms_book_location FOREIGN KEY (location)
+      REFERENCES ms_book_location (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT fk_ms_book_to_ms_category FOREIGN KEY (category)
+      REFERENCES ms_book_category (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT fk_ms_book_to_ms_publisher FOREIGN KEY (publisher)
+      REFERENCES ms_book_publisher (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE ms_book
+  OWNER TO postgres;
+COMMENT ON COLUMN ms_book.status IS '1 = available,  0 = borrowed';
+COMMENT ON COLUMN ms_book.received_date IS 'date when book is received for the first time';
+
+
+-- Index: fki_ms_book_to_ms_book_location
+
+-- DROP INDEX fki_ms_book_to_ms_book_location;
+
+CREATE INDEX fki_ms_book_to_ms_book_location
+  ON ms_book
+  USING btree
+  (location);
+
+-- Index: fki_ms_book_to_ms_category
+
+-- DROP INDEX fki_ms_book_to_ms_category;
+
+CREATE INDEX fki_ms_book_to_ms_category
+  ON ms_book
+  USING btree
+  (category);
+
+-- Index: fki_ms_book_to_ms_publisher
+
+-- DROP INDEX fki_ms_book_to_ms_publisher;
+
+CREATE INDEX fki_ms_book_to_ms_publisher
+  ON ms_book
+  USING btree
+  (publisher);
+  
+ 
+  
+CREATE TABLE ms_penalty_type
+(
+  id serial NOT NULL,
+  tahun_ajaran_id integer,
+  penalty_type integer, -- 1=suspend, 2 = pay base on late date
+  nominal double precision, -- fill only when penalty type is 2 (pay base on late date), the value is daily basis
+  CONSTRAINT ms_penalty_type_pkey PRIMARY KEY (id),
+  CONSTRAINT fk_ms_penalty_type_to_tahun_ajaran FOREIGN KEY (tahun_ajaran_id)
+      REFERENCES tahun_ajaran (pk_tahun_ajaran) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE ms_penalty_type
+  OWNER TO postgres;
+COMMENT ON COLUMN ms_penalty_type.penalty_type IS '1=suspend, 2 = pay base on late date';
+COMMENT ON COLUMN ms_penalty_type.nominal IS 'fill only when penalty type is 2 (pay base on late date), the value is daily basis';
+
+
+-- Index: fki_ms_penalty_type_to_tahun_ajaran
+
+-- DROP INDEX fki_ms_penalty_type_to_tahun_ajaran;
+
+CREATE INDEX fki_ms_penalty_type_to_tahun_ajaran
+  ON ms_penalty_type
+  USING btree
+  (tahun_ajaran_id);
+
+
+CREATE TABLE ms_library_annual_fee
+(
+  id serial NOT NULL,
+  tahun_ajaran_id integer,
+  annual_fee double precision,
+  CONSTRAINT ms_library_annual_fee_pkey PRIMARY KEY (id),
+  CONSTRAINT fk_ms_library_annual_fee_to_tahun_ajaran FOREIGN KEY (tahun_ajaran_id)
+      REFERENCES tahun_ajaran (pk_tahun_ajaran) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE ms_library_annual_fee
+  OWNER TO postgres;
+
+-- Index: fki_ms_library_annual_fee_to_tahun_ajaran
+
+-- DROP INDEX fki_ms_library_annual_fee_to_tahun_ajaran;
+
+CREATE INDEX fki_ms_library_annual_fee_to_tahun_ajaran
+  ON ms_library_annual_fee
+  USING btree
+  (tahun_ajaran_id);
+
+
+
+CREATE TABLE ms_library_member
+(
+  id serial NOT NULL,
+  member_code character varying(20),
+  member_name character varying(255),
+  member_type integer, -- 1=student, 2=teacher, 3=adminstratif employee (TU)
+  member_identity_no character varying(20), -- NIS if student, NIP if is teacher or employee
+  member_status integer, -- 1 = active, 2 = suspend, 3 = non active
+  start_date date,
+  end_date date,
+  annual_fee_status integer, -- 1 = paid, 0 = not paid
+  created_date timestamp without time zone,
+  changed_date timestamp without time zone,
+  created_by character varying(40),
+  changed_by character varying(40),
+  suspend_date date,
+  end_suspend_date date,
+  CONSTRAINT ms_library_member_pkey PRIMARY KEY (id)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE ms_library_member
+  OWNER TO postgres;
+COMMENT ON COLUMN ms_library_member.member_type IS '1=student, 2=teacher, 3=adminstratif employee (TU)';
+COMMENT ON COLUMN ms_library_member.member_identity_no IS 'NIS if student, NIP if is teacher or employee';
+COMMENT ON COLUMN ms_library_member.member_status IS '1 = active, 2 = suspend, 3 = non active';
+COMMENT ON COLUMN ms_library_member.annual_fee_status IS '1 = paid, 0 = not paid';
+
+
+
+CREATE TABLE member_annual_fee
+(
+  id serial NOT NULL,
+  member_id integer,
+  annual_fee_id integer,
+  nominal_fee double precision,
+  CONSTRAINT member_annual_fee_pkey PRIMARY KEY (id),
+  CONSTRAINT fk_member_annual_fee_to_ms_library_annual_fee FOREIGN KEY (annual_fee_id)
+      REFERENCES ms_library_annual_fee (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT fk_member_annual_fee_to_ms_library_member FOREIGN KEY (member_id)
+      REFERENCES ms_library_member (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE member_annual_fee
+  OWNER TO postgres;
+
+-- Index: fki_member_annual_fee_to_ms_library_annual_fee
+
+-- DROP INDEX fki_member_annual_fee_to_ms_library_annual_fee;
+
+CREATE INDEX fki_member_annual_fee_to_ms_library_annual_fee
+  ON member_annual_fee
+  USING btree
+  (annual_fee_id);
+
+-- Index: fki_member_annual_fee_to_ms_library_member
+
+-- DROP INDEX fki_member_annual_fee_to_ms_library_member;
+
+CREATE INDEX fki_member_annual_fee_to_ms_library_member
+  ON member_annual_fee
+  USING btree
+  (member_id);
+
+
+
+CREATE TABLE book_history
+(
+  id serial NOT NULL,
+  book_id integer,
+  borrowed_by integer,
+  start_date date,
+  end_date date,
+  return_date date,
+  created_date timestamp without time zone,
+  changed_date timestamp without time zone,
+  created_by character varying(40),
+  changed_by character varying(40),
+  CONSTRAINT book_history_pkey PRIMARY KEY (id),
+  CONSTRAINT fk_book_history_to_ms_book FOREIGN KEY (book_id)
+      REFERENCES ms_book (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT fk_book_history_to_ms_library_member FOREIGN KEY (borrowed_by)
+      REFERENCES ms_library_member (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE book_history
+  OWNER TO postgres;
+
+-- Index: fki_book_history_to_ms_book
+
+-- DROP INDEX fki_book_history_to_ms_book;
+
+CREATE INDEX fki_book_history_to_ms_book
+  ON book_history
+  USING btree
+  (book_id);
+
+-- Index: fki_book_history_to_ms_library_member
+
+-- DROP INDEX fki_book_history_to_ms_library_member;
+
+CREATE INDEX fki_book_history_to_ms_library_member
+  ON book_history
+  USING btree
+  (borrowed_by);
+
+
+  
+CREATE TABLE book_penalty
+(
+  id serial NOT NULL,
+  history_id integer,
+  penalty_type integer,
+  total_late_day integer,
+  nominal double precision,
+  CONSTRAINT book_penalty_pkey PRIMARY KEY (id),
+  CONSTRAINT fk_book_penalty_to_book_history FOREIGN KEY (history_id)
+      REFERENCES book_history (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE book_penalty
+  OWNER TO postgres;
+
+-- Index: fki_book_penalty_to_book_history
+
+-- DROP INDEX fki_book_penalty_to_book_history;
+
+CREATE INDEX fki_book_penalty_to_book_history
+  ON book_penalty
+  USING btree
+  (history_id);
+
