@@ -1,0 +1,2 @@
+eksekusi db/sis_online.backup terakhir
+eksekusi script yang ada di db/new_table.sql
