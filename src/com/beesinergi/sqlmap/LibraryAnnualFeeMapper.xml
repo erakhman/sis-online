@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.beesinergi.mapper.LibraryAnnualFeeMapper">
+
+	<resultMap id="BaseResultMap" type="com.beesinergi.model.LibraryAnnualFee">
+		<id column="id" property="id" />
+		<result column="tahun_ajaran_id" property="tahunAjaranId" />
+		<result column="annual_fee" property="annualFee" />
+		<result column="tahun_ajaran" property="tahunAjaran" />
+	</resultMap>
+	
+	
+	<select id="selectAll" parameterType="com.beesinergi.model.LibraryAnnualFee" resultMap="BaseResultMap">
+		select af.*, ta.tahun_ajaran from ms_library_annual_fee af
+		inner join tahun_ajaran ta
+		on ta.pk_tahun_ajaran = af.tahun_ajaran_id
+		where 1 = 1
+			
+			
+		order by ta.tahun_ajaran asc	
+	</select>
+	
+	<select id="selectByPrimaryKey" parameterType="com.beesinergi.model.LibraryAnnualFee" resultMap="BaseResultMap">
+		select af.* from ms_library_annual_fee af
+		where af.id = #{id}
+	</select>
+	
+	<select id="selectCount" parameterType="com.beesinergi.model.LibraryAnnualFee" resultType="java.lang.Integer">
+    	select count(af.id) from ms_library_annual_fee af
+		where 1 = 1
+  	</select>
+	
+	<insert id="insert" parameterType="com.beesinergi.model.LibraryAnnualFee">
+		insert into ms_library_annual_fee ( 
+			
+			tahun_ajaran_id,
+			annual_fee
+		) values (
+			#{tahunAjaranId},
+			
+			#{annualFee}
+      )
+	</insert>
+	
+	<update id="updateByPrimaryKey" parameterType="com.beesinergi.model.LibraryAnnualFee">
+		update ms_library_annual_fee
+    	set 
+    		tahun_ajaran_id = #{tahunAjaranId},
+	      	annual_fee = #{annualFee}
+		where id = #{id}
+	</update> 
+	
+</mapper>
