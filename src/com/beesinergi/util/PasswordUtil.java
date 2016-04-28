@@ -18,6 +18,6 @@ public class PasswordUtil {
 	}
 	
 	public static void main(String[] args) {
-		System.out.println(getEncryptPassword("password"));
+		System.out.println(getEncryptPassword("adhan123"));
 	}
 }

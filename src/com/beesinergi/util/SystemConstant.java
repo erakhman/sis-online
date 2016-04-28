@@ -32,6 +32,11 @@ public class SystemConstant {
 		public static String JADWAL_UJIAN = "jadwalUjian";
 		public static String SISWA = "siswa";
 		public static String SOAL = "soal";
+		public static String LIBRARY_ANNUAL_FEE = "libraryAnnualFee";
+		public static String BOOK = "book";
+		public static String BOOK_CATEGORY = "bookCategory";
+		public static String BOOK_PUBLISHER = "bookPublisher";
+		public static String LIBRARY_MEMBER = "libraryMember";
 	}	
 	
 	public static class LookupType {
