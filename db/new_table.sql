@@ -537,7 +537,7 @@ CREATE INDEX fki_sch_to_student
 
 CREATE TABLE public.ms_school_profile
 (
-  pk_school_profile integer NOT NULL DEFAULT nextval('ms_school_profile_pk_school_profile_seq'::regclass),
+  pk_school_profile serial,
   school_name character varying,
   nis character varying,
   nss character varying,
@@ -564,7 +564,7 @@ ALTER TABLE public.ms_school_profile
 
 CREATE TABLE public.ms_city
 (
-  pk_city integer NOT NULL DEFAULT nextval('ms_city_pk_city_seq'::regclass),
+  pk_city serial,
   city_code character varying,
   city_name character varying,
   CONSTRAINT ms_city_pkey PRIMARY KEY (pk_city)
@@ -581,7 +581,7 @@ ALTER TABLE public.ms_city
 
 CREATE TABLE public.ms_district
 (
-  pk_district integer NOT NULL DEFAULT nextval('ms_district_pk_district_seq'::regclass),
+  pk_district serial,
   district_code character varying,
   district_name character varying,
   CONSTRAINT ms_district_pkey PRIMARY KEY (pk_district)
@@ -598,7 +598,7 @@ ALTER TABLE public.ms_district
 
 CREATE TABLE public.ms_province
 (
-  pk_province integer NOT NULL DEFAULT nextval('ms_province_pk_province_seq'::regclass),
+  pk_province serial,
   province_code character varying,
   province_name character varying,
   CONSTRAINT ms_province_pkey PRIMARY KEY (pk_province)
@@ -615,7 +615,7 @@ ALTER TABLE public.ms_province
 
 CREATE TABLE public.lookup
 (
-  pk_lookup integer NOT NULL DEFAULT nextval('lookup_pk_lookup_seq'::regclass),
+  pk_lookup serial,
   lookup_name character varying,
   lookup_value character varying,
   fk_lookup_group integer,
@@ -637,7 +637,7 @@ ALTER TABLE public.lookup
 
 CREATE TABLE public.lookup_group
 (
-  pk_lookup_group integer NOT NULL DEFAULT nextval('lookup_group_pk_lookup_group_seq'::regclass),
+  pk_lookup_group serial,
   lookup_group_code character varying,
   lookup_group_name character varying,
   CONSTRAINT lookup_group_pkey PRIMARY KEY (pk_lookup_group)
@@ -647,4 +647,100 @@ WITH (
 );
 ALTER TABLE public.lookup_group
   OWNER TO postgres;
+  
+  
+CREATE TABLE ms_admission_fee
+(
+  id serial NOT NULL,
+  tahun_ajaran_id integer,
+  description character varying(255),
+  admission_fee double precision,
+  CONSTRAINT ms_admission_fee_pkey PRIMARY KEY (id),
+  CONSTRAINT fk_admission_fee_to_tahun_ajaran FOREIGN KEY (tahun_ajaran_id)
+      REFERENCES tahun_ajaran (pk_tahun_ajaran) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE ms_admission_fee
+  OWNER TO postgres;
+
+-- Index: fki_admission_fee_to_tahun_ajaran
+
+-- DROP INDEX fki_admission_fee_to_tahun_ajaran;
+
+CREATE INDEX fki_admission_fee_to_tahun_ajaran
+  ON ms_admission_fee
+  USING btree
+  (tahun_ajaran_id);
+
+  
  
+CREATE TABLE ms_admission_fee_detail
+(
+  id serial NOT NULL,
+  admission_fee_id integer,
+  description character varying(255),
+  nominal double precision,
+  CONSTRAINT ms_admission_fee_detail_pkey PRIMARY KEY (id),
+  CONSTRAINT fk_admission_fee_detail_to_ms_admission_fee FOREIGN KEY (admission_fee_id)
+      REFERENCES ms_admission_fee (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE ms_admission_fee_detail
+  OWNER TO postgres;
+
+-- Index: fki_admission_fee_detail_to_ms_admission_fee
+
+-- DROP INDEX fki_admission_fee_detail_to_ms_admission_fee;
+
+CREATE INDEX fki_admission_fee_detail_to_ms_admission_fee
+  ON ms_admission_fee_detail
+  USING btree
+  (admission_fee_id);
+
+
+ CREATE TABLE admission_fee_history
+(
+  id serial NOT NULL,
+  siswa_id integer,
+  admission_fee_id integer,
+  nominal double precision,
+  description character varying(255),
+  payment_date date,
+  CONSTRAINT admission_fee_history_pkey PRIMARY KEY (id),
+  CONSTRAINT fk_admission_fee_history_to_ms_admission_fee FOREIGN KEY (admission_fee_id)
+      REFERENCES ms_admission_fee (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT fk_admission_fee_history_to_siswa FOREIGN KEY (siswa_id)
+      REFERENCES siswa (pk_siswa) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE admission_fee_history
+  OWNER TO postgres;
+
+-- Index: fki_admission_fee_history_to_ms_admission_fee
+
+-- DROP INDEX fki_admission_fee_history_to_ms_admission_fee;
+
+CREATE INDEX fki_admission_fee_history_to_ms_admission_fee
+  ON admission_fee_history
+  USING btree
+  (admission_fee_id);
+
+-- Index: fki_admission_fee_history_to_siswa
+
+-- DROP INDEX fki_admission_fee_history_to_siswa;
+
+CREATE INDEX fki_admission_fee_history_to_siswa
+  ON admission_fee_history
+  USING btree
+  (siswa_id);
+
