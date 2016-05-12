@@ -3,6 +3,8 @@ package com.beesinergi.model;
 import java.util.Date;
 import java.util.List;
 
+import com.beesinergi.util.SystemConstant;
+
 public class Pendaftaran {
 
     private Integer pkPendaftaran;
@@ -15,9 +17,21 @@ public class Pendaftaran {
     private String createdBy;
     private Date changedDate;
     private String changedBy;
+    private Integer fkTahunAjaran;
+    private Integer status;
+    private String kodePendaftaran;
+    private Integer biayaPendaftaran;
+    
+    private Double totalNilaiUjian;
+    private String tahunAjaran;
+    private String orderBy;
     
     private Siswa siswa;
     private List<PendaftaranDetail> pendaftaranDetailList;
+    
+    public String getStatusDescr() {
+		return SystemConstant.RegistrationStatus().get(status);
+	}
     
 	public Integer getPkPendaftaran() {
 		return pkPendaftaran;
@@ -91,5 +105,47 @@ public class Pendaftaran {
 	}
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+	public Double getTotalNilaiUjian() {
+		return totalNilaiUjian;
+	}
+	public void setTotalNilaiUjian(Double totalNilaiUjian) {
+		this.totalNilaiUjian = totalNilaiUjian;
+	}
+	public Integer getFkTahunAjaran() {
+		return fkTahunAjaran;
+	}
+	public void setFkTahunAjaran(Integer fkTahunAjaran) {
+		this.fkTahunAjaran = fkTahunAjaran;
+	}
+	public String getTahunAjaran() {
+		return tahunAjaran;
+	}
+	public void setTahunAjaran(String tahunAjaran) {
+		this.tahunAjaran = tahunAjaran;
+	}
+	public String getOrderBy() {
+		return orderBy;
+	}
+	public void setOrderBy(String orderBy) {
+		this.orderBy = orderBy;
+	}
+	public Integer getStatus() {
+		return status;
+	}
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+	public String getKodePendaftaran() {
+		return kodePendaftaran;
+	}
+	public void setKodePendaftaran(String kodePendaftaran) {
+		this.kodePendaftaran = kodePendaftaran;
+	}
+	public Integer getBiayaPendaftaran() {
+		return biayaPendaftaran;
+	}
+	public void setBiayaPendaftaran(Integer biayaPendaftaran) {
+		this.biayaPendaftaran = biayaPendaftaran;
 	}
 }
