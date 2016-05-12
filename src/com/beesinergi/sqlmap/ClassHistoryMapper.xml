@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.beesinergi.mapper.ClassHistoryMapper">
+
+	<resultMap id="BaseResultMap" type="com.beesinergi.model.ClassHistory">
+		<id column="id" property="pkClassHistory" />
+		<result column="tahun_ajaran_id" property="fkTahunAjaran" />
+		<result column="home_room_teacher_id" property="fkStaff" />
+		<result column="tahun_ajaran" property="tahunAjaran" />
+		<result column="staff_name" property="staffName" />
+		
+		<result column="nama_kelas" property="className" />
+	</resultMap>
+	
+	<select id="selectAll" parameterType="com.beesinergi.model.ClassHistory" resultMap="BaseResultMap">
+		select 
+			*
+		from class_history a
+			join tahun_ajaran b on b.pk_tahun_ajaran = a.tahun_ajaran_id
+			join ms_staff d on d.id = a.home_room_teacher_id
+			join kelas e on e.pk_kelas = a.class_id
+		where 1 = 1 
+			<if test="fkClass != null">
+				and a.class_id = #{fkClass}
+			</if>
+			<if test="isCurrentYear != null">
+				and a.tahun_ajaran_id = (select * from fn_tahun_ajaran())
+			</if>
+		order by a.tahun_ajaran_id asc	
+	</select>
+	
+	<insert id="insert" parameterType="com.beesinergi.model.ClassHistory" useGeneratedKeys="true" keyProperty="pkClassHistory" keyColumn="id">
+		insert into class_history ( 
+			home_room_teacher_id,
+			class_id,
+			tahun_ajaran_id
+		) values (
+			#{fkStaff},
+			#{fkClass},
+			#{fkTahunAjaran}
+      )
+	</insert>
+	
+	<update id="updateByPrimaryKey" parameterType="com.beesinergi.model.ClassHistory">
+		update class_history
+    	set 
+    		home_room_teacher_id = #{fkStaff},
+    		tahun_ajaran_id = #{fkTahunAjaran}
+    	where id = #{pkClassHistory}	
+	</update> 
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from class_history 
+		where id = #{pkClassHistory} 
+	</delete> 
+	
+</mapper>
