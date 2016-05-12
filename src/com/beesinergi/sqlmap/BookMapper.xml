@@ -17,12 +17,20 @@
 		<result column="changed_date" property="changedDate" />
 		<result column="changed_by" property="changedBy" />
 		<result column="is_active" property="isActive" />
+		<result column="price" property="price" />
+		
+		<result column="publisher_name" property="publisherName" />
+		<result column="category_description" property="categoryDescription" />
+		<result column="location_description" property="locationDescription" />
 	</resultMap>
 	
 	<select id="selectAll" parameterType="com.beesinergi.model.Book" resultMap="BaseResultMap">
 		select 
 			*
 		from ms_book a
+			join ms_book_publisher b on b.id = a.publisher
+			join ms_book_category c on c.id = a.category
+			join ms_book_location d on d.id = a.location
 		where 1 = 1
 			<if test="pkBook != null">
 				and a.id = #{pkBook}
@@ -46,6 +54,7 @@
 			publisher,
 			status,
 			location,
+			price,
 			received_date,
 			created_by
 		) values (		
@@ -58,8 +67,8 @@
 			#{bookPublisher},
 			#{bookStatus},
 			#{bookLocation},
-			#{receivedDate,},
-			
+			#{price},
+			#{receivedDate},
 			#{createdBy}
       )
 	</insert>
@@ -75,6 +84,7 @@
 			publisher = #{bookPublisher},
 			status = #{bookStatus},
 			location = #{bookLocation},
+			price = #{price},
 	      	changed_date = #{changedDate},
 	      	changed_by = #{changedBy}
 		where id = #{pkBook}

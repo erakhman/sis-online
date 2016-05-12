@@ -30,10 +30,9 @@ public class LookupService implements CommonService<Lookup>{
 		return list.get(0);
 	}
 	
-	public List<Lookup> findAllByType(int type) {
+	public List<Lookup> findAllByGroup(int type) {
 		Lookup param = new Lookup();
-		param.setLookupType(type);
-		param.setIsActive(SystemConstant.YES);
+		param.setFkLookupGroup(type);
 		List<Lookup> list = lookupMapper.selectAll(param);
 		return list;
 	}

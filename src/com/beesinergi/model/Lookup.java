@@ -7,7 +7,7 @@ public class Lookup {
     private Integer pkLookup;
     private String lookupName;
     private String lookupValue;
-    private Integer lookupType;
+    private Integer fkLookupGroup;
     private Date createdDate;
     private String createdBy;
     private Date changedDate;
@@ -35,12 +35,6 @@ public class Lookup {
 	}
 	public void setLookupValue(String lookupValue) {
 		this.lookupValue = lookupValue;
-	}
-	public Integer getLookupType() {
-		return lookupType;
-	}
-	public void setLookupType(Integer lookupType) {
-		this.lookupType = lookupType;
 	}
 	public Date getCreatedDate() {
 		return createdDate;
@@ -71,6 +65,12 @@ public class Lookup {
 	}
 	public void setIsActive(String isActive) {
 		this.isActive = isActive;
+	}
+	public Integer getFkLookupGroup() {
+		return fkLookupGroup;
+	}
+	public void setFkLookupGroup(Integer fkLookupGroup) {
+		this.fkLookupGroup = fkLookupGroup;
 	}
     
 

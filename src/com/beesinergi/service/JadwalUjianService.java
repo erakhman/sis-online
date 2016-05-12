@@ -17,7 +17,10 @@ import com.beesinergi.mapper.JadwalUjianMapper;
 import com.beesinergi.model.AppUser;
 import com.beesinergi.model.JadwalUjian;
 import com.beesinergi.model.JadwalUjian;
+import com.beesinergi.model.Pendaftaran;
+import com.beesinergi.model.UjianMasuk;
 import com.beesinergi.util.Paging;
+import com.beesinergi.util.SystemConstant;
 
 @Service("jadwalUjianService")
 public class JadwalUjianService implements CommonService<JadwalUjian> {
@@ -69,7 +72,8 @@ public class JadwalUjianService implements CommonService<JadwalUjian> {
 
 	@Override
 	public List<JadwalUjian> findAll(JadwalUjian param) {
-		return null;
+		List<JadwalUjian> list = jadwalUjianMapper.selectAll(param);
+		return list;
 	}
 
 	@Override

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.beesinergi.mapper.StaffMapper">
+
+	<resultMap id="BaseResultMap" type="com.beesinergi.model.Staff">
+		<id column="id" property="pkStaff" />
+		<result column="staff_code" property="code" />
+		<result column="staff_name" property="name" />
+		<result column="staff_dob" property="dob" />
+		<result column="staff_sex" property="sex" />
+		<result column="staff_marital_status" property="maritalStatus" />
+		<result column="staff_address" property="address" />
+		<result column="staff_phone_no" property="phoneNo" />
+		<result column="staff_entrance_date" property="joinDate" />
+		<result column="staff_type" property="type" />
+		<result column="staff_status" property="status" />
+		
+		<collection property="classHistoryList" ofType="com.beesinergi.model.ClassHistory">
+	    	<result column="class_id" property="fkClass" />
+	    	<result column="nama_kelas" property="className" />
+	    	<result column="tahun_ajaran" property="tahunAjaran" />
+	  	</collection>
+	</resultMap>
+	
+	<select id="selectAll" parameterType="com.beesinergi.model.Staff" resultMap="BaseResultMap">
+		select 
+			*
+		from ms_staff a
+			left join class_history b on a.id = b.home_room_teacher_id
+			left join kelas c on c.pk_kelas = b.class_id
+			left join tahun_ajaran d on d.pk_tahun_ajaran = b.tahun_ajaran_id
+		where 1 = 1
+			<if test="pkStaff != null">
+				and a.id = #{pkStaff}
+			</if>
+			<if test="type != null">
+				and a.staff_type = #{type}
+			</if>
+		order by a.id asc	
+	</select>
+	
+	<select id="selectClassHistory" parameterType="com.beesinergi.model.ClassHistory" resultMap="BaseResultMap">
+		select 
+			*
+		from ms_staff a
+			inner join class_history b on a.id = b.home_room_teacher_id
+		where 1 = 1
+		order by a.pk_class_history asc	
+	</select>
+	
+	<select id="selectCount" parameterType="com.beesinergi.model.Staff" resultType="java.lang.Integer">
+    	select count(*) from ms_staff a
+    	where 1 = 1
+  	</select>
+	
+	<insert id="insert" parameterType="com.beesinergi.model.Staff" useGeneratedKeys="true" keyProperty="pkStaff" keyColumn="id">
+		insert into ms_staff ( 
+			staff_code,
+			staff_name,
+			staff_dob, 
+			staff_sex,
+			staff_marital_status,
+			staff_address,
+			staff_phone_no, 
+			staff_entrance_date,
+			staff_type,
+			staff_status
+		) values (
+			#{code},
+			#{name},
+			#{dob},
+			#{sex},
+			#{maritalStatus},
+			#{address},
+			#{phoneNo},
+			#{joinDate},
+			#{type},
+			#{status}
+      )
+	</insert>
+	
+	<update id="updateByPrimaryKey" parameterType="com.beesinergi.model.Staff">
+		update ms_staff
+    	set 
+    		staff_code = #{code},
+    		staff_name = #{name},
+	      	staff_dob = #{dob},
+	      	staff_sex = #{sex},
+	      	staff_marital_status = #{maritalStatus},
+    		staff_address = #{address},
+	      	staff_phone_no = #{phoneNo},
+	      	staff_entrance_date = #{joinDate},
+    		staff_type = #{type},
+	      	staff_status = #{status}
+		where id = #{pkStaff}
+	</update> 
+	
+</mapper>

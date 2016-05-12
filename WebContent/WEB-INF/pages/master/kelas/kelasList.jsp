@@ -28,6 +28,7 @@
 	            		<td class="hidden"></td>
 	            		<td class="listHeader">Kode Kelas</td> 
 	            		<td class="listHeader">Nama Kelas</td> 
+	            		<td class="listHeader">Wali Kelas</td>
 	             	</tr>
 	        	</thead>
 				<tbody></tbody>	
@@ -50,9 +51,18 @@ function populateTable(data){
    				'<td class="hidden">'+this.pkKelas+'</td>'+
    				'<td class="listItem">'+this.kodeKelas+'</td>'+
    				'<td class="listItem">'+this.namaKelas+'</td>'+
+   				'<td class="listItemWithoutPointer" align="center"><a href="#" style="color: red;" onclick="showClassHistory('+this.pkKelas+')"><strong>Lihat</strong></a></td>'+
    			'</tr>';
 	});
 	return tBody;
+}
+
+function showClassHistory(id){
+	var param = 'model.fkClass='+id;
+	var sURL = '${contextPath}/ClassHistory.action';
+	$.get(sURL,param,function(data){
+		openDialog(300, 300, 1, 'Wali Kelas', data, 1);
+	});	
 }
 </script>
 </s:layout-component>

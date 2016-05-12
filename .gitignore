@@ -1,5 +1,10 @@
 /.settings/
 /.classpath
 /.project
+<<<<<<< HEAD
 /build/*
 .gitignoe
+=======
+
+/build/classes/*
+>>>>>>> branch 'master' of https://github.com/erakhman/sis-online

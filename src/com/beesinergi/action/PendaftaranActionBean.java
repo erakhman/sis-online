@@ -2,6 +2,8 @@ package com.beesinergi.action;
 
 import java.util.List;
 
+import org.apache.commons.lang.exception.ExceptionUtils;
+
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.StreamingResolution;
@@ -9,6 +11,8 @@ import net.sourceforge.stripes.action.UrlBinding;
 import net.sourceforge.stripes.integration.spring.SpringBean;
 import net.sourceforge.stripes.validation.ValidationMethod;
 
+import com.beesinergi.exception.ErrorHolder;
+import com.beesinergi.exception.SystemException;
 import com.beesinergi.model.Pelajaran;
 import com.beesinergi.model.Pendaftaran;
 import com.beesinergi.service.CommonService;
@@ -21,6 +25,7 @@ public class PendaftaranActionBean extends BaseMaintenanceActionBean<Pendaftaran
 	
 	private String LIST_PAGE = "/WEB-INF/pages/pendaftaran/pendaftaranList.jsp";
 	private String DETAIL_PAGE = "/WEB-INF/pages/pendaftaran/pendaftaranDetail.jsp";
+	private String RE_REGISTER_PAGE = "/WEB-INF/pages/pendaftaran/pendaftaranUlang.jsp";
 	
 	@SpringBean
 	private PendaftaranService pendaftaranService;
@@ -28,18 +33,41 @@ public class PendaftaranActionBean extends BaseMaintenanceActionBean<Pendaftaran
 	private PelajaranService pelajaranService;
 	
 	private String namaPelajaran;
+	private List<Integer> pkPendaftaranList;
+	
 
 	@Override
 	public Resolution show() {
 		return new ForwardResolution(LIST_PAGE);
 	}
 	
+	public Resolution showReRegister() {
+		return new ForwardResolution(RE_REGISTER_PAGE);
+	}
+	
 	@ValidationMethod(on = "doSave")
 	public void validate() {
 		Pendaftaran model = getModel();
-//		if (model.getPendaftaranCode() == null){ 
-//			addLocalizableError("err.required", "label.pendaftaranCode");
-//		}
+	}
+	
+	public Resolution doExamPass() {
+		try {
+			pendaftaranService.examPass(pkPendaftaranList);
+			getContext().getResponse().setHeader("X-Stripes-Success","true");
+		} catch (Exception e) {
+			log.error(ExceptionUtils.getStackTrace(e));
+		}
+		return new ForwardResolution(AJAX_RESULT_PAGE);
+	}
+	
+	public Resolution doReRegister() {
+		try {
+			pendaftaranService.reRegister(getModel().getPkPendaftaran());
+			getContext().getResponse().setHeader("X-Stripes-Success","true");
+		} catch (Exception e) {
+			log.error(ExceptionUtils.getStackTrace(e));
+		}
+		return new ForwardResolution(AJAX_RESULT_PAGE);
 	}
 	
 	public Resolution doGetPelajaranList() {
@@ -83,5 +111,14 @@ public class PendaftaranActionBean extends BaseMaintenanceActionBean<Pendaftaran
 	public void setNamaPelajaran(String namaPelajaran) {
 		this.namaPelajaran = namaPelajaran;
 	}
+
+	public List<Integer> getPkPendaftaranList() {
+		return pkPendaftaranList;
+	}
+
+	public void setPkPendaftaranList(List<Integer> pkPendaftaranList) {
+		this.pkPendaftaranList = pkPendaftaranList;
+	}
+
 
 }

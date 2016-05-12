@@ -26,10 +26,12 @@
 	        	<thead>
 	            	<tr>
 	            		<td class="hidden"></td>
+	            		<td class="hidden"></td>
 	            		<td class="listHeader">ISBN</td> 
 	            		<td class="listHeader">Kode Buku</td> 
 	            		<td class="listHeader">Judul Buku</td> 
 	            		<td class="listHeader">Kategori</td> 
+	            		<td class="listHeader">Lokasi</td> 
 	            		<td class="listHeader">Pengarang</td> 
 	            		<td class="listHeader">Penerbit</td>
 	            		<td class="listHeader">Status</td> 
@@ -53,13 +55,15 @@ function populateTable(data){
 		tBody += 
    			'<tr>'+
    				'<td class="hidden">'+this.pkBook+'</td>'+
+   				'<td class="hidden">'+this.bookPublisher+'</td>'+
    				'<td class="listItem">'+this.bookIsbn+'</td>'+
    				'<td class="listItem">'+this.bookCode+'</td>'+
    				'<td class="listItem">'+this.bookTitle+'</td>'+
-   				'<td class="listItem">'+this.bookCategory+'</td>'+
+   				'<td class="listItem">'+this.categoryDescription+'</td>'+
+   				'<td class="listItem">'+this.locationDescription+'</td>'+
    				'<td class="listItem">'+this.bookAuthor+'</td>'+
-   				'<td class="listItem">'+this.bookPublisher+'</td>'+
-   				'<td class="listItem">'+this.bookStatus+'</td>'+
+   				'<td class="listItem">'+this.publisherName+'</td>'+
+   				'<td class="listItem">'+this.statusDescr+'</td>'+
    			'</tr>';
 	});
 	return tBody;

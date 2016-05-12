@@ -2,6 +2,8 @@ package com.beesinergi.model;
 
 import java.util.Date;
 
+import com.beesinergi.util.SystemConstant;
+
 public class Book {
 
     private Integer pkBook;
@@ -19,6 +21,14 @@ public class Book {
     private Date changedDate;
     private String changedBy;
     private String isActive;
+    private Double price;
+    
+    private String publisherName;
+    private String categoryDescription;
+    
+    public String getStatusDescr() {
+    	return SystemConstant.BookStatus().get(bookStatus);
+    }
     
 	public Integer getPkBook() {
 		return pkBook;
@@ -109,6 +119,30 @@ public class Book {
 	}
 	public void setIsActive(String isActive) {
 		this.isActive = isActive;
+	}
+
+	public Double getPrice() {
+		return price;
+	}
+
+	public void setPrice(Double price) {
+		this.price = price;
+	}
+
+	public String getPublisherName() {
+		return publisherName;
+	}
+
+	public void setPublisherName(String publisherName) {
+		this.publisherName = publisherName;
+	}
+
+	public String getCategoryDescription() {
+		return categoryDescription;
+	}
+
+	public void setCategoryDescription(String categoryDescription) {
+		this.categoryDescription = categoryDescription;
 	}
     
     

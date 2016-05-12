@@ -24,7 +24,7 @@
 						</tr>
 						<tr>
 							<td class="caption">Alamat<b class="mandatory">*</b></td>
-							<td><s:text name="model.publisherAddress"/></td>
+							<td><s:textarea name="model.publisherAddress" rows="5"></s:textarea></td>
 						</tr>
 						<tr>
 							<td class="caption">Telp<b class="mandatory">*</b></td>

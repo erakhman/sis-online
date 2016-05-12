@@ -1,20 +1,21 @@
 package com.beesinergi.action;
 
+import java.util.List;
+
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.integration.spring.SpringBean;
 
 import com.beesinergi.model.Book;
-import com.beesinergi.service.CommonService;
-import com.beesinergi.service.BookService;
-import com.beesinergi.util.SystemConstant;
 import com.beesinergi.model.BookCategory;
-import com.beesinergi.service.BookCategoryService;
-
+import com.beesinergi.model.BookLocation;
 import com.beesinergi.model.BookPublisher;
+import com.beesinergi.service.BookCategoryService;
+import com.beesinergi.service.BookLocationService;
 import com.beesinergi.service.BookPublisherService;
-
-import java.util.List;
+import com.beesinergi.service.BookService;
+import com.beesinergi.service.CommonService;
+import com.beesinergi.util.SystemConstant;
 
 public class BookActionBean extends BaseMaintenanceActionBean<Book> {
 
@@ -23,12 +24,12 @@ public class BookActionBean extends BaseMaintenanceActionBean<Book> {
 	
 	@SpringBean 
 	private BookService bookService;
-	
 	@SpringBean 
 	private BookCategoryService bookCategoryService;
-	
 	@SpringBean 
 	private BookPublisherService bookPublisherService;
+	@SpringBean 
+	private BookLocationService bookLocationService;
 	
 	@Override
 	protected CommonService<Book> getCommonService() {
@@ -48,6 +49,10 @@ public class BookActionBean extends BaseMaintenanceActionBean<Book> {
 	@Override
 	public String getPageTitle() {
 		return getLocalizeableMessage("nav."+SystemConstant.MenuCode.BOOK);
+	}
+	
+	public List<BookLocation> getBookLocationList(){
+		return bookLocationService.findAll(null);
 	}
 	
 	public List<BookCategory> getBookCategoryList(){

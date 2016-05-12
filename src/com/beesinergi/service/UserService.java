@@ -11,10 +11,13 @@ import org.springframework.stereotype.Service;
 
 import com.beesinergi.exception.ErrorHolder;
 import com.beesinergi.exception.SystemException;
+import com.beesinergi.mapper.JadwalUjianMapper;
 import com.beesinergi.mapper.UserMapper;
 import com.beesinergi.mapper.UserRoleMapper;
+import com.beesinergi.model.AppRole;
 import com.beesinergi.model.AppUser;
 import com.beesinergi.model.AppUserRole;
+import com.beesinergi.model.JadwalUjian;
 import com.beesinergi.util.Paging;
 import com.beesinergi.util.PasswordUtil;
 import com.beesinergi.util.SystemConstant;
@@ -27,6 +30,8 @@ public class UserService implements CommonService<AppUser> {
 	private UserMapper userMapper;
 	@Autowired
 	private UserRoleMapper userRoleMapper;
+	@Autowired
+	private JadwalUjianMapper jadwalUjianMapper;
 	@Autowired
 	private SqlSessionFactory sqlSessionFactory;
 
@@ -120,6 +125,19 @@ public class UserService implements CommonService<AppUser> {
 			if (user.getIsLocked().equals(SystemConstant.YES)){
 				throw new SystemException(new ErrorHolder("User anda terkunci, silahkan hubungi Administrator."));
 			} 
+			List<AppUserRole> roleList = user.getUserRoleList();
+			if (!roleList.isEmpty()){
+				AppUserRole role = roleList.get(0);
+				if (role.getFkRole().equals(SystemConstant.PK_USER_ROLE_CALON_SISWA)){
+					JadwalUjian param2 = new JadwalUjian();
+					param2.setIsActive(SystemConstant.YES);
+					param2.setFkLookupType(SystemConstant.JadwalUjianType.UJIAN_MASUK);
+					List<JadwalUjian> jadwalUjian = jadwalUjianMapper.selectAll(param2);
+					if (jadwalUjian.isEmpty()){
+						throw new SystemException(new ErrorHolder("Saat ini belum ada jadwal ujian."));
+					}
+				}
+			}
 			if (PasswordUtil.checkPassword(param.getPassword(),user.getPassword())){
 				user.setLastLoginDate(new Date());
 			} else{

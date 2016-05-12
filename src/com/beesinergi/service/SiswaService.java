@@ -41,6 +41,11 @@ public class SiswaService implements CommonService<Siswa> {
 	public Paging findAllByPaging(Paging paging, Siswa param) {
 		SqlSession session = sqlSessionFactory.openSession();
 		String sqlMapper = "com.beesinergi.mapper.SiswaMapper.selectAll";
+		if (param != null){
+			if (param.getNamaSiswa() != null){
+				param.setNamaSiswa("%"+param.getNamaSiswa().toLowerCase()+"%");
+			}
+		}
 		List<Siswa> list = session.selectList(sqlMapper, param, new RowBounds(paging.getOffset(),paging.getLimit()));
 		Paging result = new Paging(list);
 		session.close();

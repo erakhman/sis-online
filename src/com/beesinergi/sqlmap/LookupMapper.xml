@@ -3,10 +3,10 @@
 <mapper namespace="com.beesinergi.mapper.LookupMapper">
 
 	<resultMap id="BaseResultMap" type="com.beesinergi.model.Lookup">
-		<id column="pk_lookup" jdbcType="INTEGER" property="pkLookup" />
-		<result column="lookup_name" jdbcType="VARCHAR" property="lookupName" />
-		<result column="lookup_type" jdbcType="INTEGER" property="lookupType" />
-		<result column="is_active" jdbcType="VARCHAR" property="isActive" />
+		<id column="pk_lookup" property="pkLookup" />
+		<result column="fk_lookup_group" property="fkLookupGroup" />
+		<result column="lookup_name" property="lookupName" />
+		<result column="lookup_value" property="lookupValue" />
 		<result column="created_date" jdbcType="DATE" property="createdDate" />
 		<result column="created_by" jdbcType="VARCHAR" property="createdBy" />
 		<result column="changed_date" jdbcType="DATE" property="changedDate" />
@@ -16,20 +16,15 @@
 	<select id="selectAll" parameterType="com.beesinergi.model.Lookup" resultMap="BaseResultMap">
 		select a.* 
 		from lookup a
+			join lookup_group b on b.pk_lookup_group = a.fk_lookup_group
 		where 1 = 1
 			<if test="pkLookup != null">
 				and a.pk_lookup = #{pkLookup}
 			</if>	
-			<if test="isActive != null">
-				and a.is_active = #{isActive}
+			<if test="fkLookupGroup != null">
+				and a.fk_lookup_group = #{fkLookupGroup}
 			</if>
-			<if test="lookupType != null">
-				and a.lookup_type = #{lookupType}
-			</if>
-			<if test="lookupName != null">
-				and lower(a.lookup_name) like #{lookupName}
-			</if>
-		order by a.lookup_name asc		
+		order by a.pk_lookup asc		
 	</select>
 	
 	<select id="selectCount" parameterType="com.beesinergi.model.Lookup" resultType="java.lang.Integer">

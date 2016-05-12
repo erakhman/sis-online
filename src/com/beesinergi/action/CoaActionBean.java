@@ -1,12 +1,16 @@
 package com.beesinergi.action;
 
+import java.util.List;
+
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.integration.spring.SpringBean;
 
 import com.beesinergi.model.Coa;
-import com.beesinergi.service.CommonService;
+import com.beesinergi.model.CoaType;
 import com.beesinergi.service.CoaService;
+import com.beesinergi.service.CoaTypeService;
+import com.beesinergi.service.CommonService;
 import com.beesinergi.util.SystemConstant;
 
 public class CoaActionBean extends BaseMaintenanceActionBean<Coa> {
@@ -16,6 +20,8 @@ public class CoaActionBean extends BaseMaintenanceActionBean<Coa> {
 	
 	@SpringBean 
 	private CoaService coaService;
+	@SpringBean 
+	private CoaTypeService coaTypeService;
 	
 	@Override
 	protected CommonService<Coa> getCommonService() {
@@ -34,7 +40,17 @@ public class CoaActionBean extends BaseMaintenanceActionBean<Coa> {
 
 	@Override
 	public String getPageTitle() {
-		return getLocalizeableMessage("nav."+SystemConstant.MenuCode.TAHUN_AJARAN);
+		return getLocalizeableMessage("nav."+SystemConstant.MenuCode.COA);
+	}
+	
+	public List<CoaType> getCoaTypeList() {
+		List<CoaType> list = coaTypeService.findAll(null);
+		return list;
+	}
+	
+	public List<Coa> getParentCoaList() {
+		List<Coa> list = coaService.findAllParent();
+		return list;
 	}
 
 }

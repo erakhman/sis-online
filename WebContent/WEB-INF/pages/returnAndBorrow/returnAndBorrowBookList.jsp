@@ -26,7 +26,15 @@
 	        	<thead>
 	            	<tr>
 	            		<td class="hidden"></td>
-	            		<td class="listHeader">Tahun Ajaran</td> 
+	            		<td class="listHeader">Book ID</td> 
+	            		<td class="listHeader">Borrowed By</td> 
+	            		<td class="listHeader">Start Date</td>
+	            		<td class="listHeader">End Date</td>
+	            		<td class="listHeader">Return Date</td>
+	            		<td class="listHeader">Created Date</td>
+	            		<td class="listHeader">Changed Date</td>
+	            		<td class="listHeader">Created By</td>
+	            		<td class="listHeader">Changed By</td> 
 	             	</tr>
 	        	</thead>
 				<tbody></tbody>	
@@ -38,7 +46,7 @@
 <script>
 $(document).ready(function(){
 	showList(1);
-	$('#'+'<%=SystemConstant.MenuCode.TAHUN_AJARAN%>').addClass('tabActive');
+	$('#'+'<%=SystemConstant.MenuCode.RETURN_AND_BORROW_BOOK%>').addClass('tabActive');
 });
 
 function populateTable(data){
@@ -46,8 +54,16 @@ function populateTable(data){
 	$.each(data,function(i){
 		tBody += 
    			'<tr>'+
-   				'<td class="hidden">'+this.pkTahunAjaran+'</td>'+
-   				'<td class="listItem">'+this.tahunAjaran+'</td>'+
+   				'<td class="hidden">'+this.id+'</td>'+
+   				'<td class="listItem">'+this.bookId+'</td>'+
+   				'<td class="listItem">'+this.borrowedBy+'</td>'+
+   				'<td class="listItem">'+this.startDate+'</td>'+
+   				'<td class="listItem">'+this.endDate+'</td>'+
+   				'<td class="listItem">'+this.returnDate+'</td>'+
+   				'<td class="listItem">'+this.createdDate+'</td>'+
+   				'<td class="listItem">'+this.changedDate+'</td>'+
+   				'<td class="listItem">'+this.createdBy+'</td>'+
+   				'<td class="listItem">'+this.changedBy+'</td>'+
    			'</tr>';
 	});
 	return tBody;

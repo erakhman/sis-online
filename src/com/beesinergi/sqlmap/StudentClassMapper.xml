@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.beesinergi.mapper.StudentClassMapper">
+
+	<resultMap id="BaseResultMap" type="com.beesinergi.model.StudentClass">
+		<id column="id" property="pkStudentClass" />
+		<result column="class_history_id" property="fkClassHistory" />
+		<result column="student_id" property="fkStudent" />
+	</resultMap>
+	
+	<select id="selectAll" parameterType="com.beesinergi.model.StudentClass" resultMap="BaseResultMap">
+		select 
+			*
+		from student_class_history a
+		where 1 = 1
+		order by a.id asc	
+	</select>
+	
+	<insert id="insert" parameterType="com.beesinergi.model.StudentClass" useGeneratedKeys="true" keyProperty="pkStudentClass" keyColumn="id">
+		insert into student_class_history ( 
+			class_history_id,
+			student_id
+		) values (
+			#{fkClassHistory},
+			#{fkStudent}
+      )
+	</insert>
+	
+</mapper>

@@ -15,6 +15,12 @@
 				</c:choose>
 					<table>
 						<tr>
+							<td class="caption" width="20%"><fmt:message key="label.status"/></td>
+							<td>						
+								<s:checkbox value="Y" name="model.isActive" onclick="activeInactive()" id="chkIsActive"/><span>Active</span>
+							</td>
+						</tr>
+						<tr>
 							<td class="caption">Nama Pelajaran<b class="mandatory">*</b></td>
 							<td>
 								<s:select name="model.fkPelajaran">

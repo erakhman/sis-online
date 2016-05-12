@@ -24,9 +24,6 @@ public class HomeActionBean extends BaseActionBean {
 	}
 
 	@Override
-	public String getPageTitle() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public String getPageTitle() {return null;}
 
 }

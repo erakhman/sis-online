@@ -1,3 +1,4 @@
+<%@page import="com.beesinergi.util.SystemParameter"%>
 <%@include file="/WEB-INF/pages/layout/taglibs.jsp"%>
 <%@page import="com.beesinergi.util.SystemConstant"%>
 
@@ -9,11 +10,12 @@
 			<s:form id="detailForm" method="POST" beanclass="${actionBean.beanClass}">
 				<s:hidden name="doSave"/>
 				<s:hidden name="model.pkPendaftaran"/>
+				<s:hidden name="model.userName"/>
 				<s:hidden name="model.siswa.pkSiswa"/>
-				<%-- <c:choose>
-					<c:when test="${actionBean.model.pkPendaftaran != null}"><input type="hidden" name="model.changedBy" value="${actionBean.userInfo.employeeName}"/></c:when>
-					<c:otherwise><input type="hidden" name="model.createdBy" value="${actionBean.userInfo.employeeName}"/></c:otherwise>
-				</c:choose> --%>
+				<c:choose>
+					<c:when test="${actionBean.model.pkPendaftaran != null}"><input type="hidden" name="model.changedBy" value="${actionBean.userInfo.fullName}"/></c:when>
+					<c:otherwise><input type="hidden" name="model.createdBy" value="${actionBean.userInfo.fullName}"/></c:otherwise>
+				</c:choose>
 				<fieldset>
 					<legend>Rincian Siswa</legend>
 					<table>
@@ -28,6 +30,19 @@
 						<tr>
 							<td class="caption">NEM<b class="mandatory">*</b></td>
 							<td><s:text name="model.nem"/></td>
+						</tr>
+						<tr>
+							<td class="caption">Biaya<b class="mandatory">*</b></td>
+							<td><s:text name="model.biayaPendaftaran" readonly="true" class="numeric"/></td>
+						</tr>
+						<tr>
+							<td class="caption">Status<b class="mandatory">*</b></td>
+							<td>
+								<s:select name="model.status">
+									<s:option value="<%= SystemConstant.RegistrationStatus.NEW %>"><%= SystemConstant.RegistrationStatus().get(SystemConstant.RegistrationStatus.NEW) %></s:option>
+		               				<s:option value="<%= SystemConstant.RegistrationStatus.PASSED %>"><%= SystemConstant.RegistrationStatus().get(SystemConstant.RegistrationStatus.PASSED) %></s:option>
+								</s:select>
+							</td>
 						</tr>
 					</table>
 				</fieldset>
@@ -97,6 +112,9 @@ $(function(){
 		cancelNilai();
 	});
 	onclickNilaiList();
+	if ($('input[name="model.pkPendaftaran"]').val() == ''){
+		$('input[name="model.biayaPendaftaran"]').val('<%= SystemParameter.REGISTRATION_FEE %>');
+	}
 });
 
 function populateNilaiList(){
@@ -152,19 +170,10 @@ function onclickNilaiList(){
 	});
 }
 
-function save(){
+function insertAdditionalValue(){
 	$('#nilaiList tbody').find('tr').each(function(i){
 		$('#detailForm').append('<input type="hidden" name="model.pendaftaranDetailList['+i+'].fkPelajaran" value="'+$(this).children().eq(0).html()+'"/>');
 		$('#detailForm').append('<input type="hidden" name="model.pendaftaranDetailList['+i+'].nilai" value="'+$(this).children().eq(2).html()+'"/>');
-	});
-	var url = $('#detailForm').attr('action');
-	var xhr = $.post(url,$('#detailForm').serialize(),function(data){
-		if(xhr.getResponseHeader('X-Stripes-Success')){
-			showList(1);
-			closeDialog();
-		} else{
-			$('#errorMessage').html(data);
-		}
 	});
 }
 </script>

@@ -11,12 +11,14 @@ public class Coa {
     private Integer fkCoaType;
     private Double balance;
     private Integer naturalBalance;
-    private Integer parentCoa;
+    private Integer parentFkCoa;
     private Integer status;
     private Date createdDate;
     private String createdBy;
     private Date changedDate;
     private String changedBy;
+    
+    private Integer totalChild;
     
 	public Integer getPkCoa() {
 		return pkCoa;
@@ -60,12 +62,6 @@ public class Coa {
 	public void setNaturalBalance(Integer naturalBalance) {
 		this.naturalBalance = naturalBalance;
 	}
-	public Integer getParentCoa() {
-		return parentCoa;
-	}
-	public void setParentCoa(Integer parentCoa) {
-		this.parentCoa = parentCoa;
-	}
 	public Integer getStatus() {
 		return status;
 	}
@@ -95,6 +91,18 @@ public class Coa {
 	}
 	public void setChangedBy(String changedBy) {
 		this.changedBy = changedBy;
+	}
+	public Integer getParentFkCoa() {
+		return parentFkCoa;
+	}
+	public void setParentFkCoa(Integer parentFkCoa) {
+		this.parentFkCoa = parentFkCoa;
+	}
+	public Integer getTotalChild() {
+		return totalChild;
+	}
+	public void setTotalChild(Integer totalChild) {
+		this.totalChild = totalChild;
 	}
        
 }

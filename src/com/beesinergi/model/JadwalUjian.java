@@ -9,7 +9,7 @@ public class JadwalUjian {
     private Integer fkKelas;
     private Date startDate;
     private Date endDate;
-    private String type;
+    private Integer fkLookupType;
     private Integer fkTahunAjaran;
     private Date createdDate;
     private String createdBy;
@@ -19,6 +19,8 @@ public class JadwalUjian {
     private String namaPelajaran;
     private String namaKelas;
     private String tahunAjaran;
+    private String lookupName;
+    private String isActive;
     
 	public Integer getPkJadwalUjian() {
 		return pkJadwalUjian;
@@ -49,12 +51,6 @@ public class JadwalUjian {
 	}
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
-	}
-	public String getType() {
-		return type;
-	}
-	public void setType(String type) {
-		this.type = type;
 	}
 	public Integer getFkTahunAjaran() {
 		return fkTahunAjaran;
@@ -103,6 +99,24 @@ public class JadwalUjian {
 	}
 	public void setTahunAjaran(String tahunAjaran) {
 		this.tahunAjaran = tahunAjaran;
+	}
+	public Integer getFkLookupType() {
+		return fkLookupType;
+	}
+	public void setFkLookupType(Integer fkLookupType) {
+		this.fkLookupType = fkLookupType;
+	}
+	public String getLookupName() {
+		return lookupName;
+	}
+	public void setLookupName(String lookupName) {
+		this.lookupName = lookupName;
+	}
+	public String getIsActive() {
+		return isActive;
+	}
+	public void setIsActive(String isActive) {
+		this.isActive = isActive;
 	}
     
 }

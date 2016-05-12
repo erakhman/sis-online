@@ -13,7 +13,13 @@
 		<result column="created_by" property="createdBy" />
 		<result column="changed_date" property="changedDate" />
 		<result column="changed_by" property="changedBy" />
-		<result column="is_active" property="isActive" />
+		<result column="fk_tahun_ajaran" property="fkTahunAjaran" />
+		<result column="status" property="status" />
+		<result column="kode_pendaftaran" property="kodePendaftaran" />
+		<result column="biaya_pendaftaran" property="biayaPendaftaran" />
+		
+		<result column="tahun_ajaran" property="tahunAjaran" />
+		<result column="total_nilai_ujian" property="totalNilaiUjian" />
 		<collection property="pendaftaranDetailList" ofType="com.beesinergi.model.PendaftaranDetail">
 	    	<result column="fk_pelajaran" property="fkPelajaran" />
 	    	<result column="nama_pelajaran" property="namaPelajaran" />
@@ -23,8 +29,10 @@
 	
 	<select id="selectAll" parameterType="com.beesinergi.model.Pendaftaran" resultMap="BaseResultMap">
 		select 
-			*
+			*,
+			coalesce((select sum(score) from hasil_ujian_masuk x where x.fk_pendaftaran = a.pk_pendaftaran),0) total_nilai_ujian
 		from pendaftaran a
+			join tahun_ajaran e on e.pk_tahun_ajaran = a.fk_tahun_ajaran
 			left join pendaftaran_detail c on a.pk_pendaftaran = c.fk_pendaftaran
 			left join pelajaran d on d.pk_pelajaran = c.fk_pelajaran
 		where 1 = 1
@@ -34,7 +42,16 @@
 			<if test="userName != null">
 				and a.user_name = #{userName}
 			</if>
-		order by a.pk_pendaftaran asc	
+			<if test="status != null">
+				and a.status = #{status}
+			</if>
+			<if test="kodePendaftaran != null">
+				and lower(a.kode_pendaftaran) like #{kodePendaftaran}
+			</if>
+		<if test="orderBy != null">
+			order by ${orderBy} desc
+		</if>	
+			
 	</select>
 	
 	<select id="selectCount" parameterType="com.beesinergi.model.Pendaftaran" resultType="java.lang.Integer">
@@ -48,6 +65,10 @@
 			tgl_lahir,
 			nem,
 			user_name,
+			fk_tahun_ajaran,
+			kode_pendaftaran,
+			biaya_pendaftaran,
+			status,
 			created_date, 
 			created_by
 		) values (
@@ -55,9 +76,13 @@
 			#{tglLahir},
 			#{nem},
 			#{userName},
+			fn_tahun_ajaran(),
+			#{kodePendaftaran},
+			#{biayaPendaftaran},
+			#{status},
 			#{createdDate},
 			#{createdBy}
-      )
+      	)
 	</insert>
 	
 	<update id="updateByPrimaryKey" parameterType="com.beesinergi.model.Pendaftaran">
@@ -66,9 +91,19 @@
     		nama_siswa = #{namaSiswa},
     		tgl_lahir = #{tglLahir},
     		nem = #{nem},
+    		user_name = #{userName},
+    		status = #{status},
 	      	changed_date = #{changedDate},
 	      	changed_by = #{changedBy}
 		where pk_pendaftaran = #{pkPendaftaran}
+	</update> 
+	
+	<update id="examPass" parameterType="java.util.List">
+		update pendaftaran set status = 2 
+		where pk_pendaftaran in 
+		<foreach item="pkPendaftaranList" index="index" collection="list" open="(" separator="," close=")">
+       		#{pkPendaftaranList}
+ 		</foreach>
 	</update> 
 	
 </mapper>

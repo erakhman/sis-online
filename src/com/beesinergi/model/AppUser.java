@@ -22,7 +22,7 @@ public class AppUser {
     private String roleName;
     private String employeeName;
     private List<AppMenu> menuList;
-    private List<AppRole> roleList;
+    private List<AppUserRole> userRoleList;
     private List<Integer> fkRoleList;
     
     public boolean isHasRolePoApproval() {
@@ -155,13 +155,13 @@ public class AppUser {
 		this.fkRoleList = fkRoleList;
 	}
 
-	public List<AppRole> getRoleList() {
-		return roleList;
-	}
-
-	public void setRoleList(List<AppRole> roleList) {
-		this.roleList = roleList;
-	}
+//	public List<AppRole> getRoleList() {
+//		return roleList;
+//	}
+//
+//	public void setRoleList(List<AppRole> roleList) {
+//		this.roleList = roleList;
+//	}
 
 	public Integer getFkEmployee() {
 		return fkEmployee;
@@ -177,6 +177,14 @@ public class AppUser {
 
 	public void setEmployeeName(String employeeName) {
 		this.employeeName = employeeName;
+	}
+
+	public List<AppUserRole> getUserRoleList() {
+		return userRoleList;
+	}
+
+	public void setUserRoleList(List<AppUserRole> userRoleList) {
+		this.userRoleList = userRoleList;
 	}
 
 }

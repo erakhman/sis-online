@@ -8,6 +8,10 @@
 		<result column="jawaban_benar" property="jawabanBenar" />
 		<result column="jawaban_salah" property="jawabanSalah" />
 		<result column="score" property="score" />
+		<result column="fk_pendaftaran" property="fkPendaftaran" />
+		<result column="fk_pelajaran" property="fkPelajaran" />
+		
+		<result column="nama_pelajaran" property="namaPelajaran" />
 		<association property="pendaftaran" resultMap="com.beesinergi.mapper.PendaftaranMapper.BaseResultMap"/>
 	</resultMap>
 	
@@ -16,9 +20,14 @@
 			*
 		from hasil_ujian_masuk a
 			join pendaftaran b on b.pk_pendaftaran = a.fk_pendaftaran
+			join pelajaran c on c.pk_pelajaran = a.fk_pelajaran
+			join tahun_ajaran d on d.pk_tahun_ajaran = b.fk_tahun_ajaran
 		<where>
 			<if test="fkPendaftaran != null">
 				and a.fk_pendaftaran = #{fkPendaftaran}
+			</if>
+			<if test="fkPelajaran != null">
+				and a.fk_pelajaran = #{fkPelajaran}
 			</if>
 		</where>	
 		order by a.pk_hasil_ujian_masuk asc	
@@ -35,12 +44,14 @@
 			jawaban_benar,
 			jawaban_salah,
 			score, 
+			fk_pelajaran, 
 			fk_pendaftaran
 		) values (
 			#{jumlahSoal},
 			#{jawabanBenar},
 			#{jawabanSalah},
 			#{score},
+			#{fkPelajaran},
 			#{fkPendaftaran}
       )
 	</insert>

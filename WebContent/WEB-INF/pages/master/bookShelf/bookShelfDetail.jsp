@@ -8,17 +8,21 @@
 			<div id="errorMessage"></div>
 			<s:form id="detailForm" method="POST" beanclass="${actionBean.beanClass}">
 				<s:hidden name="doSave"/>
-				<s:hidden name="model.pkTahunAjaran"/>
-				<c:choose>
-					<c:when test="${actionBean.model.pkTahunAjaran != null}"><input type="hidden" name="model.changedBy" value="${actionBean.userInfo.fullName}"/></c:when>
-					<c:otherwise><input type="hidden" name="model.createdBy" value="${actionBean.userInfo.fullName}"/></c:otherwise>
-				</c:choose>
+				<s:hidden name="model.id"/>
 					<table>
 						<tr>
-							<td class="caption">Tahun Ajaran<b class="mandatory">*</b></td>
-							<td><s:text name="model.tahunAjaran"/></td>
+							<td class="caption"><fmt:message key="label.shelfCode"/><b class="mandatory">*</b></td>
+							<td>
+								<s:text name="model.shelfCode"/>
+							</td>
 						</tr>
-					</table>		
+						<tr>
+							<td class="caption"><fmt:message key="label.shelfName"/><b class="mandatory">*</b></td>
+							<td>
+								<s:text name="model.shelfName"/>
+							</td>
+						</tr>
+					</table>				
 			</s:form>
 		</td>
 	</tr>

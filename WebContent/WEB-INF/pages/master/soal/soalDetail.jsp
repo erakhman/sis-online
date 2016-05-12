@@ -15,8 +15,44 @@
 				</c:choose>
 					<table>
 						<tr>
-							<td class="caption">Tahun Ajaran<b class="mandatory">*</b></td>
-							<td><s:text name="model.soal"/></td>
+							<td class="caption">Nama Pelajaran<b class="mandatory">*</b></td>
+							<td>
+								<s:select name="model.fkPelajaran">
+									<s:options-collection collection="${actionBean.pelajaranList}" value="pkPelajaran" label="namaPelajaran"/>
+								</s:select>
+							</td>
+						</tr>
+						<tr>
+							<td class="caption">Soal Pelajaran<b class="mandatory">*</b></td>
+							<td><s:text name="model.soalPelajaran"/></td>
+						</tr>
+						<tr>
+							<td class="caption">Pilihan A<b class="mandatory">*</b></td>
+							<td><s:text name="model.pilihanA"/></td>
+						</tr>
+						<tr>
+							<td class="caption">Pilihan B<b class="mandatory">*</b></td>
+							<td><s:text name="model.pilihanB"/></td>
+						</tr>
+						<tr>
+							<td class="caption">Pilihan C<b class="mandatory">*</b></td>
+							<td><s:text name="model.pilihanC"/></td>
+						</tr>
+						<tr>
+							<td class="caption">Pilihan D<b class="mandatory">*</b></td>
+							<td><s:text name="model.pilihanD"/></td>
+						</tr>
+						<tr>
+							<td class="caption">Pilihan E<b class="mandatory">*</b></td>
+							<td><s:text name="model.pilihanE"/></td>
+						</tr>
+						<tr>
+							<td class="caption">Level<b class="mandatory">*</b></td>
+							<td><s:text name="model.level"/></td>
+						</tr>
+						<tr>
+							<td class="caption">Jawaban<b class="mandatory">*</b></td>
+							<td><s:text name="model.jawaban"/></td>
 						</tr>
 					</table>		
 			</s:form>

@@ -1,10 +1,18 @@
 package com.beesinergi.action;
 
+import java.util.List;
+
+import org.apache.commons.lang.exception.ExceptionUtils;
+
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.integration.spring.SpringBean;
 
+import com.beesinergi.exception.ErrorHolder;
+import com.beesinergi.exception.SystemException;
+import com.beesinergi.model.ClassHistory;
 import com.beesinergi.model.Kelas;
+import com.beesinergi.service.ClassHistoryService;
 import com.beesinergi.service.CommonService;
 import com.beesinergi.service.KelasService;
 import com.beesinergi.util.SystemConstant;
@@ -16,6 +24,10 @@ public class KelasActionBean extends BaseMaintenanceActionBean<Kelas> {
 	
 	@SpringBean 
 	private KelasService kelasService;
+	@SpringBean 
+	private ClassHistoryService classHistoryService;
+	
+	private ClassHistory classHistory;
 	
 	@Override
 	protected CommonService<Kelas> getCommonService() {
@@ -35,6 +47,19 @@ public class KelasActionBean extends BaseMaintenanceActionBean<Kelas> {
 	@Override
 	public String getPageTitle() {
 		return getLocalizeableMessage("nav."+SystemConstant.MenuCode.KELAS);
+	}
+	
+	public List<ClassHistory> getClassHistoryList() {
+		List<ClassHistory> list = classHistoryService.findAll(classHistory);
+		return list;
+	}
+
+	public ClassHistory getClassHistory() {
+		return classHistory;
+	}
+
+	public void setClassHistory(ClassHistory classHistory) {
+		this.classHistory = classHistory;
 	}
 
 }
