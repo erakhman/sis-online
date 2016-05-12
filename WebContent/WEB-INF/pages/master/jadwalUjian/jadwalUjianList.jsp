@@ -26,12 +26,12 @@
 	        	<thead>
 	            	<tr>
 	            		<td class="hidden"></td>
+	            		<td class="listHeader">Tahun Ajaran</td>
 	            		<td class="listHeader">Nama Pelajaran</td>
 	            		<td class="listHeader">Nama Kelas</td>
 	            		<td class="listHeader">Start Date</td> 
 	            		<td class="listHeader">End Date</td>
 	            		<td class="listHeader">Type</td>
-	            		<td class="listHeader">Tahun Ajaran</td>
 	             	</tr>
 	        	</thead>
 				<tbody></tbody>	
@@ -49,15 +49,16 @@ $(document).ready(function(){
 function populateTable(data){
 	var tBody = '';
 	$.each(data,function(i){
+		var namaKelas = this.namaKelas == null ? '-' : this.namaKelas;
 		tBody += 
    			'<tr>'+
    				'<td class="hidden">'+this.pkJadwalUjian+'</td>'+
-   				'<td class="listItem">'+this.namaPelajaran+'</td>'+
-   				'<td class="listItem">'+this.namaKelas+'</td>'+
-   				'<td class="listItem">'+this.startDate+'</td>'+
-   				'<td class="listItem">'+this.endDate+'</td>'+
-   				'<td class="listItem">'+this.type+'</td>'+
    				'<td class="listItem">'+this.tahunAjaran+'</td>'+
+   				'<td class="listItem">'+this.namaPelajaran+'</td>'+
+   				'<td class="listItem">'+namaKelas+'</td>'+
+   				'<td class="listItem">'+formatDateTime(this.startDate)+'</td>'+
+   				'<td class="listItem">'+formatDateTime(this.endDate)+'</td>'+
+   				'<td class="listItem">'+this.lookupName+'</td>'+
    			'</tr>';
 	});
 	return tBody;

@@ -6,7 +6,7 @@ public class PelajaranUjian {
 
     private Integer pkPelajaranUjian;
     private Integer fkPelajaran;
-    private String fkTahunAjaran;
+    private Integer fkTahunAjaran;
     private Date createdDate;
     private String createdBy;
     private Date changedDate;
@@ -28,10 +28,10 @@ public class PelajaranUjian {
 	public void setFkPelajaran(Integer fkPelajaran) {
 		this.fkPelajaran = fkPelajaran;
 	}
-	public String getFkTahunAjaran() {
+	public Integer getFkTahunAjaran() {
 		return fkTahunAjaran;
 	}
-	public void setFkTahunAjaran(String fkTahunAjaran) {
+	public void setFkTahunAjaran(Integer fkTahunAjaran) {
 		this.fkTahunAjaran = fkTahunAjaran;
 	}
 	public Date getCreatedDate() {

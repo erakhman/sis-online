@@ -3,50 +3,88 @@
 <mapper namespace="com.beesinergi.mapper.CoaMapper">
 
 	<resultMap id="BaseResultMap" type="com.beesinergi.model.Coa">
-		<id column="pk_coa" property="pkCoa" />
-		<result column="coa" property="tahunAjaran" />
-		<result column="created_date" property="createdDate" />
-		<result column="created_by" property="createdBy" />
-		<result column="changed_date" property="changedDate" />
-		<result column="changed_by" property="changedBy" />
-		<result column="is_active" property="isActive" />
+		<id column="n_coa_id" property="pkCoa" />
+		<result column="v_acct_no" property="acctNo" />
+		<result column="v_acct_name" property="acctName" />
+		<result column="v_desc" property="descr" />
+		<result column="n_type" property="fkCoaType" />
+		<result column="n_balance" property="balance" />
+		<result column="n_natural_balance" property="naturalBalance" />
+		<result column="n_sup_coa_id" property="parentFkCoa" />
+		<result column="n_status" property="status" />		
+		<result column="d_whn_create" property="createdDate" />
+		<result column="v_who_create" property="createdBy" />
+		<result column="d_whn_change" property="changedDate" />
+		<result column="v_who_change" property="changedBy" />
+		
+		<result column="total_child" property="totalChild" />
 	</resultMap>
 	
 	<select id="selectAll" parameterType="com.beesinergi.model.Coa" resultMap="BaseResultMap">
 		select 
-			*
-		from coa a
+			*,
+			(select count(*) from ms_coa where n_sup_coa_id = a.n_coa_id) as total_child
+		from ms_coa a
 		where 1 = 1
 			<if test="pkCoa != null">
-				and a.pk_coa = #{pkCoa}
+				and a.n_coa_id = #{pkCoa}
 			</if>
-		order by a.pk_coa asc	
+		order by v_acct_no asc	
+	</select>
+	
+	<select id="selectAllParent" parameterType="com.beesinergi.model.Coa" resultMap="BaseResultMap">
+		select 
+			*
+		from ms_coa a
+		where n_sup_coa_id is null
+		order by a.n_coa_id asc	
 	</select>
 	
 	<select id="selectCount" parameterType="com.beesinergi.model.Coa" resultType="java.lang.Integer">
-    	select count(*) from coa a
+    	select count(*) from ms_coa a
     	where 1 = 1
   	</select>
 	
-	<insert id="insert" parameterType="com.beesinergi.model.Coa" useGeneratedKeys="true" keyProperty="pkCoa" keyColumn="pk_coa">
-		insert into coa ( 
-			coa,
-			created_date, 
-			created_by
+	<insert id="insert" parameterType="com.beesinergi.model.Coa" useGeneratedKeys="true" keyProperty="pkCoa" keyColumn="n_coa_id">
+		insert into ms_coa ( 
+			v_acct_no,
+			v_acct_name,
+			v_desc,
+			n_type,
+			n_balance,
+			n_natural_balance,
+			n_sup_coa_id,
+			n_status,
+			d_whn_create, 
+			v_who_create
 		) values (
-			#{tahunAjaran},
+			#{acctNo},
+			#{acctName},
+			#{descr},
+			#{fkCoaType},
+			#{balance},
+			#{naturalBalance},
+			#{parentFkCoa},
+			#{status},
 			#{createdDate},
 			#{createdBy}
       )
 	</insert>
 	
 	<update id="updateByPrimaryKey" parameterType="com.beesinergi.model.Coa">
-		update coa
+		update ms_coa
     	set 
-    		coa = #{tahunAjaran},
-	      	changed_date = #{changedDate},
-	      	changed_by = #{changedBy}
-		where pk_coa = #{pkCoa}
+    		v_acct_no = #{acctNo},
+    		v_acct_name = #{acctName},
+    		v_desc = #{descr},
+    		n_type = #{fkCoaType},
+    		n_balance = #{balance},
+    		n_natural_balance = #{naturalBalance},
+    		n_sup_coa_id = #{parentFkCoa},
+    		n_status = #{status},
+	      	d_whn_change = #{changedDate},
+	      	v_who_change = #{changedBy}
+		where n_coa_id = #{pkCoa}
 	</update> 
 	
 </mapper>

@@ -26,21 +26,26 @@
 							<td class="caption">Nama Kelas<b class="mandatory">*</b></td>
 							<td>
 								<s:select name="model.fkKelas">
+									<s:option value="">-</s:option>
 									<s:options-collection collection="${actionBean.kelasList}" value="pkKelas" label="namaKelas"/>
 								</s:select>
 							</td>
 						</tr>
 						<tr>
 							<td class="caption">Start Date<b class="mandatory">*</b></td>
-							<td><s:text name="model.startDate" class="datepicker"/></td>
+							<td><s:text name="model.startDate" class="datetimepicker" formatPattern="<%= SystemConstant.DATE_TIME_FORMAT %>"/></td>
 						</tr>
 						<tr>
 							<td class="caption">End Date<b class="mandatory">*</b></td>
-							<td><s:text name="model.endDate" class="datepicker"/></td>
+							<td><s:text name="model.endDate" class="datetimepicker" formatPattern="<%= SystemConstant.DATE_TIME_FORMAT %>"/></td>
 						</tr>
 						<tr>
 							<td class="caption">Type<b class="mandatory">*</b></td>
-							<td><s:text name="model.type"/></td>
+							<td>
+								<s:select name="model.fkLookupType">
+									<s:options-collection collection="${actionBean.typeList}" value="pkLookup" label="lookupName"/>
+								</s:select>
+							</td>
 						</tr>
 						<tr>
 							<td class="caption">Tahun Ajaran<b class="mandatory">*</b></td>

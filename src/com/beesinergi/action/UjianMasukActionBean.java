@@ -1,6 +1,7 @@
 package com.beesinergi.action;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.stripes.action.ForwardResolution;
@@ -9,12 +10,14 @@ import net.sourceforge.stripes.integration.spring.SpringBean;
 
 import com.beesinergi.model.AppUser;
 import com.beesinergi.model.HasilUjianMasuk;
+import com.beesinergi.model.JadwalUjian;
 import com.beesinergi.model.Pelajaran;
 import com.beesinergi.model.Pendaftaran;
 import com.beesinergi.model.Soal;
 import com.beesinergi.model.UjianMasuk;
 import com.beesinergi.service.CommonService;
 import com.beesinergi.service.HasilUjianMasukService;
+import com.beesinergi.service.JadwalUjianService;
 import com.beesinergi.service.PelajaranService;
 import com.beesinergi.service.PendaftaranService;
 import com.beesinergi.service.SoalService;
@@ -29,6 +32,7 @@ public class UjianMasukActionBean extends BaseMaintenanceActionBean<UjianMasuk> 
 	private String DEFAULT_PAGE = "/WEB-INF/pages/ujianMasuk/ujianMasuk.jsp";
 	private String DETAIL_PAGE = "/WEB-INF/pages/ujianMasuk/ujianMasukDetail.jsp";
 	private String RESULT_PAGE = "/WEB-INF/pages/ujianMasuk/ujianMasukResult.jsp";
+	private String LOGIN_PAGE = "/WEB-INF/pages/login.jsp";
 	
 	@SpringBean
 	private UjianMasukService ujianMasukService;
@@ -42,19 +46,23 @@ public class UjianMasukActionBean extends BaseMaintenanceActionBean<UjianMasuk> 
 	private SoalService soalService;
 	@SpringBean
 	private UserService userService;
+	@SpringBean
+	private JadwalUjianService jadwalUjianService;
 	
 	private HasilUjianMasuk hasilUjian;
+	private JadwalUjian jadwalUjian;
 
 	@Override
 	public Resolution show() {
 		if (getModel() == null){
-			UjianMasuk ujianMasuk = new UjianMasuk();
-			Pendaftaran param = new Pendaftaran();
-			param.setUserName(getUserInfo().getUserName());
-			Pendaftaran pendaftaran = pendaftaranService.findAll(param).get(0);
-			ujianMasuk.setFkPendaftaran(pendaftaran.getPkPendaftaran());
-			ujianMasuk.setFkPelajaran(1);
-			setModel(ujianMasuk);
+			populateJadwalUjian();
+			populateUjianMasuk();
+			List<UjianMasuk> list = ujianMasukService.findAll(getModel());
+			if (!list.isEmpty()){
+				addSimpleError("Anda sudah melakukan ujian!");
+				getContext().getSession().invalidate();
+				return new ForwardResolution(LOGIN_PAGE);
+			}
 		}
 		return new ForwardResolution(DEFAULT_PAGE);
 	}
@@ -73,17 +81,33 @@ public class UjianMasukActionBean extends BaseMaintenanceActionBean<UjianMasuk> 
 	public Resolution showResult() {
 		HasilUjianMasuk param = new HasilUjianMasuk();
 		param.setFkPendaftaran(getModel().getFkPendaftaran());
+		param.setFkPelajaran(getModel().getFkPelajaran());
 		hasilUjian = hasilUjianMasukService.findAll(param).get(0);
 		return new ForwardResolution(RESULT_PAGE);
 	}
 	
 	public Resolution doSave() {
 		setSessionAttribute(SystemConstant.SESSION_WAKTU_UJIAN, "0");
-		AppUser user = getUserInfo();
-		user.setIsLocked(SystemConstant.YES);
-		
 		return super.doSave();
 	}
+	
+	public void populateUjianMasuk() {
+		UjianMasuk ujianMasuk = new UjianMasuk();
+		Pendaftaran param = new Pendaftaran();
+		param.setUserName(getUserInfo().getUserName());
+		Pendaftaran pendaftaran = pendaftaranService.findAll(param).get(0);
+		ujianMasuk.setFkPendaftaran(pendaftaran.getPkPendaftaran());
+		ujianMasuk.setFkPelajaran(jadwalUjian.getFkPelajaran());
+		setModel(ujianMasuk);
+	}
+	
+	public void populateJadwalUjian() {
+		JadwalUjian param = new JadwalUjian();
+		param.setIsActive(SystemConstant.YES);
+		param.setFkLookupType(SystemConstant.JadwalUjianType.UJIAN_MASUK);
+		jadwalUjian = jadwalUjianService.findAll(param).get(0);
+	}
+	
 	
 	public List<Pelajaran> getPelajaranList() {
 		List<Pelajaran> list = pelajaranService.findAll(null);
@@ -92,7 +116,7 @@ public class UjianMasukActionBean extends BaseMaintenanceActionBean<UjianMasuk> 
 	
 	public List<Soal> getSoalList() {
 		Soal soal = new Soal();
-		soal.setFkPelajaran(1);
+		soal.setFkPelajaran(getModel().getFkPelajaran());
 		return soalService.findAll(soal);
 	}
 	
@@ -117,6 +141,14 @@ public class UjianMasukActionBean extends BaseMaintenanceActionBean<UjianMasuk> 
 	
 	public void setHasilUjian(HasilUjianMasuk hasilUjian) {
 		this.hasilUjian = hasilUjian;
+	}
+
+	public JadwalUjian getJadwalUjian() {
+		return jadwalUjian;
+	}
+
+	public void setJadwalUjian(JadwalUjian jadwalUjian) {
+		this.jadwalUjian = jadwalUjian;
 	}
 	
 }

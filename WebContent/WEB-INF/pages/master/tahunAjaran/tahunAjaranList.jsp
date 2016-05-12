@@ -26,6 +26,7 @@
 	        	<thead>
 	            	<tr>
 	            		<td class="hidden"></td>
+	            		<td class="listHeader" width="5px"></td>
 	            		<td class="listHeader">Tahun Ajaran</td> 
 	             	</tr>
 	        	</thead>
@@ -44,9 +45,11 @@ $(document).ready(function(){
 function populateTable(data){
 	var tBody = '';
 	$.each(data,function(i){
+		var isActive = this.isActive == 'Y' ? '<img src="${contextPath}/images/green16.png" title="Active">' : '<img src="${contextPath}/images/red16.png" title="Inactive">'
 		tBody += 
    			'<tr>'+
    				'<td class="hidden">'+this.pkTahunAjaran+'</td>'+
+   				'<td class="listItem">'+isActive+'</td>'+
    				'<td class="listItem">'+this.tahunAjaran+'</td>'+
    			'</tr>';
 	});

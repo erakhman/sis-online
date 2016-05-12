@@ -4,9 +4,10 @@
 
 	<resultMap id="BaseResultMap" type="com.beesinergi.model.JadwalUjian">
 		<id column="pk_jadwal_ujian" property="pkJadwalUjian" />
+		<result column="fk_pelajaran" property="fkPelajaran" />
 		<result column="start_date" property="startDate" />
 		<result column="end_date" property="endDate" />
-		<result column="type" property="type" />
+		<result column="fk_lookup_type" property="fkLookupType" />
 		<result column="created_date" property="createdDate" />
 		<result column="created_by" property="createdBy" />
 		<result column="changed_date" property="changedDate" />
@@ -15,6 +16,7 @@
 		<result column="nama_pelajaran" property="namaPelajaran" />
 		<result column="nama_kelas" property="namaKelas" />
 		<result column="tahun_ajaran" property="tahunAjaran" />
+		<result column="lookup_name" property="lookupName" />
 	</resultMap>
 	
 	<select id="selectAll" parameterType="com.beesinergi.model.JadwalUjian" resultMap="BaseResultMap">
@@ -22,11 +24,16 @@
 			*
 		from jadwal_ujian a
 			join pelajaran b on b.pk_pelajaran = a.fk_pelajaran
-			join kelas c on c.pk_kelas = a.fk_kelas
+			left join kelas c on c.pk_kelas = a.fk_kelas
 			join tahun_ajaran d on d.pk_tahun_ajaran = a.fk_tahun_ajaran
+			join lookup e on e.pk_lookup = a.fk_lookup_type
 		where 1 = 1
 			<if test="pkJadwalUjian != null">
 				and a.pk_jadwal_ujian = #{pkJadwalUjian}
+			</if>
+			<if test="isActive != null">
+				and now() between a.start_date and a.end_date
+				and d.is_active = 'Y'
 			</if>
 		order by a.pk_jadwal_ujian asc	
 	</select>
@@ -42,7 +49,7 @@
 			fk_kelas,
 			start_date,
 			end_date,
-			type,
+			fk_lookup_type,
 			fk_tahun_ajaran,
 			created_date, 
 			created_by
@@ -51,7 +58,7 @@
 			#{fkKelas},
 			#{startDate},
 			#{endDate},
-			#{type},
+			#{fkLookupType},
 			#{fkTahunAjaran},
 			#{createdDate},
 			#{createdBy}
@@ -65,7 +72,7 @@
     		fk_kelas = #{fkKelas},
     		start_date = #{startDate},
     		end_date = #{endDate},
-    		type = #{type},
+    		fk_lookup_type = #{fkLookupType},
     		fk_tahun_ajaran = #{fkTahunAjaran},
 	      	changed_date = #{changedDate},
 	      	changed_by = #{changedBy}

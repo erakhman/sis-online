@@ -57,7 +57,6 @@
 	
 	function convertNumericHtmlToMoney(){
 		$('.numericHtml').each(function(){
-			alert($(this).html());
 			if ($(this).html() != ''){
 				$(this).html(formatMoney($(this).html()));
 			}
@@ -104,7 +103,7 @@
 			if(typeof populateTable == 'function'){
 				tBody = populateTable(data.maintenanceList);
 				if (tBody == ''){
-					var colLength = $('#tableList thead th').length;
+					var colLength = $('#tableList thead td').length;
 					tBody = '<tr><td class="listItemWithoutPointer" colspan="'+colLength+'"><fmt:message key="table.noData"/></td></tr>';
 				}
 				$('#tableList tbody').html(tBody);

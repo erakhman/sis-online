@@ -16,20 +16,10 @@
 				</c:choose>
 				<table>
 					<tr>
-						<td class="caption" width="20%"><fmt:message key="label.status"/></td>
-						<td>						
-							<s:checkbox value="Y" name="model.isActive" onclick="activeInactive()" id="chkIsActive"/><span>Active</span>
-						</td>
-					</tr>	
-					<tr>
-						<td class="caption"><fmt:message key="label.lookupType"/><b class="mandatory">*</b></td>
+						<td class="caption"><fmt:message key="label.fkLookupGroup"/><b class="mandatory">*</b></td>
 						<td>
 							<s:select name="model.lookupType">
-		               			<s:option value="<%= SystemConstant.LookupType.CATEGORY %>"><fmt:message key="<%= SystemConstant.LookupTypeDescr().get(SystemConstant.LookupType.CATEGORY) %>"/></s:option>
-		               			<s:option value="<%= SystemConstant.LookupType.UNIT %>"><fmt:message key="<%= SystemConstant.LookupTypeDescr().get(SystemConstant.LookupType.UNIT) %>"/></s:option>
-		               			<s:option value="<%= SystemConstant.LookupType.CAR %>"><fmt:message key="<%= SystemConstant.LookupTypeDescr().get(SystemConstant.LookupType.CAR) %>"/></s:option>
-		               			<s:option value="<%= SystemConstant.LookupType.DEPARTMENT %>"><fmt:message key="<%= SystemConstant.LookupTypeDescr().get(SystemConstant.LookupType.DEPARTMENT) %>"/></s:option>
-		               			<s:option value="<%= SystemConstant.LookupType.ROOM %>"><fmt:message key="<%= SystemConstant.LookupTypeDescr().get(SystemConstant.LookupType.ROOM) %>"/></s:option>
+		               			<s:option value="<%= SystemConstant.LookupGroup.JADWAL_UJIAN %>"><fmt:message key="<%= SystemConstant.LookupGroupDescr().get(SystemConstant.LookupGroup.JADWAL_UJIAN) %>"/></s:option>
 		               		</s:select>
 						</td>
 					</tr>
@@ -44,18 +34,7 @@
 	</tr>
 </table>
 <script>
-$(document).ready(function(){$('input[name="model.lookupName"]').val();
-	if ($('input[name="model.pkLookup"]').val() == ''){
-		$('#chkIsActive').attr('checked','checked');
-	} 
-	activeInactive();
+$(document).ready(function(){
+	
 });
-
-function activeInactive(){
-	if ($('#chkIsActive').is(':checked')){
-		$('#chkIsActive').next().html('Active');
-	} else{
-		$('#chkIsActive').next().html('Inactive');
-	}
-}
 </script>	

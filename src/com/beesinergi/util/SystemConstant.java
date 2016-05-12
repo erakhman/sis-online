@@ -105,5 +105,31 @@ public class SystemConstant {
 		return map;
 	}
 	
+	public static class BookStatus {
+		public static int AVAILABLE = 1;
+		public static int BORROWED = 0;
+		public static int LOST = 2;
+	}
+	
+	public static Map<Integer,String> BookStatus() {
+		Map<Integer,String> map = new HashMap<Integer, String>();
+		map.put(BookStatus.AVAILABLE, "Tersedia");
+		map.put(BookStatus.BORROWED, "Dipinjam");
+		map.put(BookStatus.LOST, "Hilang");
+		return map;
+	}
+	
+	public static class PenaltyType {
+		public static int SUSPEND = 1;
+		public static int PAY = 2;
+	}
+	
+	public static Map<Integer,String> PenaltyType() {
+		Map<Integer,String> map = new HashMap<Integer, String>();
+		map.put(PenaltyType.SUSPEND, "Suspend");
+		map.put(PenaltyType.PAY, "Bayar Denda");
+		return map;
+	}
+	
     
 }

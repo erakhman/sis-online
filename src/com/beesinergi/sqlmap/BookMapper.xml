@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.beesinergi.mapper.BookMapper">
+
+	<resultMap id="BaseResultMap" type="com.beesinergi.model.Book">
+		<id column="id" property="pkBook" />
+		<result column="isbn" property="bookIsbn" />
+		<result column="code" property="bookCode" />
+		<result column="title" property="bookTitle" />
+		<result column="category" property="bookCategory" />
+		<result column="author" property="bookAuthor" />
+		<result column="publisher" property="bookPublisher" />
+		<result column="location" property="bookLocation" />
+		<result column="status" property="bookStatus"/>
+		<result column="created_date" property="createdDate" />
+		<result column="created_by" property="createdBy" />
+		<result column="changed_date" property="changedDate" />
+		<result column="changed_by" property="changedBy" />
+		<result column="is_active" property="isActive" />
+		<result column="price" property="price" />
+		
+		<result column="publisher_name" property="publisherName" />
+		<result column="category_description" property="categoryDescription" />
+		<result column="location_description" property="locationDescription" />
+	</resultMap>
+	
+	<select id="selectAll" parameterType="com.beesinergi.model.Book" resultMap="BaseResultMap">
+		select 
+			*
+		from ms_book a
+			join ms_book_publisher b on b.id = a.publisher
+			join ms_book_category c on c.id = a.category
+			join ms_book_location d on d.id = a.location
+		where 1 = 1
+			<if test="pkBook != null">
+				and a.id = #{pkBook}
+			</if>
+		order by a.id asc	
+	</select>
+	
+	<select id="selectCount" parameterType="com.beesinergi.model.Book" resultType="java.lang.Integer">
+    	select count(*) from ms_book a
+    	where 1 = 1
+  	</select>
+	
+	<insert id="insert" parameterType="com.beesinergi.model.Book" useGeneratedKeys="true" keyProperty="pkBook" keyColumn="id">
+		insert into ms_book ( 
+			isbn,
+			code,
+			title,
+			category,
+			created_date,
+			author, 
+			publisher,
+			status,
+			location,
+			price,
+			received_date,
+			created_by
+		) values (		
+			#{bookIsbn},
+			#{bookCode},
+			#{bookTitle},
+			#{bookCategory},
+			#{createdDate},
+			#{bookAuthor},
+			#{bookPublisher},
+			#{bookStatus},
+			#{bookLocation},
+			#{price},
+			#{receivedDate},
+			#{createdBy}
+      )
+	</insert>
+	
+	<update id="updateByPrimaryKey" parameterType="com.beesinergi.model.Book">
+		update ms_book
+    	set 
+    		isbn = #{bookIsbn},
+    		code = #{bookCode},
+			title = #{bookTitle},
+			category = #{bookCategory},
+			author = #{bookAuthor},
+			publisher = #{bookPublisher},
+			status = #{bookStatus},
+			location = #{bookLocation},
+			price = #{price},
+	      	changed_date = #{changedDate},
+	      	changed_by = #{changedBy}
+		where id = #{pkBook}
+	</update> 
+	
+</mapper>

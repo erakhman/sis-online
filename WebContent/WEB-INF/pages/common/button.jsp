@@ -15,6 +15,9 @@
 </tr>
 <script>
 function save(){
+	if(typeof insertAdditionalValue == 'function'){
+		insertAdditionalValue();
+	}
 	$('.disabled').removeAttr('disabled');
 	var url = $('#detailForm').attr('action');
 	$('.numeric').each(function(){

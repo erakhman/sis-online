@@ -78,7 +78,6 @@ public class UjianMasukService implements CommonService<UjianMasuk> {
 			object.setCreatedDate(new Date());
 			ujianMasukMapper.insert(object);
 			saveUjianMasukDetail(object);
-			lockingUser(object);
 			saveHasilUjianMasuk(object);
 		} catch (Exception e) {
 			txManager.rollback(status);
@@ -104,16 +103,10 @@ public class UjianMasukService implements CommonService<UjianMasuk> {
 		hasilUjian.setJawabanSalah(jawabanSalah);
 		double nilai = (double)jawabanBenar/jumlahSoal;
 		double score = nilai*100;
-		hasilUjian.setScore(score);
+		hasilUjian.setScore(Double.valueOf(String.format("%.2f", score)));
 		hasilUjian.setFkPendaftaran(ujianMasuk.getFkPendaftaran());
+		hasilUjian.setFkPelajaran(ujianMasuk.getFkPelajaran());
 		hasilUjianMasukMapper.insert(hasilUjian);
-	}
-	
-	public void lockingUser(UjianMasuk object) {
-		Pendaftaran pendaftaran = pendaftaranService.findById(object.getFkPendaftaran());
-		AppUser user = userMapper.selectByUserName(pendaftaran.getUserName());
-		user.setIsLocked(SystemConstant.YES);
-		userMapper.updateByPrimaryKey(user);
 	}
 	
 	public void saveUjianMasukDetail(UjianMasuk object) throws SystemException {

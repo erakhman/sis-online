@@ -27,6 +27,7 @@
 	            	<tr>
 	            		<td class="hidden"></td>
 	            		<td class="listHeader">Tahun Ajaran</td> 
+	            		<td class="listHeader">Biaya Tahunan</td> 
 	             	</tr>
 	        	</thead>
 				<tbody></tbody>	
@@ -38,7 +39,7 @@
 <script>
 $(document).ready(function(){
 	showList(1);
-	$('#'+'<%=SystemConstant.MenuCode.TAHUN_AJARAN%>').addClass('tabActive');
+	$('#'+'<%=SystemConstant.MenuCode.LIBRARY_ANNUAL_FEE%>').addClass('tabActive');
 });
 
 function populateTable(data){
@@ -46,7 +47,8 @@ function populateTable(data){
 	$.each(data,function(i){
 		tBody += 
    			'<tr>'+
-   				'<td class="hidden">'+this.pkTahunAjaran+'</td>'+
+   				'<td class="hidden">'+this.id+'</td>'+
+   				'<td class="listItem">'+this.annualFee+'</td>'+
    				'<td class="listItem">'+this.tahunAjaran+'</td>'+
    			'</tr>';
 	});

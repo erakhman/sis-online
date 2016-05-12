@@ -8,11 +8,13 @@ import net.sourceforge.stripes.integration.spring.SpringBean;
 
 import com.beesinergi.model.JadwalUjian;
 import com.beesinergi.model.Kelas;
+import com.beesinergi.model.Lookup;
 import com.beesinergi.model.Pelajaran;
 import com.beesinergi.model.TahunAjaran;
 import com.beesinergi.service.CommonService;
 import com.beesinergi.service.JadwalUjianService;
 import com.beesinergi.service.KelasService;
+import com.beesinergi.service.LookupService;
 import com.beesinergi.service.PelajaranService;
 import com.beesinergi.service.TahunAjaranService;
 import com.beesinergi.util.SystemConstant;
@@ -30,6 +32,8 @@ public class JadwalUjianActionBean extends BaseMaintenanceActionBean<JadwalUjian
 	private KelasService kelasService;
 	@SpringBean 
 	private TahunAjaranService tahunAjaranService;
+	@SpringBean 
+	private LookupService lookupService;
 	
 	@Override
 	protected CommonService<JadwalUjian> getCommonService() {
@@ -63,6 +67,11 @@ public class JadwalUjianActionBean extends BaseMaintenanceActionBean<JadwalUjian
 	
 	public List<TahunAjaran> getTahunAjaranList() {
 		List<TahunAjaran> list = tahunAjaranService.findAll(null);
+		return list;
+	}
+	
+	public List<Lookup> getTypeList() {
+		List<Lookup> list = lookupService.findAllByGroup(SystemConstant.LookupGroup.JADWAL_UJIAN);
 		return list;
 	}
 

@@ -2,31 +2,33 @@ package com.beesinergi.model;
 
 public class HasilUjianMasuk {
 
-	private int pkHasilUjianMasuk;
-	private int jumlahSoal;
-	private int jawabanBenar;
-	private int jawabanSalah;
+	private Integer pkHasilUjianMasuk;
+	private Integer jumlahSoal;
+	private Integer jawabanBenar;
+	private Integer jawabanSalah;
 	private double score;
-	private int fkPendaftaran;
+	private Integer fkPendaftaran;
+	private Integer fkPelajaran;
 	
+	private String namaPelajaran;
 	private Pendaftaran pendaftaran;
 	
-	public int getJumlahSoal() {
+	public Integer getJumlahSoal() {
 		return jumlahSoal;
 	}
-	public void setJumlahSoal(int jumlahSoal) {
+	public void setJumlahSoal(Integer jumlahSoal) {
 		this.jumlahSoal = jumlahSoal;
 	}
-	public int getJawabanBenar() {
+	public Integer getJawabanBenar() {
 		return jawabanBenar;
 	}
-	public void setJawabanBenar(int jawabanBenar) {
+	public void setJawabanBenar(Integer jawabanBenar) {
 		this.jawabanBenar = jawabanBenar;
 	}
-	public int getJawabanSalah() {
+	public Integer getJawabanSalah() {
 		return jawabanSalah;
 	}
-	public void setJawabanSalah(int jawabanSalah) {
+	public void setJawabanSalah(Integer jawabanSalah) {
 		this.jawabanSalah = jawabanSalah;
 	}
 	public double getScore() {
@@ -35,16 +37,16 @@ public class HasilUjianMasuk {
 	public void setScore(double score) {
 		this.score = score;
 	}
-	public int getPkHasilUjianMasuk() {
+	public Integer getPkHasilUjianMasuk() {
 		return pkHasilUjianMasuk;
 	}
-	public void setPkHasilUjianMasuk(int pkHasilUjianMasuk) {
+	public void setPkHasilUjianMasuk(Integer pkHasilUjianMasuk) {
 		this.pkHasilUjianMasuk = pkHasilUjianMasuk;
 	}
-	public int getFkPendaftaran() {
+	public Integer getFkPendaftaran() {
 		return fkPendaftaran;
 	}
-	public void setFkPendaftaran(int fkPendaftaran) {
+	public void setFkPendaftaran(Integer fkPendaftaran) {
 		this.fkPendaftaran = fkPendaftaran;
 	}
 	public Pendaftaran getPendaftaran() {
@@ -52,6 +54,18 @@ public class HasilUjianMasuk {
 	}
 	public void setPendaftaran(Pendaftaran pendaftaran) {
 		this.pendaftaran = pendaftaran;
+	}
+	public Integer getFkPelajaran() {
+		return fkPelajaran;
+	}
+	public void setFkPelajaran(Integer fkPelajaran) {
+		this.fkPelajaran = fkPelajaran;
+	}
+	public String getNamaPelajaran() {
+		return namaPelajaran;
+	}
+	public void setNamaPelajaran(String namaPelajaran) {
+		this.namaPelajaran = namaPelajaran;
 	}
 	
 }

@@ -14,21 +14,33 @@
 		<result column="alamat_ibu" property="alamatIbu" />
 		<result column="telp_ortu" property="telpOrtu" />
 		<result column="nem" property="nem" />
+		<result column="fk_kelas" property="fkKelas" />
 		<result column="created_date" property="createdDate" />
 		<result column="created_by" property="createdBy" />
 		<result column="changed_date" property="changedDate" />
 		<result column="changed_by" property="changedBy" />
+		
+		<result column="nama_kelas" property="className" />
 	</resultMap>
 	
 	<select id="selectAll" parameterType="com.beesinergi.model.Siswa" resultMap="BaseResultMap">
 		select 
 			*
 		from siswa a
+			left join kelas b on b.pk_kelas = a.fk_kelas
 		where 1 = 1
 			<if test="pkSiswa != null">
 				and a.pk_siswa = #{pkSiswa}
-			</if>pe
-		order by a.pk_siswa asc	
+			</if>
+			<if test="fkKelas != null">
+				and a.fk_kelas = #{fkKelas}
+			</if>
+			<if test="namaSiswa != null">
+				and lower(a.nama_siswa) like #{namaSiswa}
+			</if>
+		<if test="orderBy != null">
+			order by ${orderBy} ${sortBy}
+		</if>
 	</select>
 	
 	<select id="selectCount" parameterType="com.beesinergi.model.Siswa" resultType="java.lang.Integer">

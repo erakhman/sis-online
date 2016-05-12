@@ -31,10 +31,12 @@
 	<insert id="insert" parameterType="com.beesinergi.model.TahunAjaran" useGeneratedKeys="true" keyProperty="pkTahunAjaran" keyColumn="pk_tahun_ajaran">
 		insert into tahun_ajaran ( 
 			tahun_ajaran,
+			is_active,
 			created_date, 
 			created_by
 		) values (
 			#{tahunAjaran},
+			#{isActive},
 			#{createdDate},
 			#{createdBy}
       )
@@ -44,6 +46,7 @@
 		update tahun_ajaran
     	set 
     		tahun_ajaran = #{tahunAjaran},
+    		is_active = #{isActive},
 	      	changed_date = #{changedDate},
 	      	changed_by = #{changedBy}
 		where pk_tahun_ajaran = #{pkTahunAjaran}

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.beesinergi.mapper.LibraryMemberMapper">
+
+	<resultMap id="BaseResultMap" type="com.beesinergi.model.LibraryMember">
+		<id column="id" property="pkLibraryMember" />
+		<result column="member_code" property="memberCode" />
+		<result column="member_name" property="memberName" />
+		<result column="member_type" property="memberType" />
+		<result column="member_identity_no" property="memberIdentityNo" />
+		<result column="member_status" property="memberStatus" />
+		<result column="start_date" property="startDate" />
+		<result column="end_date" property="endDate" />
+		<result column="annual_fee_status" property="annualFeeStatus" />
+		<result column="created_date" property="createdDate" />
+		<result column="created_by" property="createdBy" />
+		<result column="changed_date" property="changedDate" />
+		<result column="changed_by" property="changedBy" />
+		<result column="suspend_date" property="suspendDate" />
+		<result column="end_suspend_date" property="endSuspendDate" />
+		
+	</resultMap>
+	
+	<select id="selectAll" parameterType="com.beesinergi.model.LibraryMember" resultMap="BaseResultMap">
+		select 
+			*
+		from ms_library_member a
+		where 1 = 1
+			<if test="pkLibraryMember != null">
+				and a.id = #{pkLibraryMember}
+			</if>
+		order by a.id asc	
+	</select>
+	
+	<select id="selectCount" parameterType="com.beesinergi.model.LibraryMember" resultType="java.lang.Integer">
+    	select count(*) from ms_library_member a
+    	where 1 = 1
+  	</select>
+	
+	<insert id="insert" parameterType="com.beesinergi.model.LibraryMember" useGeneratedKeys="true" keyProperty="pkLibraryMember" keyColumn="id">
+		insert into ms_library_member ( 
+			  member_code,
+			  member_name,
+			  member_type,
+			  member_identity_no,
+			  member_status,
+			  start_date,
+			  end_date,
+			  annual_fee_status,
+			  created_date,
+			  changed_date,
+			  created_by,
+			  changed_by,
+			  suspend_date,
+			  end_suspend_date
+		) values (
+			#{memberCode},
+			#{memberName},
+			#{memberType},
+			#{memberIdentityNo},
+			#{memberStatus},
+			#{startDate},
+			#{endDate},
+			#{annualFeeStatus},
+			#{createdDate},
+			#{changedDate},
+			#{createdBy},
+			#{changedBy},
+			#{suspendDate},
+			#{endSuspendDate}
+      )
+	</insert>
+	
+	<update id="updateByPrimaryKey" parameterType="com.beesinergi.model.LibraryMember">
+		update ms_library_member
+    	set 
+    		member_code = #{memberCode},
+	      	member_name = #{memberName},
+	      	member_type = #{memberType},
+	      	member_identity_no = #{memberIdentityNo},
+	      	member_status = #{memberStatus},
+	      	start_date = #{startDate},
+	      	end_date = #{endDate},
+	      	annual_fee_status = #{annualFeeStatus},
+	      	changed_date = #{changedDate},
+	      	suspend_date = #{suspendDate},
+	      	end_suspend_date = #{endSuspendDate},	      	
+	      	changed_by = #{changedBy}
+		where id = #{pkLibraryMember}
+	</update> 
+	
+</mapper>

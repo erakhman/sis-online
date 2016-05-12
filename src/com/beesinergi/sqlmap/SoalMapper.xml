@@ -42,11 +42,27 @@
 	
 	<insert id="insert" parameterType="com.beesinergi.model.Soal" useGeneratedKeys="true" keyProperty="pkSoal" keyColumn="pk_soal">
 		insert into soal ( 
-			fk_siswa,
+			fk_pelajaran,
+			soal_pelajaran,
+			level,
+			pilihan_a,
+			pilihan_b,
+			pilihan_c,
+			pilihan_d,
+			pilihan_e,
+			jawaban,
 			created_date, 
 			created_by
 		) values (
-			#{fkSiswa},
+			#{fkPelajaran},
+			#{soalPelajaran},
+			#{level},
+			#{pilihanA},
+			#{pilihanB},
+			#{pilihanC},
+			#{pilihanD},
+			#{pilihanE},
+			#{jawaban},
 			#{createdDate},
 			#{createdBy}
       )
@@ -55,6 +71,15 @@
 	<update id="updateByPrimaryKey" parameterType="com.beesinergi.model.Soal">
 		update soal
     	set 
+    		fk_pelajaran = #{fkPelajaran},
+    		soal_pelajaran = #{soalPelajaran},
+    		level = #{level},
+    		pilihan_a = #{pilihanA},
+    		pilihan_b = #{pilihanB},
+    		pilihan_c = #{pilihanC},
+    		pilihan_d = #{pilihanD},
+    		pilihan_e = #{pilihanE},
+    		jawaban = #{jawaban},
 	      	changed_date = #{changedDate},
 	      	changed_by = #{changedBy}
 		where pk_soal = #{pkSoal}

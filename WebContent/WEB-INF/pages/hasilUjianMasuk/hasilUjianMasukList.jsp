@@ -20,11 +20,13 @@
 	        	<thead>
 	            	<tr>
 	            		<td class="hidden"></td>
+	            		<td class="listHeader">Tahun Ajaran</td>  
 	            		<td class="listHeader"><fmt:message key="label.namaSiswa"/></td> 
+	            		<td class="listHeader">Nama Pelajaran</td>  
 	            		<td class="listHeader">Jumlah Soal</td>   
 	            		<td class="listHeader">Jawaban Benar</td>   
 	            		<td class="listHeader">Jawaban Salah</td>
-	            		<td class="listHeader">Score</td>     
+	            		<td class="listHeader">Score</td>      
 	             	</tr>
 	        	</thead>
 				<tbody></tbody>	
@@ -45,7 +47,9 @@ function populateTable(data){
 		tBody += 
    			'<tr>'+
    				'<td class="hidden">'+this.pkHasilUjianMasuk+'</td>'+
+   				'<td class="listItemWithoutPointer">'+this.pendaftaran.tahunAjaran+'</td>'+
    				'<td class="listItemWithoutPointer">'+this.pendaftaran.namaSiswa+'</td>'+
+   				'<td class="listItemWithoutPointer">'+this.namaPelajaran+'</td>'+
    				'<td class="listItemWithoutPointer">'+this.jumlahSoal+'</td>'+
    				'<td class="listItemWithoutPointer">'+this.jawabanBenar+'</td>'+
    				'<td class="listItemWithoutPointer">'+this.jawabanSalah+'</td>'+

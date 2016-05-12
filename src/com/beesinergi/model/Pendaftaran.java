@@ -2,6 +2,7 @@ package com.beesinergi.model;
 
 import java.util.Date;
 import java.util.List;
+import com.beesinergi.model.Siswa;
 
 import com.beesinergi.util.SystemConstant;
 

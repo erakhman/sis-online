@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.beesinergi.mapper.BookPublisherMapper">
+
+	<resultMap id="BaseResultMap" type="com.beesinergi.model.BookPublisher">
+		<id column="id" property="pkBookPublisher" />
+		<result column="code" property="publisherCode" />
+		<result column="publisher_name" property="publisherName" />
+		<result column="address" property="publisherAddress" />
+		<result column="phone_no" property="publisherPhoneNo" />
+		
+	</resultMap>
+	
+	<select id="selectAll" parameterType="com.beesinergi.model.BookPublisher" resultMap="BaseResultMap">
+		select 
+			*
+		from ms_book_publisher a
+		where 1 = 1
+			<if test="pkBookPublisher != null">
+				and a.id = #{pkBookPublisher}
+			</if>
+		order by a.id asc	
+	</select>
+	
+	<select id="selectCount" parameterType="com.beesinergi.model.BookPublisher" resultType="java.lang.Integer">
+    	select count(*) from ms_book_publisher a
+    	where 1 = 1
+  	</select>
+	
+	<insert id="insert" parameterType="com.beesinergi.model.BookPublisher" useGeneratedKeys="true" keyProperty="pkBookPublisher" keyColumn="id">
+		insert into ms_book_publisher ( 
+			code,
+			publisher_name, 
+			address,
+			phone_no
+		) values (
+			#{publisherCode},
+			#{publisherName},
+			#{publisherAddress},
+			#{publisherPhoneNo}
+      )
+	</insert>
+	
+	<update id="updateByPrimaryKey" parameterType="com.beesinergi.model.BookPublisher">
+		update ms_book_publisher
+    	set 
+    		code = #{publisherCode},
+	      	publisher_name = #{publisherName},
+	      	address = #{publisherAddress},
+	      	phone_no = #{publisherPhoneNo}
+		where id = #{pkBookPublisher}
+	</update> 
+	
+</mapper>

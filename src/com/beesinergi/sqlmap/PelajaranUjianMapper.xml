@@ -4,6 +4,8 @@
 
 	<resultMap id="BaseResultMap" type="com.beesinergi.model.PelajaranUjian">
 		<id column="pk_pelajaran_ujian" property="pkPelajaranUjian" />
+		<result column="fk_pelajaran" property="fkPelajaran" />
+		<result column="fk_tahun_ajaran" property="fkTahunAjaran" />
 		<result column="created_date" property="createdDate" />
 		<result column="created_by" property="createdBy" />
 		<result column="changed_date" property="changedDate" />

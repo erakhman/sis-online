@@ -22,9 +22,8 @@
 	    	<result column="page_name" property="pageName" />
 	    	<result column="menu_code" property="menuCode" />
 	  	</collection>
-	  	<collection property="roleList" ofType="com.beesinergi.model.AppRole">
-	    	<result column="pk_role" property="pkRole" />
-	    	<result column="role_name" property="roleName" />
+	  	<collection property="userRoleList" ofType="com.beesinergi.model.AppUserRole">
+	    	<result column="fk_role" property="fkRole" />
 	  	</collection>
 	</resultMap>
 	
@@ -100,7 +99,9 @@
     		<if test="password != null">
 	      	"password" = #{password},
 	      	</if>
+	      	<if test="fullName != null">
 	      	"full_name" = #{fullName},
+	      	</if>
 	      	<if test="wrongPassword != null">
 	      	"wrong_password" = #{wrongPassword},
 	      	</if>
@@ -128,6 +129,11 @@
 		<foreach item="pkUserList" index="index" collection="list" open="(" separator="," close=")">
        		#{pkUserList}
  		</foreach>
+	</delete>
+	
+	<delete id="deleteByUserName" parameterType="java.lang.String">
+		delete from app_user a where a.user_name = #{userName};
+		delete from app_user_role a where a.fk_user in (select b.pk_user from app_user b where b.user_name = #{userName});
 	</delete>
 	
 </mapper>

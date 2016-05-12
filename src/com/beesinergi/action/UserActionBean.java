@@ -70,9 +70,6 @@ public class UserActionBean extends BaseMaintenanceActionBean<AppUser> {
 		if (model.getUserName() == null){ 
 			addLocalizableError("err.required", "label.userName");
 		}
-		if (model.getFkEmployee() == null){ 
-			addLocalizableError("err.required", "label.employeeName");
-		}
 		if (model.getFkRoleList() == null){
 			addLocalizableError("err.required", "label.roleName");
 		}

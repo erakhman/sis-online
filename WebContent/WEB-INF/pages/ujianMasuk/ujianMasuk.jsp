@@ -30,7 +30,7 @@
    				<tr>
     				<td>Mata Pelajaran</td>
     				<td>:</td>
-    				<td>Matematika</td>
+    				<td>${actionBean.jadwalUjian.namaPelajaran}</td>
     			</tr>
     			<tr>
     				<td>Durasi Ujian</td>

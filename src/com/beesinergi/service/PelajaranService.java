@@ -55,9 +55,6 @@ public class PelajaranService implements CommonService<Pelajaran> {
 			object.setCreatedDate(new Date());
 			pelajaranMapper.insert(object);
 		} else{
-			if (object.getIsActive() == null){
-				object.setIsActive(SystemConstant.NO);
-			}
 			object.setChangedDate(new Date());
 			pelajaranMapper.updateByPrimaryKey(object);
 		}
@@ -71,9 +68,6 @@ public class PelajaranService implements CommonService<Pelajaran> {
 
 	@Override
 	public Integer getCount(Pelajaran param) {
-		if (param.getIsActive() == null){
-			param.setIsActive(SystemConstant.YES);
-		}
 		int count = pelajaranMapper.selectCount(param);
 		return count;
 	}

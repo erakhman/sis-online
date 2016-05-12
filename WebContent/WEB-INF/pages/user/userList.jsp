@@ -119,7 +119,7 @@ function populateTable(data){
 		tBody += 
   			'<tr>'+
   				'<td class="hidden">'+this.pkUser+'</td>'+
-  				'<td class="listItem" align="center">'+
+  				'<td class="listItemWithoutPointer" align="center">'+
   					'<input type="checkbox" class="chk" onclick="check(this)" name="pkUserList" value="'+this.pkUser+'">'+
   				'</td>'+
   				'<td class="listItem">'+this.userName+'</td>'+

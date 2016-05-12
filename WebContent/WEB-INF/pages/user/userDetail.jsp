@@ -27,8 +27,8 @@
 						<td>
 							<c:forEach items="${actionBean.roleList}" var="role">
 								<c:set var="isMatch" value="false"/>
-	                    		<c:forEach items="${actionBean.model.roleList}" var="roleSelected">
-	                    			<c:if test="${role.pkRole == roleSelected.pkRole}">
+	                    		<c:forEach items="${actionBean.model.userRoleList}" var="roleSelected">
+	                    			<c:if test="${role.pkRole == roleSelected.fkRole}">
 	                    				<input type="checkbox" name="model.fkRoleList" value="${role.pkRole}" checked="checked"/>${role.roleName}
 	                    				<c:set var="isMatch" value="true"/>
 	                    			</c:if>
@@ -44,8 +44,8 @@
 						<td><s:text name="model.userName"/></td>
 					</tr>
 					<tr>
-						<td class="caption"><fmt:message key="label.employeeName"/><b class="mandatory">*</b></td>
-						<td><s:text name="model.employeeName" id="employeeName"/></td>
+						<td class="caption"><fmt:message key="label.fullName"/><b class="mandatory">*</b></td>
+						<td><s:text name="model.fullName"/></td>
 					</tr>
 				</table>
 			</s:form>

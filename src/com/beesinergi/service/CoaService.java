@@ -73,6 +73,11 @@ public class CoaService implements CommonService<Coa> {
 		List<Coa> list = coaMapper.selectAll(param);
 		return list;
 	}
+	
+	public List<Coa> findAllParent() {
+		List<Coa> list = coaMapper.selectAllParent();
+		return list;
+	}
 
 	@Override
 	public Integer getCount(Coa param) {

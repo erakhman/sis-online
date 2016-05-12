@@ -69,7 +69,8 @@ public class PelajaranUjianService implements CommonService<PelajaranUjian> {
 
 	@Override
 	public List<PelajaranUjian> findAll(PelajaranUjian param) {
-		return null;
+		List<PelajaranUjian> list = pelajaranUjianMapper.selectAll(param);
+		return list;
 	}
 
 	@Override

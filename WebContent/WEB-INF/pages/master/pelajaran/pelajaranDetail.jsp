@@ -15,12 +15,6 @@
 				</c:choose>
 					<table>
 						<tr>
-							<td class="caption" width="20%">Status</td>
-							<td>						
-								<s:checkbox value="Y" name="model.isActive" onclick="activeInactive()" id="chkIsActive"/><span>Active</span>
-							</td>
-						</tr>
-						<tr>
 							<td class="caption">Kode Pelajaran<b class="mandatory">*</b></td>
 							<td><s:text name="model.kodePelajaran"/></td>
 						</tr>
