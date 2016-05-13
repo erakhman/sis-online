@@ -648,99 +648,85 @@ WITH (
 ALTER TABLE public.lookup_group
   OWNER TO postgres;
   
-  
-CREATE TABLE ms_admission_fee
+
+CREATE TABLE ms_fee
 (
   id serial NOT NULL,
   tahun_ajaran_id integer,
   description character varying(255),
-  admission_fee double precision,
-  CONSTRAINT ms_admission_fee_pkey PRIMARY KEY (id),
-  CONSTRAINT fk_admission_fee_to_tahun_ajaran FOREIGN KEY (tahun_ajaran_id)
+  fee_type integer, -- 1 = SPP, 2=Admission Fee
+  fee double precision,
+  CONSTRAINT ms_fee_pkey PRIMARY KEY (id),
+  CONSTRAINT fk_ms_fee_to_tahun_ajaran FOREIGN KEY (tahun_ajaran_id)
       REFERENCES tahun_ajaran (pk_tahun_ajaran) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION
 )
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE ms_admission_fee
+ALTER TABLE ms_fee
   OWNER TO postgres;
+COMMENT ON COLUMN ms_fee.fee_type IS '1 = SPP, 2=Admission Fee';
 
--- Index: fki_admission_fee_to_tahun_ajaran
-
--- DROP INDEX fki_admission_fee_to_tahun_ajaran;
-
-CREATE INDEX fki_admission_fee_to_tahun_ajaran
-  ON ms_admission_fee
-  USING btree
-  (tahun_ajaran_id);
-
-  
- 
-CREATE TABLE ms_admission_fee_detail
+CREATE TABLE ms_fee_detail
 (
   id serial NOT NULL,
-  admission_fee_id integer,
+  fee_id integer,
   description character varying(255),
   nominal double precision,
-  CONSTRAINT ms_admission_fee_detail_pkey PRIMARY KEY (id),
-  CONSTRAINT fk_admission_fee_detail_to_ms_admission_fee FOREIGN KEY (admission_fee_id)
-      REFERENCES ms_admission_fee (id) MATCH SIMPLE
+  CONSTRAINT ms_fee_detail_pkey PRIMARY KEY (id),
+  CONSTRAINT fk_ms_fee_detail_to_ms_fee FOREIGN KEY (fee_id)
+      REFERENCES ms_fee (id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION
 )
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE ms_admission_fee_detail
+ALTER TABLE ms_fee_detail
   OWNER TO postgres;
 
--- Index: fki_admission_fee_detail_to_ms_admission_fee
+-- Index: fki_ms_fee_detail_to_ms_fee
 
--- DROP INDEX fki_admission_fee_detail_to_ms_admission_fee;
+-- DROP INDEX fki_ms_fee_detail_to_ms_fee;
 
-CREATE INDEX fki_admission_fee_detail_to_ms_admission_fee
-  ON ms_admission_fee_detail
+CREATE INDEX fki_ms_fee_detail_to_ms_fee
+  ON ms_fee_detail
   USING btree
-  (admission_fee_id);
+  (fee_id);
 
 
- CREATE TABLE admission_fee_history
+ CREATE TABLE fee_history
 (
   id serial NOT NULL,
   siswa_id integer,
-  admission_fee_id integer,
+  fee_id integer,
   nominal double precision,
   description character varying(255),
   payment_date date,
-  CONSTRAINT admission_fee_history_pkey PRIMARY KEY (id),
-  CONSTRAINT fk_admission_fee_history_to_ms_admission_fee FOREIGN KEY (admission_fee_id)
-      REFERENCES ms_admission_fee (id) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT fk_admission_fee_history_to_siswa FOREIGN KEY (siswa_id)
+  payment_month integer, -- null if fee_type is admission fee, filled if fee_type is SPP (the containts is month in integer, means 1=Jan, 2=Feb etc)
+  CONSTRAINT fee_history_pkey PRIMARY KEY (id),
+  CONSTRAINT fee_history_to_siswa FOREIGN KEY (siswa_id)
       REFERENCES siswa (pk_siswa) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT fk_fee_history_to_ms_fee FOREIGN KEY (fee_id)
+      REFERENCES ms_fee (id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION
 )
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE admission_fee_history
+ALTER TABLE fee_history
   OWNER TO postgres;
+COMMENT ON COLUMN fee_history.payment_month IS 'null if fee_type is admission fee, filled if fee_type is SPP (the containts is month in integer, means 1=Jan, 2=Feb etc)';
 
--- Index: fki_admission_fee_history_to_ms_admission_fee
 
--- DROP INDEX fki_admission_fee_history_to_ms_admission_fee;
+-- Index: fki_fee_history_to_ms_fee
 
-CREATE INDEX fki_admission_fee_history_to_ms_admission_fee
-  ON admission_fee_history
+-- DROP INDEX fki_fee_history_to_ms_fee;
+
+CREATE INDEX fki_fee_history_to_ms_fee
+  ON fee_history
   USING btree
-  (admission_fee_id);
+  (fee_id);
 
--- Index: fki_admission_fee_history_to_siswa
-
--- DROP INDEX fki_admission_fee_history_to_siswa;
-
-CREATE INDEX fki_admission_fee_history_to_siswa
-  ON admission_fee_history
-  USING btree
-  (siswa_id);
-
+ 
