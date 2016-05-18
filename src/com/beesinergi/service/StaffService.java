@@ -81,6 +81,13 @@ public class StaffService implements CommonService<Staff> {
 		List<Staff> list = staffMapper.selectAll(param);
 		return list;
 	}
+	
+	public List<Staff> findAllAdmin() {
+		Staff param = new Staff();
+		param.setType(SystemConstant.StaffType.ADMIN);
+		List<Staff> list = staffMapper.selectAll(param);
+		return list;
+	}
 
 	@Override
 	public Integer getCount(Staff param) {

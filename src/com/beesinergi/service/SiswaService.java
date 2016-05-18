@@ -74,7 +74,8 @@ public class SiswaService implements CommonService<Siswa> {
 
 	@Override
 	public List<Siswa> findAll(Siswa param) {
-		return null;
+		List<Siswa> list = siswaMapper.selectAll(param);
+		return list;
 	}
 
 	@Override

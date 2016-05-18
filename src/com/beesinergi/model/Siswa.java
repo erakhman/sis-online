@@ -15,15 +15,17 @@ public class Siswa {
     private String alamatIbu;
     private String telpOrtu;
     private Double nem;
-    private Integer fkKelas;
     private Date createdDate;
     private String createdBy;
     private Date changedDate;
     private String changedBy;
+    private String nis;
     
     private String className;
     private String orderBy;
     private String sortBy;
+    
+    private Kelas kelas;
     
 	public Integer getPkSiswa() {
 		return pkSiswa;
@@ -127,16 +129,22 @@ public class Siswa {
 	public void setOrderBy(String orderBy) {
 		this.orderBy = orderBy;
 	}
-	public Integer getFkKelas() {
-		return fkKelas;
-	}
-	public void setFkKelas(Integer fkKelas) {
-		this.fkKelas = fkKelas;
-	}
 	public String getSortBy() {
 		return sortBy;
 	}
 	public void setSortBy(String sortBy) {
 		this.sortBy = sortBy;
+	}
+	public String getNis() {
+		return nis;
+	}
+	public void setNis(String nis) {
+		this.nis = nis;
+	}
+	public Kelas getKelas() {
+		return kelas;
+	}
+	public void setKelas(Kelas kelas) {
+		this.kelas = kelas;
 	}
 }

@@ -12,6 +12,7 @@ public final class SystemParameter {
 	public static int DURASI_UJIAN;
 	public static int REGISTRATION_FEE;
 	public static int RUNNING_NO_REGISTRATION_CODE;
+	public static int RUNNING_NO_MEMBER_CODE;
 	
 	
 	public static synchronized void updateSystemEnvironment(String name, String value) {

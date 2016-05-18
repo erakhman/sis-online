@@ -74,7 +74,6 @@
 	<update id="updateByPrimaryKey" parameterType="com.beesinergi.model.LibraryMember">
 		update ms_library_member
     	set 
-    		member_code = #{memberCode},
 	      	member_name = #{memberName},
 	      	member_type = #{memberType},
 	      	member_identity_no = #{memberIdentityNo},

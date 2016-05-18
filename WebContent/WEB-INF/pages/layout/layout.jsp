@@ -136,6 +136,36 @@
 		});	
 	}
 	
+	function showStudentList(){
+		var sURL = '${contextPath}/Search.action';
+		$.get(sURL,function(data){
+			openDialog(300, 400, 1, 'Daftar Nama Siswa', data, 2);
+			var colLength = $('#studentList thead td').length;
+			var tBody = '<tr><td class="listItemWithoutPointer" colspan="'+colLength+'"><fmt:message key="table.noData"/></td></tr>';
+			$('#studentList tbody').html(tBody);
+		});	
+	}
+	
+	function showTeacherList(){
+		var sURL = '${contextPath}/Search.action?showTeacherList=';
+		$.get(sURL,function(data){
+			openDialog(300, 400, 1, 'Daftar Nama Guru', data, 2);
+			var colLength = $('#teacherList thead td').length;
+			var tBody = '<tr><td class="listItemWithoutPointer" colspan="'+colLength+'"><fmt:message key="table.noData"/></td></tr>';
+			$('#teacherList tbody').html(tBody);
+		});	
+	}
+	
+	function showStaffList(){
+		var sURL = '${contextPath}/Search.action?showStaffList=';
+		$.get(sURL,function(data){
+			openDialog(300, 400, 1, 'Daftar Nama Pegawai', data, 2);
+			var colLength = $('#staffList thead td').length;
+			var tBody = '<tr><td class="listItemWithoutPointer" colspan="'+colLength+'"><fmt:message key="table.noData"/></td></tr>';
+			$('#staffList tbody').html(tBody);
+		});	
+	}
+	
 	function activeInactive(el){
 		if ($('#chkIsActive').is(':checked')){
 			$('#chkIsActive').next().html('<fmt:message key="label.active"/>');
@@ -167,9 +197,14 @@
 		return m.format('DD MMM YYYY HH:mm');  
 	}
 	
-	function getCurrentDate(){
+	function getCurrentDateTime(){
 		var m = moment(new Date());
 		return m.format('DD-MM-YYYY HH:mm');
+	}
+	
+	function getCurrentDate(){
+		var m = moment(new Date());
+		return m.format('DD-MM-YYYY');
 	}
 	
 	function formatDate(date){

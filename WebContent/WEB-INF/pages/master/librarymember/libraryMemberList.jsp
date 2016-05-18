@@ -55,11 +55,11 @@ function populateTable(data){
    				'<td class="hidden">'+this.pkLibraryMember+'</td>'+
    				'<td class="listItem">'+this.memberCode+'</td>'+
    				'<td class="listItem">'+this.memberName+'</td>'+
-   				'<td class="listItem">'+this.memberType+'</td>'+
+   				'<td class="listItem">'+this.memberTypeDescr+'</td>'+
    				'<td class="listItem">'+this.memberIdentityNo+'</td>'+
-   				'<td class="listItem">'+this.memberStatus+'</td>'+
-   				'<td class="listItem">'+this.startDate+'</td>'+
-   				'<td class="listItem">'+this.endDate+'</td>'+
+   				'<td class="listItem">'+this.memberStatusDescr+'</td>'+
+   				'<td class="listItem">'+formatDate(this.startDate)+'</td>'+
+   				'<td class="listItem">'+formatDate(this.endDate)+'</td>'+
    			'</tr>';
 	});
 	return tBody;

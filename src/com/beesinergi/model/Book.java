@@ -25,6 +25,7 @@ public class Book {
     
     private String publisherName;
     private String categoryDescription;
+    private String locationDescription;
     
     public String getStatusDescr() {
     	return SystemConstant.BookStatus().get(bookStatus);
@@ -143,6 +144,14 @@ public class Book {
 
 	public void setCategoryDescription(String categoryDescription) {
 		this.categoryDescription = categoryDescription;
+	}
+
+	public String getLocationDescription() {
+		return locationDescription;
+	}
+
+	public void setLocationDescription(String locationDescription) {
+		this.locationDescription = locationDescription;
 	}
     
     

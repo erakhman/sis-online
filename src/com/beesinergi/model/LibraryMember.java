@@ -2,6 +2,8 @@ package com.beesinergi.model;
 
 import java.util.Date;
 
+import com.beesinergi.util.SystemConstant;
+
 public class LibraryMember {
 
     private Integer pkLibraryMember;
@@ -19,6 +21,14 @@ public class LibraryMember {
     private String changedBy;
     private Date suspendDate;
     private Date endSuspendDate;
+    
+    public String getMemberTypeDescr() {
+    	return SystemConstant.MemberType().get(memberType);
+    }
+    
+    public String getMemberStatusDescr() {
+    	return SystemConstant.MemberStatus().get(memberStatus);
+    }
     
 	public Integer getPkLibraryMember() {
 		return pkLibraryMember;

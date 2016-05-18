@@ -141,7 +141,6 @@ public class PendaftaranService implements CommonService<Pendaftaran> {
 		Siswa siswa = new Siswa();
 		siswa.setNamaSiswa(pendaftaran.getNamaSiswa());
 		siswa.setNem(pendaftaran.getNem());
-		siswa.setFkKelas(0);
 		siswaService.save(siswa);
 	}
 	

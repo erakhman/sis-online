@@ -14,26 +14,31 @@
 		<result column="alamat_ibu" property="alamatIbu" />
 		<result column="telp_ortu" property="telpOrtu" />
 		<result column="nem" property="nem" />
-		<result column="fk_kelas" property="fkKelas" />
 		<result column="created_date" property="createdDate" />
 		<result column="created_by" property="createdBy" />
 		<result column="changed_date" property="changedDate" />
 		<result column="changed_by" property="changedBy" />
+		<result column="nis" property="nis" />
 		
-		<result column="nama_kelas" property="className" />
+		<association property="kelas" resultMap="com.beesinergi.mapper.KelasMapper.BaseResultMap"/>
 	</resultMap>
 	
 	<select id="selectAll" parameterType="com.beesinergi.model.Siswa" resultMap="BaseResultMap">
 		select 
-			*
+			a.*,
+			d.*
 		from siswa a
-			left join kelas b on b.pk_kelas = a.fk_kelas
+			left join student_class_history b on a.pk_siswa = b.student_id
+			left join class_history c on c.id = b.class_history_id and c.tahun_ajaran_id = fn_tahun_ajaran()
+			left join kelas d on d.pk_kelas = c.class_id
 		where 1 = 1
 			<if test="pkSiswa != null">
 				and a.pk_siswa = #{pkSiswa}
 			</if>
-			<if test="fkKelas != null">
-				and a.fk_kelas = #{fkKelas}
+			<if test="kelas != null">
+				<if test="kelas.pkKelas != null">
+					and d.pk_kelas = #{kelas.pkKelas}
+				</if>
 			</if>
 			<if test="namaSiswa != null">
 				and lower(a.nama_siswa) like #{namaSiswa}
@@ -60,6 +65,7 @@
 		  	alamat_ibu,
 		  	telp_ortu,
 			nem, 
+			nis, 
 			created_date, 
 			created_by
 		) values (
@@ -73,6 +79,7 @@
 			#{alamatIbu},
 			#{telpOrtu},
 			#{nem},
+			#{nis},
 			#{createdDate},
 			#{createdBy}
       )
@@ -91,6 +98,7 @@
 		  	alamat_ibu = #{alamatIbu},
 		  	telp_ortu = #{telpOrtu},
 	      	nem = #{nem},
+	      	nis = #{nis},
 	      	changed_date = #{changedDate},
 	      	changed_by = #{changedBy}
 		where pk_siswa = #{pkSiswa}

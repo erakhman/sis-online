@@ -27,6 +27,7 @@
 	            	<tr>
 	            		<td class="hidden"></td>
 	            		<td class="hidden"></td>
+	            		<td class="hidden"></td>
 	            		<td class="listHeader">ISBN</td> 
 	            		<td class="listHeader">Kode Buku</td> 
 	            		<td class="listHeader">Judul Buku</td> 
@@ -56,6 +57,7 @@ function populateTable(data){
    			'<tr>'+
    				'<td class="hidden">'+this.pkBook+'</td>'+
    				'<td class="hidden">'+this.bookPublisher+'</td>'+
+   				'<td class="hidden">'+this.receivedDate+'</td>'+
    				'<td class="listItem">'+this.bookIsbn+'</td>'+
    				'<td class="listItem">'+this.bookCode+'</td>'+
    				'<td class="listItem">'+this.bookTitle+'</td>'+

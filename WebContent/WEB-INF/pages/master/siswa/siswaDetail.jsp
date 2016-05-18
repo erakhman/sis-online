@@ -18,6 +18,10 @@
 							<td class="caption">Nama Siswa<b class="mandatory">*</b></td>
 							<td><s:text name="model.namaSiswa"/></td>
 						</tr>
+						<tr>
+							<td class="caption">NIS<b class="mandatory">*</b></td>
+							<td><s:text name="model.nis"/></td>
+						</tr>
 					</table>		
 			</s:form>
 		</td>

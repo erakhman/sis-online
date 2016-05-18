@@ -3,6 +3,7 @@ package com.beesinergi.service;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -13,16 +14,21 @@ import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
+import com.beesinergi.mapper.AppParameterMapper;
 import com.beesinergi.mapper.LibraryMemberMapper;
-
+import com.beesinergi.model.AppParameter;
 import com.beesinergi.model.LibraryMember;
+import com.beesinergi.util.DateTimeFunction;
 import com.beesinergi.util.Paging;
+import com.beesinergi.util.SystemParameter;
 
 @Service("libraryMemberService")
 public class LibraryMemberService implements CommonService<LibraryMember> {
 
 	@Autowired
 	private LibraryMemberMapper libraryMemberMapper;
+	@Autowired
+	private AppParameterMapper appParameterMapper;
 	@Autowired
 	private SqlSessionFactory sqlSessionFactory;
 	@Autowired
@@ -54,6 +60,7 @@ public class LibraryMemberService implements CommonService<LibraryMember> {
 		try {
 			if (object.getPkLibraryMember() == null){
 				object.setCreatedDate(new Date());
+				object.setMemberCode(generateMemberCode());
 				libraryMemberMapper.insert(object);
 			} else{
 				object.setChangedDate(new Date());
@@ -64,6 +71,21 @@ public class LibraryMemberService implements CommonService<LibraryMember> {
 			throw e;
 		}
 		txManager.commit(status);	
+	}
+	
+	public String generateMemberCode() {
+		Integer nextNumber = SystemParameter.RUNNING_NO_MEMBER_CODE + 1;			
+		String nextNumberStr = StringUtils.leftPad(nextNumber.toString(), 6, "0");
+		return DateTimeFunction.date2String(new Date(), "yyyyMM")+nextNumberStr;
+	}
+	
+	public void updateMemberCode() {
+		Integer nextNumber = SystemParameter.RUNNING_NO_MEMBER_CODE + 1; 
+		AppParameter appParameter = new AppParameter();
+		appParameter.setName("RUNNING_NO_MEMBER_CODE");
+		appParameter.setValue(String.valueOf(nextNumber));
+		appParameterMapper.updateByName(appParameter);
+		SystemParameter.updateSystemEnvironment("RUNNING_NO_MEMBER_CODE", String.valueOf(nextNumber));
 	}
 
 	@Override

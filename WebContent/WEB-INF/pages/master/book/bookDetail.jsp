@@ -48,7 +48,7 @@
 					</tr>
 					<tr>
 						<td class="caption">Tanggal Terima</td>
-						<td><s:text name="model.receivedDate" class="datepicker"/></td>
+						<td><s:text name="model.receivedDate" class="datepicker" formatPattern="<%= SystemConstant.DATE_FORMAT %>"/></td>
 					</tr>
 					<tr>
 						<td class="caption">Penerbit<b class="mandatory">*</b></td>	

@@ -48,8 +48,8 @@ function populateTable(data){
 		tBody += 
    			'<tr>'+
    				'<td class="hidden">'+this.id+'</td>'+
-   				'<td class="listItem">'+this.annualFee+'</td>'+
    				'<td class="listItem">'+this.tahunAjaran+'</td>'+
+   				'<td class="listItem">'+this.annualFee+'</td>'+
    			'</tr>';
 	});
 	return tBody;

@@ -36,6 +36,9 @@
 			<if test="type != null">
 				and a.staff_type = #{type}
 			</if>
+			<if test="status != null">
+				and a.staff_status = #{status}
+			</if>
 		order by a.id asc	
 	</select>
 	

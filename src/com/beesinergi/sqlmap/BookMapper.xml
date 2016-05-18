@@ -18,6 +18,7 @@
 		<result column="changed_by" property="changedBy" />
 		<result column="is_active" property="isActive" />
 		<result column="price" property="price" />
+		<result column="received_date" property="receivedDate" />
 		
 		<result column="publisher_name" property="publisherName" />
 		<result column="category_description" property="categoryDescription" />
@@ -85,6 +86,7 @@
 			status = #{bookStatus},
 			location = #{bookLocation},
 			price = #{price},
+			received_date = #{receivedDate},
 	      	changed_date = #{changedDate},
 	      	changed_by = #{changedBy}
 		where id = #{pkBook}

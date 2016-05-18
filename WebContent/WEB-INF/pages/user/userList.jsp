@@ -52,6 +52,7 @@
 		                   	<td class="listHeader"><fmt:message key="label.lastLogin"/></td>
 		                   	<td class="listHeader"><fmt:message key="label.wrongPassword"/></td>
 		                   	<td class="listHeader"><fmt:message key="label.status"/></td>
+		                   		<td class="listHeader">Role</td>
 		           		</tr>
 	              	</thead>
 					<tbody></tbody>	
@@ -127,6 +128,7 @@ function populateTable(data){
   				'<td class="listItem">'+lastLoginDate+'</td>'+
   				'<td class="listItem">'+this.wrongPassword+'</td>'+
   				'<td class="listItem">'+isLocked+'</td>'+  
+  				'<td class="listItem">'+this.roleName+'</td>'+
   			'</tr>';
 	});
 	return tBody;

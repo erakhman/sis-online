@@ -16,6 +16,7 @@
 		<result column="user_name" property="userName" />
 		<result column="last_login_date" property="lastLoginDate" />
 		
+		<result column="role_name" property="roleName" />
 		<collection property="menuList" ofType="com.beesinergi.model.AppMenu">
 	    	<result column="main_menu" property="mainMenu" />
 	    	<result column="sub_menu" property="subMenu" />
@@ -29,7 +30,8 @@
 	
 	<select id="selectAll" parameterType="com.beesinergi.model.AppUser" resultMap="BaseResultMap">
 		select 
-			*
+			*,
+			(SELECT string_agg(x1.role_name, ', ') FROM app_user_role x0, app_role x1 where x1.pk_role = x0.fk_role and a.pk_user=x0.fk_user) as role_name
 		from app_user a
 		where 1 = 1	
 			<if test="pkUser != null">

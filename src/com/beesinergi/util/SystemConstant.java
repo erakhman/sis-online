@@ -131,5 +131,33 @@ public class SystemConstant {
 		return map;
 	}
 	
+	public static class MemberType {
+		public static int STUDENT = 1;
+		public static int TEACHER = 2;
+		public static int ADMIN = 3;
+	}
+	
+	public static Map<Integer,String> MemberType() {
+		Map<Integer,String> map = new HashMap<Integer, String>();
+		map.put(MemberType.STUDENT, "Siswa");
+		map.put(MemberType.TEACHER, "Guru");
+		map.put(MemberType.ADMIN, "Tata Usaha");
+		return map;
+	}
+	
+	public static class MemberStatus {
+		public static int ACTIVE = 1;
+		public static int SUSPEND = 2;
+		public static int NON_ACTIVE = 3;
+	}
+	
+	public static Map<Integer,String> MemberStatus() {
+		Map<Integer,String> map = new HashMap<Integer, String>();
+		map.put(MemberStatus.ACTIVE, "Active");
+		map.put(MemberStatus.SUSPEND, "Suspend");
+		map.put(MemberStatus.NON_ACTIVE, "Non Active");
+		return map;
+	}
+	
     
 }
